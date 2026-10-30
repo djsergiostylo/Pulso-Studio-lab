@@ -510,11 +510,11 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="prow"><div class="pchips" id="pchips" role="group" aria-label="Patrón"></div><button class="modeb" id="modeB" aria-expanded="false">Modo: Paso ▾</button></div>
     </div>
 
-    <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones">
-      <button data-g="crear" role="tab" aria-controls="t-seq" aria-pressed="true"><i>▦</i><span>Crear</span></button>
-      <button data-g="song" role="tab" aria-controls="t-song" aria-pressed="false"><i>♫</i><span>Canción</span></button>
-      <button data-g="mezcla" role="tab" aria-controls="t-mix" aria-pressed="false"><i>🎚</i><span>Mezcla</span></button>
-      <button data-g="file" role="tab" aria-controls="t-file" aria-pressed="false" aria-label="Proyecto: guardar, importar y exportar"><i>💾</i><span>Proyecto</span></button>
+    <nav class="tabs" id="tabs" aria-label="Secciones principales">
+      <button data-g="crear" aria-pressed="true"><i>▦</i><span>Crear</span></button>
+      <button data-g="song" aria-pressed="false"><i>♫</i><span>Canción</span></button>
+      <button data-g="mezcla" aria-pressed="false"><i>🎚</i><span>Mezcla</span></button>
+      <button data-g="file" aria-pressed="false" aria-label="Proyecto: guardar, importar y exportar"><i>💾</i><span>Proyecto</span></button>
     </nav>
     <div class="seg subtabs" id="subs">
       <button data-t="seq" aria-pressed="true">Secuenciador</button>
@@ -1143,8 +1143,8 @@ $('#paste').addEventListener('click',()=>{if(!CB)return;snap();if(CB.t==='pat')P
 /* ---------- tabs ---------- */
 const TG={crear:['seq','pads'],song:['song'],mezcla:['mix','fx','eq','canal'],file:['file']},TL={seq:'Secuenciador',pads:'Pads',mix:'Mix',fx:'FX',eq:'EQ',canal:'Canal'},lastT={crear:'seq',mezcla:'mix'};
 function showTab(t){S.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
-  $$('#tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===g));
-  const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','tablist');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button role="tab" aria-controls="t-${n}" data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
+  $('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-pressed',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','group');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
   ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{$('#t-'+n).hidden=n!==t});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
   if(t==='canal')renderCanal();if(t==='mix'){updMixUI();kick()}if(t==='fx'){FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)});kick()}upd()}
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){const g=b.dataset.g;showTab(lastT[g]||TG[g][0])}});
