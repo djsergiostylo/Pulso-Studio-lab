@@ -172,3 +172,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Corregida la nota de Exportar audio, que decía que el WAV iba dentro de un .zip: fuera de Claude se descarga como .wav.
 - Probado: tocar un pad, guardar proyecto, crear e importar código; sin errores.
 - Para revertir: git revert del commit v2.19.
+
+## v2.20 (2026-10-30) — Claude
+- **Crear**: el selector de páginas del ACID de 32 (Pasos 1–16 / 17–32) pasa a la misma fila que **Vista táctil**, a la derecha. La rejilla sube unos 50 px y se ve más del secuenciador sin desplazarse.
+- Botones de esa fila algo más bajos (36 px).
+- Probado: ACID 16↔32, cambio de página, Vista táctil; sin errores.
+- Para revertir: git revert del commit v2.20.

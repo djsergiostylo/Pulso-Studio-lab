@@ -585,3 +585,5 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #skinCard{--bc:#4de0c8}#saveCard{--bc:#ffd24d}#shareCard{--bc:#ff6ad5}#reccard{--bc:#a98bff}
 #t-file .card{border-top:2px solid var(--bc)}
 #skins{gap:6px}.card #skins .sk{min-height:36px;padding:6px 9px;font-size:10px}.card #skins .sk::before{margin-right:6px;width:10px;height:10px}
+.seqview{flex-wrap:wrap}.seqview>#stepPg{margin-left:auto;display:flex;gap:6px}.seqview>button,.focus-pages>button{min-height:36px}
+.seqview>#stepPg[hidden],.seqview>#focusPages[hidden]{display:none}
