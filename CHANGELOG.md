@@ -40,3 +40,5 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 | v1.7 | 2026-10-30 | Arrastre horizontal por fila, con toque corto, toque largo de velocidad y Deshacer en una acción; motor intacto. |
 | v1.8 | 2026-10-30 | Navegación principal agrupada en Crear, Canción, Mezcla y Proyecto. Mix, FX, EQ y Canal comparten el espacio Mezcla; se recuerda el último subapartado. Acceso guardar renombrado Proyecto. Motor intacto. |
 | v1.9 | 2026-10-30 | Parámetros detallados de cada FX plegables; controles de encendido y gráfico siempre visibles, acceso desde el navegador de efectos y estado abierto preservado al ajustar parámetros. Sin cambios en el motor de audio. |
+
+| v2.0 | 2026-10-30 | Guarda como EQ predeterminada las curvas ajustadas por sonido (Kick, Snare, Clap, Hat, Open Hat, Tom, Sub, Acid y Stab); EQ global con botón de activación/bypass persistente. La ruta de audio solo filtra los mismos nodos EQ existentes; sin cambios en voces, scheduler, mezcla ni efectos. |
