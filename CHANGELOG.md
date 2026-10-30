@@ -214,3 +214,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - **Altura del panel Sonido a tu gusto**: asa (barrita) arriba del panel. Arrástrala hacia arriba para ver más del panel o hacia abajo para ver más secuenciador; doble toque la devuelve a la altura normal; con teclado, flechas ↑↓. Se recuerda en este móvil (`dockH`). Si el panel está plegado, tocar o arrastrar el asa lo abre.
 - Probado: arrastre (208→328 px), teclado, doble toque y que se guarda; sin errores.
 - Para revertir: git revert del commit v2.25.
+
+## v2.26 (2026-10-30) — Claude
+- La etiqueta de versión de la pantalla LCD ya no tapa el BPM: pasa a la línea de abajo, a la izquierda del tempo. Comprobado en las tres vistas de la pantalla (info, onda y espectro).
+- Para revertir: git revert del commit v2.26.
