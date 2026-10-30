@@ -34,7 +34,7 @@
 <title>Pulso Studio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
 <style>
-/* Layout: sticky LCD + transport on top, tab bar (Seq/Mix/FX/Canal), one panel at a time; skins swap tokens only */
+/* Layout: sticky transport + four task tabs; Mix, FX, EQ and channel share one grouped workspace */
 :root{
   --lp:45%;--lt:#000;--page:#dfe3e6;--pfg:#3a444b;--dev:#f4f5f3;--edge:#c3cacf;--lcd:#c5d8b8;--lcdfg:#1f2a1a;
   --key:#e2e6e8;--keyedge:#b4bcc2;--on:#ff5a1f;--onfg:#fff;--fg:#1d2226;--mute:#56626a;--led:#ff5a1f;--track:#c9d0d4;
@@ -459,6 +459,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .mc .fad{height:120px}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
 /* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
+/* v1.8: navegación por tareas; Mix, FX, EQ y Canal agrupados dentro de Mezcla */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -489,7 +490,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.7">v1.7</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.8">v1.8</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -510,11 +511,10 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
     </div>
 
     <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones">
-      <button data-g="crear" aria-pressed="true"><i>▦</i><span>Crear</span></button>
-      <button data-g="song" aria-pressed="false"><i>♫</i><span>Canción</span></button>
-      <button data-g="mezcla" aria-pressed="false"><i>🎚</i><span>Mezcla</span></button>
-      <button data-g="fx" aria-pressed="false"><i>✺</i><span>FX</span></button>
-      <button data-g="file" aria-pressed="false" aria-label="Guardar y ajustes"><i>💾</i><span>Guardar</span></button>
+      <button data-g="crear" role="tab" aria-controls="t-seq" aria-pressed="true"><i>▦</i><span>Crear</span></button>
+      <button data-g="song" role="tab" aria-controls="t-song" aria-pressed="false"><i>♫</i><span>Canción</span></button>
+      <button data-g="mezcla" role="tab" aria-controls="t-mix" aria-pressed="false"><i>🎚</i><span>Mezcla</span></button>
+      <button data-g="file" role="tab" aria-controls="t-file" aria-pressed="false" aria-label="Proyecto: guardar, importar y exportar"><i>💾</i><span>Proyecto</span></button>
     </nav>
     <div class="seg subtabs" id="subs">
       <button data-t="seq" aria-pressed="true">Secuenciador</button>
@@ -1141,10 +1141,10 @@ $('#paste').addEventListener('click',()=>{if(!CB)return;snap();if(CB.t==='pat')P
   flash('PEGADO EN '+(CB.t==='pat'?'PAT '+'ABCD'[S.pat]:CH[S.ch][1])+' · ↶');upd();save()});
 
 /* ---------- tabs ---------- */
-const TG={crear:['seq','pads'],song:['song'],mezcla:['mix','eq','canal'],fx:['fx'],file:['file']},TL={seq:'Secuenciador',pads:'Pads',mix:'Mix',fx:'FX',eq:'EQ',canal:'Canal'},lastT={crear:'seq',mezcla:'mix'};
+const TG={crear:['seq','pads'],song:['song'],mezcla:['mix','fx','eq','canal'],file:['file']},TL={seq:'Secuenciador',pads:'Pads',mix:'Mix',fx:'FX',eq:'EQ',canal:'Canal'},lastT={crear:'seq',mezcla:'mix'};
 function showTab(t){S.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
   $$('#tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===g));
-  const sb=$('#subs');sb.hidden=TG[g].length<2;sb.innerHTML=TG[g].map(n=>`<button data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
+  const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','tablist');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button role="tab" aria-controls="t-${n}" data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
   ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{$('#t-'+n).hidden=n!==t});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
   if(t==='canal')renderCanal();if(t==='mix'){updMixUI();kick()}if(t==='fx'){FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)});kick()}upd()}
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){const g=b.dataset.g;showTab(lastT[g]||TG[g][0])}});
