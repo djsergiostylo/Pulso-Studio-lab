@@ -458,7 +458,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .mc .fv{order:0;font-size:9.45px}
 .mc .fad{height:120px}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
-/* v1.5: edición táctil ampliada de 8 pasos, sin cambiar el motor de audio */
+/* v1.6: 8 pasos adaptados al ancho real de móviles estrechos */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -473,6 +473,11 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 #grid.focus[data-page="1"] .trk.sel .step:nth-child(-n+8){display:none}
 #grid.focus .trk:not(.sel){min-height:24px;max-height:24px;gap:2px}
 #grid.focus .trk:not(.sel) .step{height:8px!important;min-height:8px;aspect-ratio:auto}
+@media (min-width:360px) and (max-width:420px){
+  #grid.focus .trk.sel .cells{grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;overflow-x:hidden}
+  #grid.focus .trk.sel .step{height:44px!important;min-height:44px;min-width:0}
+}
+
 @media (min-width:700px){.wrap{max-width:760px}:root[data-stage] .wrap{max-width:900px}.tabs{max-width:760px}}</style>
 
 <main class="wrap">
@@ -482,7 +487,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.5">v1.5</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.6">v1.6</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
