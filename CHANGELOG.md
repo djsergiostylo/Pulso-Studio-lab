@@ -133,3 +133,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Solo CSS y 2 líneas de JS (~3 KB). No cambia el audio ni el formato de guardado.
 - Probado a 390 px con Plata, MPC y Papel; sin errores. Los nombres de pista se aclararon para que se lean sobre fondos grises.
 - Para revertir: git revert del commit v2.14.
+
+## v2.15 (2026-10-30) — Claude
+- Ajustes de diseño tras revisar todas las pantallas con las carátulas:
+  - Gris MPC: los nombres de canal (KICK, SNRE…) del mezclador y la rejilla ya se leen.
+  - FX: los 6 mandos de macros (DJ, Reverb, Delay, Drive, Sidechain, Master) forman un módulo **Macros** con panel y título.
+  - Canción: nuevos módulos **Patrones** y **Reproducción** (agrupa PATRÓN/CANCIÓN y 8/16/32 compases).
+- Solo CSS y una tarjeta en el HTML. No cambia audio ni datos.
+- Para revertir: git revert del commit v2.15.

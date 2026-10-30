@@ -519,3 +519,10 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .card .sk[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
 .sk::before{content:"";display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--ca,transparent);box-shadow:0 0 0 2px var(--cs,transparent),0 0 0 3px color-mix(in srgb,var(--fg) 30%,transparent);margin-right:9px;vertical-align:-1px}
 .trk .rn{color:color-mix(in srgb,var(--c) 62%,var(--fg))}
+:root[data-skin="mpc"]{--lp:82%;--lt:var(--fg)}
+
+/* v2.15: ajustes de diseño */
+.mtx::before,.dkm::before,#t-song .pbar::before{display:block;border-left:3px solid var(--on);padding-left:6px;font-family:var(--disp);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pttl);line-height:1}
+.dkm::before{content:"Macros";grid-column:1/-1;margin-bottom:2px}
+#t-song .pbar::before{content:"Patrones"}
+.dkm{background:var(--pnl);border:1px solid var(--pedge);border-top-color:color-mix(in srgb,var(--fg) 14%,var(--pedge));border-radius:10px;padding:8px;box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 8%,transparent),0 1px 0 color-mix(in srgb,#000 18%,transparent)}
