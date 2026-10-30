@@ -536,7 +536,26 @@ const KA=[['tn','Corte'],['br','Resonancia'],['gl','Envolvente'],['dc','Caída']
 const KB=[['tn','Brillo'],['dc','Caída'],['br','Desafine'],['flt','Filtro'],['drv','Drive'],['rev','Reverb'],['dly','Delay']];
 const KD=[['dc','Caída'],['tn','Tono'],['flt','Filtro'],['drv','Drive'],['rev','Reverb'],['dly','Delay']];
 const KS=[['dc','Largo'],['br','Brillo'],['gl','Glide'],['flt','Filtro'],['drv','Drive'],['rev','Reverb'],['dly','Delay']];
-function renderCanal(){const c=C[S.ch],sub=MEL(S.ch);
+/* kits de sonido (6 baterías) y presets melódicos: solo mueven los mandos de Canal */
+const KITS=[['Original',[[.5,.5,1,0,0,0],[.5,.5,1,0,.2,0],[.5,.5,1,0,.3,0],[.5,.5,1,0,0,0],[.5,.5,1,0,.15,.3],[.5,.5,1,0,0,0]]],
+  ['808',[[.85,.3,1,.15,0,0],[.45,.45,1,.1,.2,0],[.5,.5,1,.05,.3,0],[.25,.6,1,0,0,0],[.5,.6,1,0,.1,.1],[.7,.35,1,.1,0,0]]],
+  ['909',[[.5,.5,1,.35,0,0],[.4,.6,1,.2,.15,0],[.4,.55,1,.15,.25,0],[.2,.7,1,0,0,0],[.45,.65,1,0,.1,.1],[.5,.5,1,.15,0,0]]],
+  ['Lo-fi',[[.45,.4,.6,.3,0,0],[.5,.4,.5,.3,.25,0],[.5,.4,.5,.25,.3,.1],[.3,.4,.45,.2,0,0],[.5,.35,.45,.2,.15,.2],[.55,.35,.55,.25,.1,0]]],
+  ['Seco',[[.22,.5,1,.1,0,0],[.2,.55,1,.1,0,0],[.2,.5,1,.05,.05,0],[.12,.6,1,0,0,0],[.25,.6,1,0,0,0],[.25,.5,1,.05,0,0]]],
+  ['Techno',[[.6,.45,1,.55,0,0],[.35,.65,1,.3,.1,0],[.35,.6,1,.25,.2,.1],[.15,.8,1,.1,0,0],[.4,.75,1,.15,.1,.2],[.45,.55,1,.3,0,0]]]];
+const KP=['dc','tn','flt','drv','rev','dly'];
+const PRE={[SUBI]:[['Sub sine',{w:'sine',dc:.6,br:.2,gl:0,flt:1,drv:0}],['Saw sucio',{w:'sawtooth',dc:.5,br:.6,gl:0,flt:.6,drv:.35}],['Pluck',{w:'triangle',dc:.25,br:.5,gl:0,flt:1,drv:.1}],['808 largo',{w:'sine',dc:.9,br:.15,gl:.4,flt:1,drv:.2}],['Glide',{w:'square',dc:.55,br:.4,gl:.8,flt:.7,drv:.2}]],
+  [ACI]:[['Clásico',{w:'sawtooth',tn:.35,br:.6,gl:.5,dc:.35,flt:1,drv:.2}],['Squelch',{w:'square',tn:.3,br:.8,gl:.7,dc:.25,flt:1,drv:.3}],['Suave',{w:'sawtooth',tn:.5,br:.3,gl:.3,dc:.5,flt:1,drv:0}],['Duro',{w:'sawtooth',tn:.45,br:.5,gl:.8,dc:.2,flt:1,drv:.6}]],
+  [STI]:[['Rave',{tn:.6,dc:.35,br:.4,flt:1,drv:.1,rev:.3,dly:.25}],['Seco corto',{tn:.5,dc:.15,br:.2,rev:.1,dly:0}],['Pad largo',{tn:.35,dc:.9,br:.5,rev:.5,dly:.2}],['Dub',{tn:.4,dc:.5,br:.3,rev:.3,dly:.4}]]};
+function renderPresets(){const sub=MEL(S.ch),list=sub?PRE[S.ch]:KITS;
+  $('#presetT').textContent=sub?'Presets · '+CH[S.ch][1]:'Kits de sonido';$('#presetN').textContent=sub?'este canal':'6 baterías';
+  $('#presetRow').innerHTML=list.map((x,i)=>`<button type="button" class="pre" data-i="${i}">${x[0]}</button>`).join('');
+  $('#presetNote').textContent=sub?'Cambia onda, filtro y envolvente de este canal. Ajusta a tu gusto con los mandos.':'Cambia tono, caída, filtro, drive y envíos de las 6 baterías a la vez. "Original" lo deja como al principio.'}
+$('#presetRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if(!b)return;const i=+b.dataset.i,ch=S.ch;
+  if(MEL(ch)){const [n,o]=PRE[ch][i];Object.keys(o).forEach(k=>{if(k==='w'){if(ch===ACI)S.awave=o.w;else S.wave=o.w}else C[ch][k]=o[k]});flash('PRESET: '+n.toUpperCase())}
+  else{const [n,v]=KITS[i];v.forEach((r,d)=>KP.forEach((k,j)=>{C[d][k]=r[j]}));flash('KIT: '+n.toUpperCase())}
+  applyAll();queueWarm();renderCanal();audition();save()});
+function renderCanal(){const c=C[S.ch],sub=MEL(S.ch);renderPresets();
   $('#canT').textContent='Canal · '+CH[S.ch][1];$('#canKn').innerHTML=(S.ch===ACI?KA:S.ch===STI?KB:sub?KS:KD).map(([k,l])=>kn('c_'+k,l,c[k])).join('');
   const sc=$('#scTog');sc.hidden=S.ch===0;sc.setAttribute('aria-pressed',!!c.sc);$('#subx').hidden=!sub;$('#smpx').hidden=sub;$('#smpN').textContent=(!sub&&SMPN[S.ch])||'Sintetizado';$('#smpX').disabled=sub||!SMP[S.ch];
   const wv=S.ch===ACI?S.awave:S.wave;$('#waves').hidden=S.ch===STI;$$('#waves button').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.w===wv);b.hidden=S.ch===ACI&&(b.dataset.w==='sine'||b.dataset.w==='triangle')});

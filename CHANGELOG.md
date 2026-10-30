@@ -83,3 +83,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - En modo canción/cadena, los pasos 17–32 de ACID se leen del patrón que suena en los compases pares.
 - Probado: migración de guardado antiguo, edición en la página 2, reproducción, código PS1 (crear e importar), sin errores de consola.
 - Para revertir: git revert del commit v2.7.
+
+## v2.8 (2026-10-30) — Claude
+- Kits de sonido listos en Canal (con una batería elegida): Original, 808, 909, Lo-fi, Seco, Techno. Cada kit mueve tono, caída, filtro, drive, reverb y delay de las 6 baterías a la vez. `Original` los devuelve a los valores iniciales.
+- Presets por canal melódico (al elegir SUB, ACID o STAB): SUB (Sub sine, Saw sucio, Pluck, 808 largo, Glide), ACID (Clásico, Squelch, Suave, Duro), STAB (Rave, Seco corto, Pad largo, Dub). Cambian onda y mandos de ese canal.
+- No cambia el motor de audio ni el formato de guardado: solo mueve mandos que ya existían.
+- Valores elegidos sin escucharlos en un móvil: ajústalos a oído.
+- Probado: aplicar kits y presets, mandos y guardado se actualizan, sin errores de consola.
+- Para revertir: git revert del commit v2.8.

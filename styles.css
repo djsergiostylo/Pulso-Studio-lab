@@ -487,3 +487,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 }
 
 @media (min-width:700px){.wrap{max-width:760px}:root[data-stage] .wrap{max-width:900px}.tabs{max-width:760px}}
+/* v2.8: presets de sonido */
+.presets{display:flex;flex-wrap:wrap;gap:6px}
+.pre{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--keyedge);background:var(--key);color:var(--fg);font-family:var(--disp);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+.pre:active{background:var(--on);color:var(--onfg)}
