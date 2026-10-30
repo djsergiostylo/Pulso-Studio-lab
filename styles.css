@@ -576,3 +576,12 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #chipsCan .m,#chipsCan .s{display:none}
 #smpx>summary,#kitCard>summary{cursor:pointer;list-style:none}
 #smpx[open],#kitCard[open]{display:flex;flex-direction:column;gap:10px}
+
+/* v2.19: Pads y Proyecto en bloques */
+.pads{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;background:var(--pnl);border:1px solid var(--pedge);border-top:2px solid #ff9f43;border-radius:10px;padding:8px}
+.pads::before{content:"Pads · toca en directo";grid-column:1/-1;display:block;border-left:3px solid #ff9f43;padding-left:6px;margin-bottom:2px;font-family:var(--disp);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pttl);line-height:1}
+.pads .pad:nth-child(-n+6){grid-column:span 4;aspect-ratio:1.25}
+.pads .pad:nth-child(n+7){grid-column:span 3;aspect-ratio:1}
+#skinCard{--bc:#4de0c8}#saveCard{--bc:#ffd24d}#shareCard{--bc:#ff6ad5}#reccard{--bc:#a98bff}
+#t-file .card{border-top:2px solid var(--bc)}
+#skins{gap:6px}.card #skins .sk{min-height:36px;padding:6px 9px;font-size:10px}.card #skins .sk::before{margin-right:6px;width:10px;height:10px}

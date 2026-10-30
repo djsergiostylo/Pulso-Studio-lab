@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.18">v2.18</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.19">v2.19</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -139,32 +139,28 @@
       <div class="card" id="skinCard">
         <h3>Carátula</h3>
         <div class="skins"><div id="skins" role="group" aria-label="Carátula"></div></div>
-        <p class="note">Cambia los colores y el aspecto de todo el aparato. Se guarda en este móvil. El estilo Hardware (con tornillos) está en ⚙ Aspecto · Estilo · Ayuda.</p>
+        <p class="note">Cambia los colores de todo el aparato. El estilo Hardware (con tornillos) está en ⚙ Aspecto · Estilo · Ayuda.</p>
       </div>
-      <div class="card">
+      <div class="card" id="saveCard">
         <h3>Guardar en este móvil</h3>
         <div class="saverow"><input id="pname" type="text" maxlength="40" placeholder="Nombre del proyecto" autocomplete="off"><button class="fn" id="psave">💾 Guardar</button></div>
         <p id="saveState" class="note">Se guarda automáticamente en este dispositivo.</p>
         <div class="plist" id="plist"></div>
       </div>
-      <div class="card">
-        <h3>Archivo de proyecto</h3>
+      <div class="card" id="shareCard">
+        <h3>Copias y compartir</h3>
         <div class="seg"><button id="pexp">⬇ Exportar .json</button><button id="pimp">⬆ Cargar .json</button></div>
         <input id="pfile" type="file" accept=".json,application/json" hidden>
-        <p class="note" id="dlnote">Sirve para pasar tus ritmos a otro móvil o hacer copia.</p>
-      </div>
-      <div class="card">
-        <h3>🔗 Compartir beat</h3>
-        <div class="seg"><button id="shC">Crear código</button><button id="shI">Importar código</button></div>
-        <textarea id="shT" rows="3" placeholder="Pega aquí un código PS1:… y pulsa Importar código" spellcheck="false" autocomplete="off"></textarea>
-        <p class="note">Crea el código, cópialo y mándalo por WhatsApp o donde quieras. Quien lo pegue aquí tendrá tu beat (sin samples propios).</p>
+        <div class="seg"><button id="shC">🔗 Crear código</button><button id="shI">Importar código</button></div>
+        <textarea id="shT" rows="2" placeholder="Pega aquí un código PS1:… y pulsa Importar código" spellcheck="false" autocomplete="off"></textarea>
+        <p class="note" id="dlnote">El .json sirve de copia o para pasar tus ritmos a otro móvil. El código PS1: se manda por WhatsApp; quien lo pegue aquí tendrá tu beat (sin samples propios).</p>
       </div>
       <div class="card" id="reccard">
         <h3>Exportar audio</h3>
         <div class="seg" id="recN" role="group" aria-label="Vueltas a grabar"><button data-n="1">1 vuelta</button><button data-n="2">2</button><button data-n="4">4</button><button data-n="8">8</button></div>
         <button class="fn" id="pwav">⬇ Exportar WAV (calidad máxima)</button>
         <button class="fn" id="prec">⏺ Grabar en tiempo real (.webm)</button>
-        <p class="note">WAV: se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz) / 16 bits. Se descarga dentro de un .zip (las páginas de Claude no dejan bajar .wav suelto): ábrelo y tendrás el .wav.</p>
+        <p class="note">El WAV se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz) y 16 bits.</p>
       </div>
     <details class="more2"><summary>⚙ Aspecto · Estilo · Ayuda</summary>
   <footer class="pie">

@@ -165,3 +165,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - **Canal**: las pestañas de canal ya no repiten M/S (están en Mix) y **Sample propio** y **Mis kits guardados** quedan plegados. De ~1360 px a ~950 px.
 - Probado: abrir/cerrar efectos, interruptor On/Off sin cerrar el acordeón, cambio de canal; sin errores.
 - Para revertir: git revert del commit v2.18.
+
+## v2.19 (2026-10-30) — Claude
+- **Pads** en un bloque con título: 6 baterías en 3×2 y los 4 sintes (Sub, Acid, Stab, Lead) en una fila de 4. Todo cabe en una pantalla sin desplazarse (antes LEAD quedaba solo en una cuarta fila).
+- **Proyecto** en bloques con color: **Carátula** (turquesa), **Guardar en este móvil** (amarillo), **Copias y compartir** (rosa; une Archivo de proyecto y Compartir beat) y **Exportar audio** (violeta). Botones de carátula más pequeños y textos más cortos.
+- Corregida la nota de Exportar audio, que decía que el WAV iba dentro de un .zip: fuera de Claude se descarga como .wav.
+- Probado: tocar un pad, guardar proyecto, crear e importar código; sin errores.
+- Para revertir: git revert del commit v2.19.
