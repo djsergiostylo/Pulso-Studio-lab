@@ -909,7 +909,60 @@ function stab(off,t,v,ac){const p=C[STI],root=NBASE[STI]+S.root+off,sr=ctx.sampl
   if(b){const z=ctx.createBufferSource();z.buffer=b;z.connect(d);reg(d,z);z.start(t);return}
   stabG(ctx,d,t,root,ac,p,o=>reg(d,o));stabRender(key,root,ac,p,sr)}
 /* warm the stab cache for every chord the patterns use */
-function warmStab(sr){const p=C[STI],seen=new Set();P.forEach(q=>q.bn.forEach((n,i)=>{if(n<0)return;const ac=!!q.ac[STI][i],root=NBASE[STI]+S.root+n,k=sKey(root,ac,p,sr);if(!seen.has(k)&&!SVC.has(k)){seen.add(k);som({length:16},(_,i)=>`<button class="step${i%4===0?' beat':''}" data-c="${ch}" data-s="${i}" aria-label="${c[0]} paso ${i+1}"><span class="n">${i+1}</span><span class="v"></span><span class="x"></span></button>`).join('')}</div></div>`).join('');
+function warmStab(sr){const p=C[STI],seen=new Set();P.forEach(q=>q.bn.forEach((n,i)=>{if(n<0)return;const ac=!!q.ac[STI][i],root=NBASE[STI]+S.root+n,k=sKey(root,ac,p,sr);if(!seen.has(k)&&!SVC.has(k)){seen.add(k);stabRender(k,root,ac,p,sr)}}))}
+function mel(i,off,t,v,ac,sl){if(i===SUBI)sub(off,t,v,ac);else if(i===ACI)acid(off,t,v,ac,sl);else stab(off,t,v,ac)}
+/* smooth sidechain: ~3 ms dip, exponential recovery (no clicks) */
+function duck(t){const any=C.some(x=>x.solo);if(!S.sc.on||C[0].mute||(any&&!C[0].solo))return;C.forEach((p,i)=>{if(!p.sc||i===0)return;const g=chs[i].dk.gain;
+  if(g.cancelAndHoldAtTime)g.cancelAndHoldAtTime(t);else g.cancelScheduledValues(t);
+  g.setTargetAtTime(1-S.sc.amt,t,.001+S.sc.att*.03);g.setTargetAtTime(1,t+.015,(.04+S.sc.rel*.45)/3)})}
+function audition(vv){if(!S.aud||!ensure())return;const t=ctx.currentTime+.005;vv=vv||VEL[2];if(S.ch<SUBI)drum(S.ch,t,vv);else mel(S.ch,SC[S.scale][S.subSel],t,vv,vv>1,false)}
+
+/* ---------- sequencer ---------- */
+let nextT=0,cur=0,timer=null,queue=[];
+const nextPat=p=>{for(let k=1;k<=4;k++){const j=(p+k)%4;if(S.chainSet[j])return j}return p};
+function playStep(g,t,pi,spb){spb=spb||60/S.bpm/4;const p=P[pi],hum=S.hum||0;let h=0;
+  for(let i=0;i<NCH;i++){const c=C[i],st=g%c.len;let note=0;const vl=velAt(p,i,st);if(i>=SUBI)note=p[NK[i]][st];
+    if(!vl||Math.random()>c.prob)continue;
+    const ac=p.ac[i][st],rt=p.rt[i][st]||1;let t0=t+(p.nd[i][st]||0)*spb/8,v=VEL[vl]*(ac?1.3:1);
+    if(hum){t0+=(Math.random()*2-1)*hum*.012;v*=1+(Math.random()*2-1)*hum*.22}
+    for(let r=0;r<rt;r++){const tr=t0+r*spb/rt,vr=v*(r?1-.1*r:1);if(i<SUBI){drum(i,tr,vr);if(i===0)duck(tr)}else mel(i,note,tr,vr,!!ac,i===ACI&&!r&&!!p.asl[st])}
+    h|=1<<i}
+  return h}
+function sched(g,t){const h=S.playPat>=0?playStep(g,t,S.playPat):0;queue.push({g,t,pp:S.playPat,h,b:S.song.on?Math.floor(g/16)%S.song.len:-1});if(queue.length>96)queue.splice(0,queue.length-96)}
+function tick(){const spb=60/S.bpm/4;if(nextT<ctx.currentTime-.05)nextT=ctx.currentTime+.03;
+  while(nextT<ctx.currentTime+.2){
+    S.playPat=patFor(cur,S.playPat);if(S.song.on&&cur%16===0)lanesAt(Math.floor(cur/16)%S.song.len,nextT);
+    sched(cur,nextT+((cur%2)?S.swing*spb*.4:0));nextT+=spb;cur++}}
+function patFor(g,pp){if(S.song.on)return S.song.bars[Math.floor(g/16)%S.song.len];if(S.chain){if(g%16===0)return g===0?(S.chainSet[S.pat]?S.pat:nextPat(S.pat)):nextPat(pp);return pp}return S.pat}
+/* audio lanes: bar-synced playback, rate-stretched to tempo */
+const LB={a1:null,a2:null},LN={a1:'',a2:''},liveSrc=new Set();
+function lanesAt(bar,t,x){x=x||ctx;['a1','a2'].forEach(id=>{const L=S.lanes[id],b=LB[id];if(!b||!L.on[bar])return;const bo=60/L.bpm*4,off=(bar%L.loop)*bo;if(off>=b.duration)return;
+  const s=x.createBufferSource();s.buffer=b;s.playbackRate.value=S.bpm/L.bpm;s.connect(M.lg[id]);s.start(t,off);s.stop(t+60/S.bpm*4+.005);if(x===LIVE){liveSrc.add(s);s.onended=()=>liveSrc.delete(s)}})}
+function audioWatch(){const c=ctx,t0=c.currentTime,w0=performance.now();setTimeout(()=>{if(ctx!==c||!S.play)return;const dt=(c.currentTime-t0)*1000,dw=performance.now()-w0;if(c.state!=='running'||dt<dw*.5){flash('SIN AUDIO: REVISA SALIDA DE SONIDO');setTimeout(()=>flash(c.state+' · '+c.sampleRate+' Hz'),1700)}},1500)}
+function start(){if(!ensure())return;audioWatch();cur=0;lastF=0;lastAF=0;queue=[];S.pp=S.pat;nextT=ctx.currentTime+.06;S.play=true;if(wk)wk.postMessage(25);else timer=setInterval(tick,25);tick();kick();upd()}
+function stop(){if(wk)wk.postMessage(0);clearInterval(timer);timer=null;S.play=false;queue=[];liveSrc.forEach(s=>{try{s.stop()}catch(e){}});liveSrc.clear();if(ctx&&acV)choke(acV,ctx.currentTime);if(ctx&&subV)choke(subV,ctx.currentTime);if(ctx&&ctx._pend){ctx._pend=0;setTimeout(()=>{if(!S.play){swapCr();swapLim()}},120)}upd();if(S.tab==='song')paintSongPH()}
+let wk=null;try{wk=new Worker(URL.createObjectURL(new Blob(['let t=0;onmessage=e=>{clearInterval(t);if(e.data>0)t=setInterval(()=>postMessage(0),e.data)}'],{type:'text/javascript'})));wk.onmessage=()=>{if(S.play&&ctx)tick()}}catch(e){wk=null}
+
+/* ---------- ui loop + meters ---------- */
+let looping=false,lastHv=0;const lv=new Array(NCH+1).fill(0),mb=new Uint8Array(256);
+const peak=a=>{a.getByteTimeDomainData(mb);let m=0;for(let i=0;i<256;i++){const x=Math.abs(mb[i]-128);if(x>m)m=x}return m/128};
+let pulse=0,glowOn=false,chipsLit=false,glowEl=null,rnLed=[],chipLed=[],mtEl=[];const fl=new Array(NCH).fill(0),RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function loop(){const now=ctx?ctx.currentTime:0;
+  while(queue.length&&queue[0].t<=now){const q=queue.shift();S.g=q.g;S.gt=q.t;S.pp=q.pp;if(q.b!==S.bar){S.bar=q.b;if(S.tab==='song')paintSongPH()}if(!RM){if(q.h&1)pulse=1;for(let i=0;i<NCH;i++)if(q.h>>i&1)fl[i]=1}ph()}
+  if(pulse||glowOn){pulse*=.86;if(pulse<.02)pulse=0;glowEl.style.opacity=(pulse*.55).toFixed(2);glowOn=!!pulse}
+  let lit=false;for(let i=0;i<NCH;i++){fl[i]*=.8;if(fl[i]<.01)fl[i]=0;if(fl[i])lit=true}
+  if(lit||chipsLit){const vis=S.tab==='canal',pv=S.tab==='pads';for(let i=0;i<NCH;i++){const o=fl[i].toFixed(2);if(rnLed[i])rnLed[i].style.opacity=o;if(vis&&chipLed[i])chipLed[i].style.opacity=o;if(pv&&padEl[i])padEl[i].style.opacity=o}}chipsLit=lit;
+  const tN=performance.now(),hv=tN-lastHv>=32;if(hv){lastHv=tN;drawLcd()}
+  if(hv&&S.tab==='mix'&&ctx){for(let i=0;i<=NCH;i++){const pk=peak(i<NCH?chs[i].ana:M.ana);lv[i]=Math.max(pk,lv[i]*.78);const h=Math.min(100,Math.pow(lv[i],.6)*100)/100;if(mtEl[i]&&Math.abs(h-(mtEl[i]._h||0))>.004){mtEl[i]._h=h;mtEl[i].style.transform='scaleY('+h.toFixed(3)+')'}}}
+  if(hv&&S.tab==='eq'&&ctx)drawEq();
+  if(hv&&S.tab==='fx'&&ctx)drawFxLive();
+  if(S.play||S.tab==='mix'||(S.tab==='eq'&&ctx)||(S.tab==='fx'&&ctx)||(S.lcdv!=='info'&&ctx)||pulse||chipsLit)requestAnimationFrame(loop);else looping=false}
+function kick(){if(!looping){looping=true;requestAnimationFrame(loop)}}
+
+/* ---------- views ---------- */
+const grid=$('#grid'),rows=[];
+grid.innerHTML=CH.map((c,ch)=>`<div class="trk" id="trk${ch}" style="--c:${CHC[ch]}"><div class="rh"><button class="rn" data-i="${ch}"><b class="led"></b>${c[1]}</button><span class="ri" id="ri${ch}"></span><div class="seg ms"><button class="m" data-i="${ch}" aria-label="Mute ${c[0]}">M</button><button class="s" data-i="${ch}" aria-label="Solo ${c[0]}">S</button></div></div>`+
+  `<div class="cells">${Array.from({length:16},(_,i)=>`<button class="step${i%4===0?' beat':''}" data-c="${ch}" data-s="${i}" aria-label="${c[0]} paso ${i+1}"><span class="n">${i+1}</span><span class="v"></span><span class="x"></span></button>`).join('')}</div></div>`).join('');
 CH.forEach((_,ch)=>rows.push($$('#trk'+ch+' .step')));
 const trkEl=CH.map((_,ch)=>$('#trk'+ch)),riEl=CH.map((_,ch)=>$('#ri'+ch)),trM=trkEl.map(t=>t.querySelector('.m')),trS=trkEl.map(t=>t.querySelector('.s')),cN=rows.map(r=>r.map(b=>b.querySelector('.n'))),cV=rows.map(r=>r.map(b=>b.querySelector('.v'))),cX=rows.map(r=>r.map(b=>b.querySelector('.x')));
 glowEl=document.createElement('div');glowEl.className='glow';grid.prepend(glowEl);rnLed=$$('.rn .led',grid);
