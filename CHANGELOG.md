@@ -74,5 +74,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Verificadas v2.4 y v2.5 en navegador (400 px): sin errores de consola, pestañas, subpestañas, reproducción, pads y vibración funcionan.
 - Canción: al mantener pulsada una casilla de patrón se abre ese patrón en el secuenciador (pendiente heredado de v1.2). Un toque corto sigue cambiando A→B→C→D→vacío.
 - Deshacer ya tenía 100 pasos y rehacer; no requiere cambios.
-- Pendiente: ACID de 32 pasos (cambia el formato de datos; requiere migración en fixP).
 - Para revertir: git revert del commit v2.6.
+
+## v2.7 (2026-10-30) — Claude
+- ACID de 32 pasos: en Más herramientas, LEN sube hasta 32 solo para ACID (tocar LEN alterna 16/32). Aparece el selector Pasos 1–16 / 17–32 sobre la rejilla.
+- Datos: todas las filas guardan ahora 32 pasos. Los proyectos, guardados y códigos PS1 antiguos de 16 pasos se amplían solos (fixP) y siguen funcionando.
+- Aleatorio, Euclídeo y copiar/pegar pista respetan el largo de 32.
+- En modo canción/cadena, los pasos 17–32 de ACID se leen del patrón que suena en los compases pares.
+- Probado: migración de guardado antiguo, edición en la página 2, reproducción, código PS1 (crear e importar), sin errores de consola.
+- Para revertir: git revert del commit v2.7.
