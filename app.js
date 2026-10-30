@@ -354,14 +354,15 @@ function finishPaint(e){const s=paint;if(!s||s.id!==e.pointerId)return;clearTime
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>grid.addEventListener(ev,finishPaint));
 grid.addEventListener('contextmenu',e=>{if(e.target.closest('.step'))e.preventDefault()});
 grid.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.classList.contains('step')){if(suppressPaintClick){suppressPaintClick=false;return}if(lpDone){lpDone=false;return}hit(+b.dataset.c,+b.dataset.s);return}
+  if(b.classList.contains('step')){if(suppressPaintClick){suppressPaintClick=false;return}if(lpDone){lpDone=false;return}haptic();hit(+b.dataset.c,+b.dataset.s);return}
   const i=+b.dataset.i;if(b.classList.contains('m'))toggleMS(i,'m');else if(b.classList.contains('s'))toggleMS(i,'s');else if(b.classList.contains('rn'))selectCh(i)});const focusPages=$('#focusPages'),focusPageButtons=$$('#focusPages button');
 const setFocusPage=page=>{grid.dataset.page=String(page);focusPageButtons.forEach((b,i)=>b.setAttribute('aria-pressed',i===page))};
 $('#focB').addEventListener('click',e=>{const on=grid.classList.toggle('focus');e.currentTarget.setAttribute('aria-pressed',on);focusPages.hidden=!on;dragHint.hidden=!on||S.em!=='step';if(on){setFocusPage(0);e.currentTarget.textContent='🔍 Vista táctil activa'}else{delete grid.dataset.page;e.currentTarget.textContent='🔍 Vista táctil'}});
 focusPageButtons.forEach(b=>b.addEventListener('click',()=>setFocusPage(+b.dataset.page)));
 function setCh(ch){if(S.ch!==ch){const m=MEL(S.ch)!==MEL(ch)||MEL(ch);S.ch=ch;renderChips();updSteppers();renderCanal();if(m)renderNotes()}}
 const clrX=(p,ch,i)=>{p.ac[ch][i]=0;p.rt[ch][i]=1;p.nd[ch][i]=0},NDC=[0,1,2,-2,-1];
-function hit(ch,i){setCh(ch);const p=P[S.pat],on=velAt(p,ch,i)>0;
+function haptic(){try{if(navigator.vibrate)navigator.vibrate(8)}catch(e){}}
+function hit(ch,i){haptic();setCh(ch);const p=P[S.pat],on=velAt(p,ch,i)>0;
   if(S.em==='sl'&&on){if(ch!==ACI){flash('SLIDE: SOLO ACID');return}snap();p.asl[i]=p.asl[i]?0:1;audition();updGrid();save();return}
   if((S.em==='acc'||S.em==='rt'||S.em==='nd')&&on){snap();if(S.em==='acc')p.ac[ch][i]=p.ac[ch][i]?0:1;else if(S.em==='rt')p.rt[ch][i]=p.rt[ch][i]%4+1;else p.nd[ch][i]=NDC[(NDC.indexOf(p.nd[ch][i])+1)%5];
     audition(p.ac[ch][i]?VEL[2]*1.3:VEL[2]);updGrid();save();return}
@@ -940,7 +941,7 @@ function padRecord(ch,off){if(!padRec||!S.play||!ctx||S.gt==null)return;const sp
   const pi=S.pp>=0?S.pp:S.pat,p=P[pi],st=((g%16)+16)%16;
   if(ch<SUBI)p.d[ch][st]=Math.max(p.d[ch][st],2);else{p[NK[ch]][st]=off;p[VK[ch]][st]=2}p.nd[ch][st]=nd;
   if(pi===S.pat){updGrid();renderChips()}saveSoon()}
-$('#pads').addEventListener('pointerdown',e=>{const b=e.target.closest('.pad');if(!b)return;e.preventDefault();if(!ensure())return;const t=ctx.currentTime+.003;
+$('#pads').addEventListener('pointerdown',e=>{const b=e.target.closest('.pad');if(!b)return;e.preventDefault();if(!ensure())return;haptic();const t=ctx.currentTime+.003;
   b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),110);
   if(b.dataset.k!=null){const k=+b.dataset.k,m=melCh(),off=SC[S.scale][k];S.subSel=k;mel(m,off,t,VEL[3],false,false);padRecord(m,off);$$('#pads .pad').forEach(x=>x.setAttribute('aria-pressed',x===b));renderNotes();return}
   const i=+b.dataset.i;if(S.ch!==i){setCh(i);$$('#pads .pad').forEach(x=>x.setAttribute('aria-pressed',x===b))}
