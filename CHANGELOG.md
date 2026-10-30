@@ -65,3 +65,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.4 (2026-10-30)
 - Separa la estructura HTML, los estilos y la lógica JavaScript en archivos independientes. La versión archivada conserva el documento autónomo.
 - Sin cambios intencionales en funciones ni en el motor de audio. Comprobación funcional pendiente para una sesión posterior.
+
+## v2.5 (2026-10-30)
+- Añade una vibración breve al tocar pasos y pads en dispositivos que admiten la API háptica del navegador.
+- Sin cambios intencionales en el motor de audio. Comprobación funcional pendiente para una sesión posterior.
