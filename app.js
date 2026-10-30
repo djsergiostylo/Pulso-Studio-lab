@@ -6,7 +6,7 @@ const NCH=CH.length,ACI=7,STI=8,LEI=9,NK={6:'s',7:'an',8:'bn',9:'cn'},VK={6:'sv'
 const SUBI=6,VEL=[0,.45,.75,1];
 const SC={'Pent. menor':[0,3,5,7,10,12,15,17],'Menor':[0,2,3,5,7,8,10,12],'Mayor':[0,2,4,5,7,9,11,12],'Cromática':[0,1,2,3,4,5,6,7]};
 const NN=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-const SKINS=[['neon','Neon'],['auto','Auto'],['dark','Oscuro'],['light','Claro'],['orange','Naranja'],['sub','Violeta'],['green','Verde']];
+const SKINS=[['neon','Neón','#0b1220','#3ee6d0'],['orange','Naranja','#ff6a13','#1f1f22'],['plata','Plata 303','#c9ccd1','#ff7a1a'],['mpc','Gris MPC','#5d6066','#e5413a'],['papel','Papel','#f3f1ea','#e2492f'],['auto','Auto','#888888','#888888'],['dark','Oscuro','#16191d','#22d3ee'],['light','Claro','#f4f5f3','#ff5a1f'],['sub','Violeta','#170a26','#b26bff'],['green','Verde','#0c1811','#46ff9c']];
 const DIVS=[['1/16',1],['1/8',2],['1/8.',3],['1/4',4]];
 const CHC=['#ff764d','#ffd24d','#b6e35a','#4de0c8','#4db8ff','#a98bff','#ff6ad5','#a6f03d','#c58bff','#ffb347'];
 const MEL=i=>i>=SUBI,melCh=()=>MEL(S.ch)?S.ch:SUBI;
@@ -698,7 +698,7 @@ document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset
 /* ---------- skins ---------- */
 function skin(n){S.skin=n;if(n==='auto')document.documentElement.removeAttribute('data-skin');else document.documentElement.setAttribute('data-skin',n);
   $$('#skins button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===n));eqCol=null;fxCol=null;if(S.tab==='fx')FXDEF.forEach(d=>drawFxG(d.id));readCols();drawLcd()}
-SKINS.forEach(s=>{const b=document.createElement('button');b.className='sk';b.dataset.k=s[0];b.textContent=s[1];b.addEventListener('click',()=>{skin(s[0]);save()});$('#skins').appendChild(b)});
+SKINS.forEach(s=>{const b=document.createElement('button');b.className='sk';b.dataset.k=s[0];b.textContent=s[1];b.style.setProperty('--cs',s[2]);b.style.setProperty('--ca',s[3]);b.addEventListener('click',()=>{skin(s[0]);save()});$('#skins').appendChild(b)});
 
 /* ---------- visuals, style, stage, undo, iOS ---------- */
 const cv=$('#scope'),cx=cv.getContext('2d'),tb=new Uint8Array(2048),fbin=new Uint8Array(1024),cols={fg:'#43e3f2',led:'#22d3ee',font:'monospace'};

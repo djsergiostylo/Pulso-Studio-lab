@@ -125,3 +125,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Verificado también: el export WAV completo funciona con LEAD, capas y las 4 pistas de audio (6 MB, sin errores).
 - Probado con eventos simulados; en móvil real hay que comprobar que el navegador no se queda el gesto (se pidió touch-action: pan-y en el LCD).
 - Para revertir: git revert del commit v2.13.
+
+## v2.14 (2026-10-30) — Claude
+- Módulos separados: transporte, secuenciador, selector de patrón, tarjetas y mezclador son ahora paneles con borde y relieve, con título en serigrafía (marca de color a la izquierda). Teclas del transporte con relieve; Play en color de acento.
+- Carátulas: 10 aspectos cambiables. Nuevas: **Plata 303**, **Gris MPC** y **Papel**; retocadas Neón y Naranja. Siguen Auto, Oscuro, Claro, Violeta y Verde.
+- El selector de carátula pasa a la pestaña 💾 Proyecto (tarjeta **Carátula**, con muestra de color), ya no está escondido abajo. El estilo Hardware (con tornillos) sigue en ⚙ Aspecto · Estilo · Ayuda.
+- Solo CSS y 2 líneas de JS (~3 KB). No cambia el audio ni el formato de guardado.
+- Probado a 390 px con Plata, MPC y Papel; sin errores. Los nombres de pista se aclararon para que se lean sobre fondos grises.
+- Para revertir: git revert del commit v2.14.
