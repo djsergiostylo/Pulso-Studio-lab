@@ -53,4 +53,5 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Añade herramientas táctiles para copiar, mover y repetir compases del arreglo, incluyendo los patrones asignados y la activación de las dos pistas de audio.
 - Incluye deshacer específico para la última edición de compases.
 - El apartado Proyecto muestra cuándo se han guardado los cambios y avisa si hay cambios pendientes o no se pudo guardar en este dispositivo.
+- Repara el marcador del estado de guardado para conservar el listado de proyectos y la inicialización del resto de controles.
 - Sin cambios en el motor de audio.
