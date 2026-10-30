@@ -20,3 +20,7 @@ Desde aquí cada cambio es un commit con etiqueta (c01, c02…). Revertir uno: `
 
 Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibración, 3) kits/presets de sonido, 4) más pistas y capas, 5) separar el código en archivos.
 
+## v1.5 (2026-10-30)
+- Añade Vista táctil para ampliar una pista y editar 8 pasos por página (1–8 / 9–16).
+- Conserva las 9 pistas y el modo de 16 pasos; amplía el ancho disponible en pantallas grandes.
+- Solo cambian la interfaz y los estilos; motor de audio intacto.
