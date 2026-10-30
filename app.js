@@ -28,13 +28,13 @@ const EQD={};EQB.forEach(b=>{EQD[b.g]=0;EQD[b.f]=b.df});
 const gv=(o,k,d)=>o[k]==null?d:o[k];
 const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.4,lo:0},EQD);
 
-const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.55,rel:.3,att:.1},
+const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.85,rel:.55,att:.1},
   cho:{on:false,mode:'cho',rate:.35,depth:.5,fb:.3,mix:.4},flt:{on:false,type:'lowpass',freq:.55,res:.3,div:3,depth:.5,shape:'sine'},cr:{on:false,bits:.45,down:.25,mix:.5},cmp:{on:false,thr:.6,ratio:.25,att:.15,rel:.3,mk:.2}};
 const SONGD={on:false,len:16,bars:[0,0,1,1,0,0,1,1,2,2,3,3,2,2,3,3].concat(new Array(16).fill(-1))},LANED=()=>({bpm:120,loop:4,vol:.8,on:new Array(32).fill(0)});
-const S={lat:'balanced',lights:false,snd:'canal',dockOpen:false,dockH:0,awave:'sawtooth',lwave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED(),a3:LANED(),a4:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:110,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
-  swing:0,mdrive:.1,mcut:1,mvol:.8,lim:.3,rev:{on:true,size:.4,mix:.3},dly:{on:true,div:2,fb:.4,mix:.25},sc:{on:true,amt:.55,rel:.3},skin:'neon',style:'abl',lcdv:'info',stage:false,ui3:false,meq:Object.assign({},EQD)};
+const S={scv:0,lat:'balanced',lights:false,snd:'canal',dockOpen:false,dockH:0,awave:'sawtooth',lwave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED(),a3:LANED(),a4:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:110,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
+  swing:0,mdrive:.1,mcut:1,mvol:.8,lim:.3,rev:{on:true,size:.4,mix:.3},dly:{on:true,div:2,fb:.4,mix:.25},sc:{on:true,amt:.85,rel:.55},skin:'neon',style:'abl',lcdv:'info',stage:false,ui3:false,meq:Object.assign({},EQD)};
 const EQSTYLE=[[[21.6093,0,"hp",48,1.09],[13918.629,0,"bell",24,1.09]],[[71.646,0,"hp",24,1.09],[226.707,-9.5,"bell",24,1.09],[7584.727,-5.5,"bell",24,.1964],[17716.707,0,"lp",24,1.09]],[[529.551,0,"hp",24,1.09]],[[7584.727,0,"hp",24,1.09]],[[2359.98,0,"hp",24,1.09]],[[52.072,0,"hp",24,1.09]],[[145.476,0,"lp",24,1.09]],[],[],[]].map(a=>a.map(([f,g,t,s,q])=>({on:1,f,g,t,s,q})));
-const CHDEF=i=>Object.assign({},DEF,{eqb:EQSTYLE[i].map(b=>({...b}))},i===SUBI?{vol:.85,sc:1}:i===ACI?{vol:.62,sc:1,tn:.35,br:.6,gl:.5,dc:.35,dly:.15}:i===STI?{vol:.5,sc:1,tn:.5,br:.4,dc:.35,rev:.3,dly:.25}:i===LEI?{vol:.5,tn:.55,br:.35,gl:.2,dc:.4,rev:.2,dly:.25}:{});
+const CHDEF=i=>Object.assign({},DEF,{eqb:EQSTYLE[i].map(b=>({...b}))},i===SUBI?{vol:.72,sc:1}:i===ACI?{vol:.55,sc:1,tn:.35,br:.6,gl:.5,dc:.35,dly:.15}:i===STI?{vol:.5,sc:1,tn:.5,br:.4,dc:.35,rev:.3,dly:.25}:i===LEI?{vol:.5,tn:.55,br:.35,gl:.2,dc:.4,rev:.2,dly:.25}:{});
 let C=CH.map((_,i)=>CHDEF(i));
 C[1].rev=.2;C[2].rev=.3;C[4].dly=.3;C[4].rev=.15;
 let P=[mk(),mk(),mk(),mk()];
@@ -50,7 +50,7 @@ let P=[mk(),mk(),mk(),mk()];
   [[0,0],[3,0],[8,0],[11,7]].forEach(([i,o])=>{e.s[i]=o})})();
 
 /* storage: per viewer only */
-const SAVE=['lat','lights','snd','dockOpen','dockH','awave','lwave','song','lanes','hum','mres','mhp','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
+const SAVE=['scv','lat','lights','snd','dockOpen','dockH','awave','lwave','song','lanes','hum','mres','mhp','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
 function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
 /* guardar es costoso (JSON + localStorage): se agrupa en una sola escritura 400 ms después del último cambio y se fuerza al salir de la página */
 const saveNow=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}};
@@ -70,6 +70,8 @@ function fixSong(){const g=S.song||{};S.song={on:!!g.on,len:[8,16,32].includes(g
 function ok16x32(a){return Array.from({length:32},(_,i)=>{const v=a&&a[i];return typeof v==='number'&&v>=-1&&v<=3?Math.round(v):(a?-1:SONGD.bars[i])})}
 const MSX={hum:0,mres:0,mhp:0,mmid:.5,mmf:.45,mair:.5,mwid:.5};
 const mergeFx=()=>{Object.keys(FXD).forEach(k=>{S[k]=Object.assign({},FXD[k],S[k])});for(const k in MSX)if(typeof S[k]!=='number')S[k]=MSX[k]};mergeFx();
+/* v2.32: protege los graves del kick -> sidechain más profundo y largo y SUB/ACID algo más bajos (solo si siguen en su valor de fábrica) */
+if((S.scv|0)<2){if(S.sc.amt<.8)S.sc.amt=.85;if(S.sc.rel<.5)S.sc.rel=.55;if(C[6].vol===.85)C[6].vol=.72;if(C[7].vol===.62)C[7].vol=.55;S.scv=2}
 
 /* ---------- audio ---------- */
 let ctx=null,LIVE=null,noise,M={},chs=[],subV=null,ohV=null;

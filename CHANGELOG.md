@@ -257,3 +257,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Hallazgos de la medición (proyecto por defecto, cada canal en solo): Kick, Snare, SUB y ACID llegan al techo del limitador; la capa de octava/quinta apenas cambia el nivel porque el limitador la comprime; Hat y Stab quedan ~10–12 dB por debajo del pico del bombo (normal en hats; Stab algo bajo, se puede subir en Mix).
 - No he escuchado el resultado: son ajustes basados en medidas. Si algo suena fuerte o duro, baja el Master en Mix o el limitador.
 - Para revertir: git revert del commit v2.31.
+
+## v2.32 (2026-10-30) — Claude
+- **Graves del kick protegidos**: el sidechain (el kick baja a SUB, ACID y STAB) pasa de profundidad 55 % / liberación 30 % a **85 % / 55 %**: la caída es más profunda y dura más, así el kick manda los primeros ~100 ms. Se aplica también a los proyectos ya guardados.
+- Niveles de fábrica: **SUB .85 → .72** y **ACID .62 → .55**, solo si sigues con el valor de fábrica (si los has movido, no se tocan).
+- Qué medí: en el patrón por defecto, alineando bien el análisis con los golpes de bombo, el SUB queda 2,6–3,6 dB por debajo del kick justo después del golpe y la banda 30–70 Hz de la mezcla es igual a la del kick solo (63,6 frente a 63,8 dB), es decir **ahí no se tapan**. Mi primera medición estaba desalineada 0,15 s (la exportación recorta el margen inicial) y daba un resultado falso. Por eso no toco filtros ni el tono del ACID; si te pasa en tu proyecto, depende de tus notas, niveles o kit: mándame el código (Proyecto → Código) para medirlo con tu caso.
+- Comprobado en directo que el sidechain funciona: la ganancia del SUB cae a 0,03 en cada golpe del kick y vuelve en ~0,5 s con liberación alta.
+- Para revertir: git revert del commit v2.32.
