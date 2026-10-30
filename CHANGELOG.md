@@ -49,3 +49,8 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Añade una biblioteca local para guardar, aplicar y eliminar kits de batería personales con los ajustes de tono, caída, drive y las muestras cargadas en los seis canales de batería.
 - Limita los kits a 24 MB y conserva las muestras fuera del proyecto JSON. Se bloquea la aplicación del kit durante la reproducción para evitar cambios de sonido en mitad del compás.
 - El cambio no altera patrones ni modifica la estructura del motor de audio.
+## v2.2 (2026-10-30)
+- Añade herramientas táctiles para copiar, mover y repetir compases del arreglo, incluyendo los patrones asignados y la activación de las dos pistas de audio.
+- Incluye deshacer específico para la última edición de compases.
+- El apartado Proyecto muestra cuándo se han guardado los cambios y avisa si hay cambios pendientes o no se pudo guardar en este dispositivo.
+- Sin cambios en el motor de audio.
