@@ -587,3 +587,19 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #skins{gap:6px}.card #skins .sk{min-height:36px;padding:6px 9px;font-size:10px}.card #skins .sk::before{margin-right:6px;width:10px;height:10px}
 .seqview{flex-wrap:wrap}.seqview>#stepPg{margin-left:auto;display:flex;gap:6px}.seqview>button,.focus-pages>button{min-height:36px}
 .seqview>#stepPg[hidden],.seqview>#focusPages[hidden]{display:none}
+
+/* v2.22: panel Sonido fijo bajo el secuenciador */
+.sdock{position:sticky;bottom:calc(var(--nav,56px) + env(safe-area-inset-bottom,0px));z-index:7;margin-inline:-6px;background:var(--dev);border-top:2px solid var(--on);box-shadow:0 -10px 20px color-mix(in srgb,#000 38%,transparent);display:flex;flex-direction:column}
+.sdock[hidden]{display:none}
+.sdh{display:flex;align-items:center;gap:8px;padding:6px 8px}
+#sndTog{flex:0 0 auto;min-height:36px;padding:0 10px;border:1px solid var(--pedge);border-radius:8px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:10px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+#sndTog .chev{display:inline-block;transition:transform .15s}.sdock.open #sndTog .chev{transform:rotate(180deg)}
+.sdh .seg{flex:1}.sdh .seg>button{min-height:36px}
+.sdb{max-height:36dvh;overflow:auto;overscroll-behavior:contain;padding:6px 8px 12px;-webkit-overflow-scrolling:touch}
+.sdb[hidden]{display:none}
+.sdb .mg .fad{height:70px}
+.sdb .tab{gap:8px}
+:root[data-dock="open"][data-tab="seq"] .lcd,:root[data-dock="open"][data-tab="pads"] .lcd{min-height:38px;padding:3px 12px}
+:root[data-dock="open"][data-tab="seq"] .lcd .big,:root[data-dock="open"][data-tab="pads"] .lcd .big{font-size:24px}
+:root[data-dock="open"][data-tab="seq"] .lcd canvas,:root[data-dock="open"][data-tab="pads"] .lcd canvas{height:28px}
+.sdb{max-height:34dvh}

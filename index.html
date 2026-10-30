@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.21">v2.21</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.22">v2.22</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -33,14 +33,13 @@
     <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones principales">
       <button type="button" role="tab" id="tab-crear" data-g="crear" aria-selected="true" aria-controls="t-seq" tabindex="0"><i>▦</i><span>Crear</span></button>
       <button type="button" role="tab" id="tab-song" data-g="song" aria-selected="false" aria-controls="t-song" tabindex="-1"><i>♫</i><span>Canción</span></button>
-      <button type="button" role="tab" id="tab-mezcla" data-g="mezcla" aria-selected="false" aria-controls="t-mix" tabindex="-1"><i>🎚</i><span>Mezcla</span></button>
       <button type="button" role="tab" id="tab-file" data-g="file" aria-selected="false" aria-controls="t-file" aria-label="Proyecto: guardar, importar y exportar" tabindex="-1"><i>💾</i><span>Proyecto</span></button>
     </nav>
     <div class="seg subtabs" id="subs">
       <button data-t="seq" aria-pressed="true">Secuenciador</button>
       <button data-t="pads" aria-pressed="false">Pads</button>
     </div>
-    <div class="msbar" id="msBar" hidden aria-label="Master rápido"></div>
+    
 
     <section id="t-seq" class="tab">
       <div class="seqview">
@@ -98,42 +97,7 @@
       <p class="note">Modo CANCIÓN: cada compás toca el patrón que pongas (toca la casilla: A → B → C → D → vacío; mantén pulsada una casilla para abrir ese patrón y editarlo). Las pistas de audio suenan en los compases marcados y se ajustan al tempo con su BPM original.</p>
     </section>
 
-    <section id="t-mix" class="tab" hidden>
-      <div class="mix" id="mix"></div>
-      <p class="note">Arrastra el fader y el pan; al lado tienes la escala en dB. Doble toque los reinicia. Toca el nombre para abrir el canal.</p>
-    </section>
-
-    <section id="t-fx" class="tab" hidden>
-      <div class="dock" id="dock"><div class="dkm" id="dkM"></div></div>
-      <div class="fxnav" id="fxNav" role="group" aria-label="Ir a efecto"></div>
-      <div class="fxl" id="fxList"></div>
-      <p class="note">Doble toque en un control lo devuelve a su valor inicial. Reverb y Delay son envíos (súbelos por canal en Canal); el resto actúa sobre toda la mezcla.</p>
-    </section>
-
-    <section id="t-eq" class="tab" hidden>
-      <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
-      <button id="eqStyle" class="fn" type="button" aria-pressed="false">EQ BYPASS · NO</button>
-      <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
-      <div class="card">
-        <div class="hd2"><h3>Banda <span id="eqBn"></span></h3><span class="eqact"><button id="eqOn" class="eqm" aria-pressed="true">ON</button><button id="eqDel" class="eqm" aria-label="Borrar banda">🗑</button></span></div>
-        <div class="eqb" id="eqB" role="group" aria-label="Bandas de EQ"></div>
-        <div id="eqCtl">
-          <div class="seg" id="eqTy" role="group" aria-label="Tipo de banda"></div>
-          <div class="seg" id="eqSl" role="group" aria-label="Pendiente del corte" hidden></div>
-          <div class="eqk">
-            <div class="k"><label for="eq_f">Frecuencia <output id="eo_f"></output></label><input id="eq_f" type="range" min="0" max="1000" step="1"></div>
-            <div class="k" id="kg"><label for="eq_g">Ganancia <output id="eo_g"></output></label><input id="eq_g" type="range" min="-24" max="24" step="0.5"></div>
-            <div class="k" id="kq"><label for="eq_q">Q (ancho) <output id="eo_q"></output></label><input id="eq_q" type="range" min="0" max="100" step="1"></div>
-          </div>
-        </div>
-      </div>
-      <div class="seg" id="eqP" role="group" aria-label="Ajustes rápidos">
-        <button data-p="flat">Plano</button><button data-p="nosub">Sin sub</button><button data-p="nobass">Sin graves</button><button data-p="bass">+Graves</button><button data-p="mud">−Barro</button><button data-p="air">Brillo</button>
-      </div>
-      <p class="note">Hasta 8 bandas por canal, como Pro-Q: doble toque en la curva crea una banda; arrastra el punto para frecuencia y ganancia (10 Hz–24 kHz). Tipos: campana, shelf, notch y cortes de graves/agudos hasta 96 dB/oct ("Sin graves" quita todo lo de abajo). La sombra es el espectro en vivo.</p>
-    </section>
-
-    <section id="t-file" class="tab" hidden>
+<section id="t-file" class="tab" hidden>
       <div class="card" id="skinCard">
         <h3>Carátula</h3>
         <div class="skins"><div id="skins" role="group" aria-label="Carátula"></div></div>
@@ -170,7 +134,20 @@
   </details>
     </section>
 
-    <section id="t-canal" class="tab" hidden>
+<div class="sheet" id="sheet" hidden>
+      <div class="seg emode" id="emode" role="group" aria-label="Qué hace tocar un paso"><button data-m="step" aria-pressed="true">Paso</button><button data-m="acc" aria-pressed="false">Acento</button><button data-m="rt" aria-pressed="false">Redoble</button><button data-m="nd" aria-pressed="false">Nudge</button><button data-m="sl" aria-pressed="false">Slide</button><button data-m="prob" aria-pressed="false">Prob.</button><button data-m="euc" aria-pressed="false">Euclíd.</button></div>
+      <div class="modex" id="modeX" hidden>
+        <div class="seg" id="probX" hidden><button class="hd" data-k="prob" data-d="-1" aria-label="Menos probabilidad">−</button><button class="val" id="prbv">PROB 100%</button><button class="hd" data-k="prob" data-d="1" aria-label="Más probabilidad">+</button></div>
+        <div class="seg" id="euc" hidden><button class="ek" data-e="-1" aria-label="Menos golpes">−</button><button class="val" id="eucv">◎ Euclid 4</button><button class="ek" data-e="1" aria-label="Más golpes">+</button><button class="ek" data-e="r" aria-label="Rotar">↻</button></div>
+      </div>
+    </div>
+    <section id="soundDock" class="sdock" aria-label="Sonido del canal, mezcla, efectos y ecualizador" hidden>
+      <div class="sdh">
+        <button type="button" id="sndTog" aria-expanded="false" aria-controls="sndBody"><span class="chev">▴</span> Sonido · <b id="sndCh">KICK</b></button>
+        <div class="seg" id="sndTabs" role="group" aria-label="Qué editar"><button data-t="canal" aria-pressed="true">Canal</button><button data-t="mix" aria-pressed="false">Mix</button><button data-t="fx" aria-pressed="false">FX</button><button data-t="eq" aria-pressed="false">EQ</button></div>
+      </div>
+      <div class="sdb" id="sndBody" hidden>
+      <section id="t-canal" class="tab" hidden>
       <div class="chips" id="chipsCan"></div>
       <div class="card">
         <div class="hd2"><h3 id="canT">Canal · KICK</h3><button class="tg" id="scTog" aria-pressed="false">Sidechain</button></div>
@@ -213,13 +190,48 @@
         <button class="fn" id="oct" aria-pressed="true">Capa +1 octava</button>
       </div>
     </section>
-    <div class="sheet" id="sheet" hidden>
-      <div class="seg emode" id="emode" role="group" aria-label="Qué hace tocar un paso"><button data-m="step" aria-pressed="true">Paso</button><button data-m="acc" aria-pressed="false">Acento</button><button data-m="rt" aria-pressed="false">Redoble</button><button data-m="nd" aria-pressed="false">Nudge</button><button data-m="sl" aria-pressed="false">Slide</button><button data-m="prob" aria-pressed="false">Prob.</button><button data-m="euc" aria-pressed="false">Euclíd.</button></div>
-      <div class="modex" id="modeX" hidden>
-        <div class="seg" id="probX" hidden><button class="hd" data-k="prob" data-d="-1" aria-label="Menos probabilidad">−</button><button class="val" id="prbv">PROB 100%</button><button class="hd" data-k="prob" data-d="1" aria-label="Más probabilidad">+</button></div>
-        <div class="seg" id="euc" hidden><button class="ek" data-e="-1" aria-label="Menos golpes">−</button><button class="val" id="eucv">◎ Euclid 4</button><button class="ek" data-e="1" aria-label="Más golpes">+</button><button class="ek" data-e="r" aria-label="Rotar">↻</button></div>
+    
+      <section id="t-mix" class="tab" hidden>
+      <div class="mix" id="mix"></div>
+      <p class="note">Arrastra el fader y el pan; al lado tienes la escala en dB. Doble toque los reinicia. Toca el nombre para abrir el canal.</p>
+    </section>
+
+    
+      <section id="t-fx" class="tab" hidden>
+      <div class="msbar" id="msBar" aria-label="Master rápido"></div>
+      <div class="dock" id="dock"><div class="dkm" id="dkM"></div></div>
+      <div class="fxnav" id="fxNav" role="group" aria-label="Ir a efecto"></div>
+      <div class="fxl" id="fxList"></div>
+      <p class="note">Doble toque en un control lo devuelve a su valor inicial. Reverb y Delay son envíos (súbelos por canal en Canal); el resto actúa sobre toda la mezcla.</p>
+    </section>
+
+    
+      <section id="t-eq" class="tab" hidden>
+      <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
+      <button id="eqStyle" class="fn" type="button" aria-pressed="false">EQ BYPASS · NO</button>
+      <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
+      <div class="card">
+        <div class="hd2"><h3>Banda <span id="eqBn"></span></h3><span class="eqact"><button id="eqOn" class="eqm" aria-pressed="true">ON</button><button id="eqDel" class="eqm" aria-label="Borrar banda">🗑</button></span></div>
+        <div class="eqb" id="eqB" role="group" aria-label="Bandas de EQ"></div>
+        <div id="eqCtl">
+          <div class="seg" id="eqTy" role="group" aria-label="Tipo de banda"></div>
+          <div class="seg" id="eqSl" role="group" aria-label="Pendiente del corte" hidden></div>
+          <div class="eqk">
+            <div class="k"><label for="eq_f">Frecuencia <output id="eo_f"></output></label><input id="eq_f" type="range" min="0" max="1000" step="1"></div>
+            <div class="k" id="kg"><label for="eq_g">Ganancia <output id="eo_g"></output></label><input id="eq_g" type="range" min="-24" max="24" step="0.5"></div>
+            <div class="k" id="kq"><label for="eq_q">Q (ancho) <output id="eo_q"></output></label><input id="eq_q" type="range" min="0" max="100" step="1"></div>
+          </div>
+        </div>
       </div>
-    </div>
+      <div class="seg" id="eqP" role="group" aria-label="Ajustes rápidos">
+        <button data-p="flat">Plano</button><button data-p="nosub">Sin sub</button><button data-p="nobass">Sin graves</button><button data-p="bass">+Graves</button><button data-p="mud">−Barro</button><button data-p="air">Brillo</button>
+      </div>
+      <p class="note">Hasta 8 bandas por canal, como Pro-Q: doble toque en la curva crea una banda; arrastra el punto para frecuencia y ganancia (10 Hz–24 kHz). Tipos: campana, shelf, notch y cortes de graves/agudos hasta 96 dB/oct ("Sin graves" quita todo lo de abajo). La sombra es el espectro en vivo.</p>
+    </section>
+
+    
+      </div>
+    </section>
     <div class="brand foot"><b>Pulso Studio</b><em>PS-9 · groovebox</em></div>
   </section>
 

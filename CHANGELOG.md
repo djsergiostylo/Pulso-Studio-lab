@@ -184,3 +184,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Los botones quedan en "Código · 🔗 Enlace · Importar". El formato del código no cambia: los códigos antiguos siguen funcionando.
 - Probado: crear enlace, cambiar el tempo, abrir el enlace en la misma página y volver al beat original (aviso mostrado una vez, dirección limpiada, sin errores). No probado abriendo el enlace en una pestaña nueva ni con el menú de compartir real del móvil.
 - Para revertir: git revert del commit v2.21.
+
+## v2.22 (2026-10-30) — Claude
+- **Panel Sonido fijo bajo el secuenciador**: **Canal, Mix, FX y EQ** ya no están en una pestaña aparte. Viven en un panel pegado abajo, encima de la barra de pestañas, dentro de **Crear** (secuenciador y pads). Mientras editas el sonido sigues viendo el secuenciador y puedes cambiar de patrón A–D, tocar pasos, dar a Play y ver los pilotos.
+- El panel se despliega con **▴ Sonido · CANAL** y se pliega al tocarlo de nuevo; las pestañas del panel (Canal · Mix · FX · EQ) lo abren. Recuerda si estaba abierto y qué vista tenía. Al elegir un canal en la rejilla, el panel muestra ese canal; tocar el nombre de un canal en la Mix abre su Canal.
+- La barra de abajo pasa a 3 pestañas: **Crear · Canción · Proyecto** (se quita Mezcla).
+- Con el panel abierto, la pantalla LCD se compacta un poco para dejar sitio a la rejilla.
+- Datos nuevos guardados en este móvil: `snd` (vista) y `dockOpen`. No cambia el formato de proyectos, audio ni códigos.
+- Probado a 390 px: abrir/cerrar, cambiar entre Canal/Mix/FX/EQ, editar un mando de Canal, aplicar un kit, cambiar de patrón con el panel abierto, Play, panel en Pads, desaparición en Canción; sin errores. Pendiente de probar en móvil real el espacio útil (con el panel abierto se ven unas 5–6 pistas a la vez y el resto se desplaza).
+- Para revertir: git revert del commit v2.22 (vuelve la pestaña Mezcla).
