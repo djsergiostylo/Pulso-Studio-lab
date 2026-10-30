@@ -725,7 +725,13 @@ function drawLcd(){if(S.lcdv==='info')return;fit();const W=cv.width,H=cv.height;
 const LV=[['info',''],['wave','ONDA'],['spec','ESPECTRO · 30 Hz – 16 kHz']];
 function setLcd(v){cvDirty=true;if(!LV.some(x=>x[0]===v))v='info';S.lcdv=v;$('#lcd').dataset.v=v;$('#md').textContent=LV.find(x=>x[0]===v)[1];drawLcd();kick()}
 const lcdNext=()=>{const i=LV.findIndex(x=>x[0]===S.lcdv);setLcd(LV[(i+1)%3][0]);saveSoon()};
-$('#lcd').addEventListener('click',lcdNext);
+/* deslizar el dedo por la pantalla LCD cambia de patrón (← siguiente, → anterior); un toque sigue cambiando info/onda/espectro */
+let lcdSw=null,lcdSwiped=false;
+$('#lcd').addEventListener('pointerdown',e=>{lcdSw={x:e.clientX,y:e.clientY,id:e.pointerId};lcdSwiped=false});
+$('#lcd').addEventListener('pointerup',e=>{const s=lcdSw;lcdSw=null;if(!s||s.id!==e.pointerId)return;const dx=e.clientX-s.x,dy=e.clientY-s.y;
+  if(Math.abs(dx)>45&&Math.abs(dy)<35){lcdSwiped=true;S.pat=(S.pat+(dx<0?1:3))%4;if(navigator.vibrate)try{navigator.vibrate(8)}catch(err){}flash('PATRÓN '+'ABCD'[S.pat]);upd();save()}});
+$('#lcd').addEventListener('pointercancel',()=>{lcdSw=null});
+$('#lcd').addEventListener('click',()=>{if(lcdSwiped){lcdSwiped=false;return}lcdNext()});
 $('#lcd').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lcdNext()}});
 window.addEventListener('resize',()=>{cvDirty=true;drawLcd()});
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{readCols();drawLcd()})}catch(e){}

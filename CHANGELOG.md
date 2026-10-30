@@ -119,3 +119,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Datos: `lanes` guarda ahora a1–a4. Los proyectos antiguos de 2 pistas se completan solos (`fixSong`). Los audios se guardan en este móvil, igual que antes.
 - Probado: 4 filas en la cuadrícula, marcar compases, copiar/deshacer, cargar un audio de prueba en AUDIO 4, reproducir en modo canción y quitar el audio, sin errores. No probado el export WAV con las 4 pistas ni en móvil.
 - Para revertir: git revert del commit v2.12.
+
+## v2.13 (2026-10-30) — Claude
+- Gesto: deslizar el dedo en horizontal por la pantalla LCD cambia de patrón (← siguiente, → anterior, vuelve de D a A). Un toque corto sigue alternando info / onda / espectro. Vibración breve al cambiar.
+- Verificado también: el export WAV completo funciona con LEAD, capas y las 4 pistas de audio (6 MB, sin errores).
+- Probado con eventos simulados; en móvil real hay que comprobar que el navegador no se queda el gesto (se pidió touch-action: pan-y en el LCD).
+- Para revertir: git revert del commit v2.13.
