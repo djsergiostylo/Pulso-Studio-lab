@@ -61,3 +61,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Añade navegación por teclado con flechas, Inicio y Fin; los botones táctiles siguen funcionando igual.
 - Sin cambios en el motor de audio.
 - Navegación por teclado verificada en GitHub Pages (30-10-2026): pestañas principales y secundarias responden a flechas, Inicio y Fin; resultado correcto.
+
+## v2.4 (2026-10-30)
+- Separa la estructura HTML, los estilos y la lógica JavaScript en archivos independientes. La versión archivada conserva el documento autónomo.
+- Sin cambios intencionales en funciones ni en el motor de audio. Comprobación funcional pendiente para una sesión posterior.
