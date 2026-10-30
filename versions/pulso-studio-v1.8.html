@@ -1143,7 +1143,7 @@ $('#paste').addEventListener('click',()=>{if(!CB)return;snap();if(CB.t==='pat')P
 /* ---------- tabs ---------- */
 const TG={crear:['seq','pads'],song:['song'],mezcla:['mix','fx','eq','canal'],file:['file']},TL={seq:'Secuenciador',pads:'Pads',mix:'Mix',fx:'FX',eq:'EQ',canal:'Canal'},lastT={crear:'seq',mezcla:'mix'};
 function showTab(t){S.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
-  $('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-pressed',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  $$('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-pressed',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','group');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
   ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{$('#t-'+n).hidden=n!==t});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
   if(t==='canal')renderCanal();if(t==='mix'){updMixUI();kick()}if(t==='fx'){FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)});kick()}upd()}
