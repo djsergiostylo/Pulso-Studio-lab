@@ -242,3 +242,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Sigue funcionando tocar, mantener pulsado (fuerza) y arrastrar en horizontal para pintar varios pasos.
 - Probado: tocar pasos, ACID 16↔32 (la fila aparece y desaparece), Play; sin errores.
 - Para revertir: git revert del commit v2.29 (vuelve la Vista táctil).
+
+## v2.30 (2026-10-30) — Claude
+- **Capas en los sintes** (SUB, ACID, STAB, LEAD): en la tarjeta **Capas** de Canal, además de las baterías, cada sinte puede sumar su misma voz a otra altura: **+1 octava, −1 octava, +5.ª o +2 octavas**, con su nivel ajustable. SUB conserva además su "Capa +1 octava" de siempre.
+- La voz de la capa no corta a la principal en los sintes monofónicos (SUB, ACID, LEAD) ni toca su legato/slide; el slide del ACID sigue en la voz principal.
+- Datos: `lo` (semitonos de la capa) y `lv` (nivel) por canal; proyectos antiguos se completan solos.
+- Coste: cada capa activa duplica las voces de ese canal. Medido con las 4 capas encendidas: 112 osciladores creados en 5 s frente a 47 sin capas. Si el móvil va justo, apaga capas o sube Audio a **Estable**.
+- Probado: botones en los 4 sintes, guardado, batería sin cambios, Play con capas; sin errores. No escuchado en móvil.
+- Para revertir: git revert del commit v2.30.

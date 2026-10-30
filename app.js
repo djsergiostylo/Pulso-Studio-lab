@@ -26,7 +26,7 @@ const EQB=[{g:'el',f:'fl',t:'lowshelf',df:120,lo:30,hi:400,n:'Graves',ic:'🔈'}
   {g:'em',f:'ef',t:'peaking',df:1000,lo:300,hi:5000,n:'Medios',ic:'🎙'},{g:'e4',f:'f4',t:'peaking',df:3500,lo:1500,hi:10000,n:'Medio-agudos',ic:'🔔'},{g:'eh',f:'fh',t:'highshelf',df:6000,lo:3000,hi:16000,n:'Agudos',ic:'✨'}];
 const EQD={};EQB.forEach(b=>{EQD[b.g]=0;EQD[b.f]=b.df});
 const gv=(o,k,d)=>o[k]==null?d:o[k];
-const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.5},EQD);
+const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.5,lo:0},EQD);
 
 const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.55,rel:.3,att:.1},
   cho:{on:false,mode:'cho',rate:.35,depth:.5,fb:.3,mix:.4},flt:{on:false,type:'lowpass',freq:.55,res:.3,div:3,depth:.5,shape:'sine'},cr:{on:false,bits:.45,down:.25,mix:.5},cmp:{on:false,thr:.6,ratio:.25,att:.15,rel:.3,mk:.2}};
@@ -64,7 +64,7 @@ try{const r=localStorage.getItem('pulsostudio1')||localStorage.getItem('pocketsu
 if(!S.ui3){S.skin='neon';S.style='abl';S.ui3=true}
 P.forEach(fixP);fixSong();C.forEach(fixC);if(!['canal','mix','fx','eq'].includes(S.snd))S.snd='canal';S.dockOpen=!!S.dockOpen;if(!['interactive','balanced','playback'].includes(S.lat))S.lat='balanced';S.lights=!!S.lights;document.documentElement.dataset.lights=S.lights?'1':'0';S.dockH=Number.isFinite(+S.dockH)&&S.dockH>0?clamp(Math.round(S.dockH),110,900):0;
 S.meq=Object.assign({},EQD,S.meq);
-function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.5,0,1)}
+function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lo=i>=SUBI&&[12,-12,7,24].includes(Math.round(+c.lo))?Math.round(+c.lo):0;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.5,0,1)}
 function fixSong(){const g=S.song||{};S.song={on:!!g.on,len:[8,16,32].includes(g.len)?g.len:16,bars:ok16x32(g.bars)};
   const L=S.lanes||{};S.lanes={};LID.forEach(id=>{const x=L[id]||{},d=LANED();S.lanes[id]={bpm:clamp(+x.bpm||120,40,240),loop:[1,2,4,8].includes(x.loop)?x.loop:4,vol:typeof x.vol==='number'?clamp(x.vol,0,1):.8,on:Array.from({length:32},(_,i)=>x.on&&x.on[i]?1:0)}})}
 function ok16x32(a){return Array.from({length:32},(_,i)=>{const v=a&&a[i];return typeof v==='number'&&v>=-1&&v<=3?Math.round(v):(a?-1:SONGD.bars[i])})}
@@ -247,28 +247,28 @@ function drum(i,t,v,dest,lay){dest=dest==null?i:dest;if(!lay){const L=C[i];if(L.
   z.connect(g);g.connect(chs[dest].in);z.onended=()=>{try{g.disconnect()}catch(e){}};z.start(t);z.stop(t+dur+.01);
   if(i===4&&!lay)ohV={gs:[g],srcs:[z],end:t+dur}}
 let lastF=0;
-function sub(off,t,v,ac){
-  const leg=!!(subV&&subV.end>t+.002);choke(subV,t);
+function sub(off,t,v,ac,lay){
+  const leg=!lay&&!!(subV&&subV.end>t+.002);if(!lay)choke(subV,t);
   const p=C[SUBI],f=mf(24+S.root+off),len=.12+p.dc*1.1,d=dst(SUBI,v),lp=ctx.createBiquadFilter(),g=ctx.createGain(),end=t+len+.05,o=osc(d,t,end,S.wave);
   const gl=p.gl>0&&lastF&&leg,gT=t+.02+p.gl*.16,pf=lastF,glide=(fr,mul)=>{if(gl){fr.setValueAtTime(pf*mul,t);fr.exponentialRampToValueAtTime(f*mul,gT)}else fr.setValueAtTime(f*mul,t)};
-  glide(o.frequency,1);lastF=f;
+  glide(o.frequency,1);if(!lay)lastF=f;
   lp.type='lowpass';lp.frequency.value=S.wave==='sine'?20000:Math.min(20000,(120+Math.pow(p.br,2)*7000)*(.75+.35*Math.min(v,1.3))*(ac?1.5:1));
   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.85,t+.008);g.gain.exponentialRampToValueAtTime(.001,t+len);
   o.connect(lp);lp.connect(g);g.connect(d);const gs=[g],srcs=[o];
   /* +1 octave layer: makes the sub audible on phones/small speakers */
   if(S.layer){const o2=osc(d,t,end),g2=ctx.createGain();glide(o2.frequency,2);
     g2.gain.setValueAtTime(0,t);g2.gain.linearRampToValueAtTime(.28,t+.008);g2.gain.exponentialRampToValueAtTime(.001,t+len*.9);o2.connect(g2);g2.connect(d);gs.push(g2);srcs.push(o2)}
-  subV={gs,srcs,end}
+  if(!lay)subV={gs,srcs,end}
 }
 /* acid 303: mono, resonant LP with env, accent, slide (legato glide) */
 let acV=null,lastAF=0;
-function acid(off,t,v,ac,sl){const leg=!!(sl&&acV&&acV.end>t-.01&&lastAF);choke(acV,t);
+function acid(off,t,v,ac,sl,lay){const leg=!lay&&!!(sl&&acV&&acV.end>t-.01&&lastAF);if(!lay)choke(acV,t);
   const p=C[ACI],f=mf(NBASE[ACI]+S.root+off),spb=60/S.bpm/4,gate=spb*(sl?1.02:.35+p.dc*.9),end=t+gate+.08,d=dst(ACI,v),o=osc(d,t,end,S.awave),lp=ctx.createBiquadFilter(),g=ctx.createGain();
-  if(leg){o.frequency.setValueAtTime(lastAF,t);o.frequency.exponentialRampToValueAtTime(f,t+.06)}else o.frequency.setValueAtTime(f,t);lastAF=f;
+  if(leg){o.frequency.setValueAtTime(lastAF,t);o.frequency.exponentialRampToValueAtTime(f,t+.06)}else o.frequency.setValueAtTime(f,t);if(!lay)lastAF=f;
   const base=70*Math.pow(70,p.tn),peak=Math.min(15000,base*(1+p.gl*9*(ac?1.7:1)));lp.type='lowpass';lp.Q.value=1+p.br*19;
   if(leg)lp.frequency.setValueAtTime(base*1.2,t);else{lp.frequency.setValueAtTime(peak,t);lp.frequency.setTargetAtTime(base,t+.003,.025+p.dc*.28*(ac?.6:1))}
   const lvl=.42*(ac?1.3:1);if(leg)g.gain.setValueAtTime(lvl,t);else{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(lvl,t+.004)}
-  g.gain.setValueAtTime(lvl,t+gate);g.gain.linearRampToValueAtTime(0,t+gate+.03);o.connect(lp);lp.connect(g);g.connect(d);acV={gs:[g],srcs:[o],end}}
+  g.gain.setValueAtTime(lvl,t+gate);g.gain.linearRampToValueAtTime(0,t+gate+.03);o.connect(lp);lp.connect(g);g.connect(d);if(!lay)acV={gs:[g],srcs:[o],end}}
 /* stab: detuned saw minor-7 chord through a plucky LP; pre-rendered per note/setting (8 oscillators live only until cached) */
 function stabG(x,out,t,root,ac,p,keep){const len=.1+p.dc*1.4,end=t+len+.08,lp=x.createBiquadFilter(),g=x.createGain(),cut=250*Math.pow(24,p.tn);
   lp.type='lowpass';lp.Q.value=1.5;lp.frequency.setValueAtTime(Math.min(16000,cut*(ac?3.4:2.4)),t);lp.frequency.setTargetAtTime(cut,t+.004,len*.3);
@@ -286,13 +286,14 @@ function stab(off,t,v,ac){const p=C[STI],root=NBASE[STI]+S.root+off,sr=ctx.sampl
 function warmStab(sr){const p=C[STI],seen=new Set();P.forEach(q=>q.bn.forEach((n,i)=>{if(n<0)return;const ac=!!q.ac[STI][i],root=NBASE[STI]+S.root+n,k=sKey(root,ac,p,sr);if(!seen.has(k)&&!SVC.has(k)){seen.add(k);stabRender(k,root,ac,p,sr)}}))}
 /* lead: dos osciladores desafinados, filtro con envolvente y glide opcional */
 let leV=null,lastLF=0;
-function lead(off,t,v,ac){const p=C[LEI],leg=!!(leV&&leV.end>t-.01&&lastLF&&p.gl>0);choke(leV,t);
+function lead(off,t,v,ac,lay){const p=C[LEI],leg=!lay&&!!(leV&&leV.end>t-.01&&lastLF&&p.gl>0);if(!lay)choke(leV,t);
   const f=mf(NBASE[LEI]+S.root+off),len=.12+p.dc*1.1,end=t+len+.08,d=dst(LEI,v),lp=ctx.createBiquadFilter(),g=ctx.createGain(),dt=3+p.br*24,os=[-dt,dt].map(c=>{const o=osc(d,t,end,S.lwave);o.detune.value=c;return o});
-  os.forEach(o=>{if(leg){o.frequency.setValueAtTime(lastLF,t);o.frequency.exponentialRampToValueAtTime(f,t+.02+p.gl*.14)}else o.frequency.setValueAtTime(f,t)});lastLF=f;
+  os.forEach(o=>{if(leg){o.frequency.setValueAtTime(lastLF,t);o.frequency.exponentialRampToValueAtTime(f,t+.02+p.gl*.14)}else o.frequency.setValueAtTime(f,t)});if(!lay)lastLF=f;
   const cut=300*Math.pow(40,p.tn),lv=.16*(ac?1.3:1);lp.type='lowpass';lp.Q.value=2;lp.frequency.setValueAtTime(Math.min(16000,cut*(ac?3:2)),t);lp.frequency.setTargetAtTime(cut,t+.004,len*.35);
   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(lv,t+.006);g.gain.setValueAtTime(lv,t+len*.6);g.gain.exponentialRampToValueAtTime(.001,t+len);
-  os.forEach(o=>o.connect(lp));lp.connect(g);g.connect(d);leV={gs:[g],srcs:os,end}}
-function mel(i,off,t,v,ac,sl){if(i===SUBI)sub(off,t,v,ac);else if(i===ACI)acid(off,t,v,ac,sl);else if(i===LEI)lead(off,t,v,ac);else stab(off,t,v,ac)}
+  os.forEach(o=>o.connect(lp));lp.connect(g);g.connect(d);if(!lay)leV={gs:[g],srcs:os,end}}
+function mel(i,off,t,v,ac,sl,lay){if(i===SUBI)sub(off,t,v,ac,lay);else if(i===ACI)acid(off,t,v,ac,sl,lay);else if(i===LEI)lead(off,t,v,ac,lay);else stab(off,t,v,ac);
+  if(!lay){const L=C[i];if(L.lo&&L.lv>0)mel(i,off+L.lo,t,v*L.lv,ac,sl,true)}}
 /* smooth sidechain: ~3 ms dip, exponential recovery (no clicks) */
 function duck(t){const any=C.some(x=>x.solo);if(!S.sc.on||C[0].mute||(any&&!C[0].solo))return;C.forEach((p,i)=>{if(!p.sc||i===0)return;const g=chs[i].dk.gain;
   if(g.cancelAndHoldAtTime)g.cancelAndHoldAtTime(t);else g.cancelScheduledValues(t);
@@ -589,11 +590,15 @@ $('#presetRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if
   else{const [n,v]=KITS[i];v.forEach((r,d)=>KP.forEach((k,j)=>{C[d][k]=r[j]}));flash('KIT: '+n.toUpperCase())}
   applyAll();queueWarm();renderCanal();audition();save()});
 /* capa: una segunda voz de batería suena a la vez dentro del mismo canal */
-function renderLayer(){const ch=S.ch,on=ch<SUBI;$('#lyCard').hidden=!on;if(!on)return;const c=C[ch];
-  $('#lyRow').innerHTML=[['Sin capa',-1]].concat(CH.slice(0,SUBI).map((x,i)=>[x[1],i]).filter(x=>x[1]!==ch)).map(([n,i])=>`<button type="button" class="pre" data-i="${i}" aria-pressed="${c.ly===i}">${n}</button>`).join('');
-  $('#lyN').textContent=c.ly>=0?'+ '+CH[c.ly][1]:'sin capa';$('#lyLv').value=Math.round(c.lv*100);$('#lyO').textContent=Math.round(c.lv*100);$('#lyK').hidden=c.ly<0}
-$('#lyRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if(!b||S.ch>=SUBI)return;C[S.ch].ly=+b.dataset.i;renderLayer();audition();save()});
-$('#lyLv').addEventListener('input',e=>{if(S.ch>=SUBI)return;C[S.ch].lv=e.target.value/100;$('#lyO').textContent=e.target.value;saveSoon()});
+/* capa: una segunda voz suena a la vez dentro del mismo canal (baterías: otra batería; sintes: la misma voz a otra altura) */
+const LAYO=[['Sin capa',0],['+1 octava',12],['−1 octava',-12],['+5.ª',7],['+2 octavas',24]];
+function renderLayer(){const ch=S.ch,mel=MEL(ch),c=C[ch];$('#lyCard').hidden=false;
+  if(mel){$('#lyRow').innerHTML=LAYO.map(([n,s])=>`<button type="button" class="pre" data-i="${s}" aria-pressed="${c.lo===s}">${n}</button>`).join('');$('#lyN').textContent=c.lo?(LAYO.find(x=>x[1]===c.lo)||['',0])[0].toLowerCase():'sin capa';$('#lyK').hidden=!c.lo}
+  else{$('#lyRow').innerHTML=[['Sin capa',-1]].concat(CH.slice(0,SUBI).map((x,i)=>[x[1],i]).filter(x=>x[1]!==ch)).map(([n,i])=>`<button type="button" class="pre" data-i="${i}" aria-pressed="${c.ly===i}">${n}</button>`).join('');
+    $('#lyN').textContent=c.ly>=0?'+ '+CH[c.ly][1]:'sin capa';$('#lyK').hidden=c.ly<0}
+  $('#lyLv').value=Math.round(c.lv*100);$('#lyO').textContent=Math.round(c.lv*100);$('#lyNote').textContent=mel?'Suma la misma voz a otra altura (octava o quinta). Su nivel se ajusta aquí. SUB ya tiene su capa de +1 octava en este canal.':'Suma una segunda batería a este canal (por ejemplo Kick + Tom o Snare + Clap). Usa el tono y la caída de esa batería; su nivel se ajusta aquí.'}
+$('#lyRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if(!b)return;if(MEL(S.ch))C[S.ch].lo=+b.dataset.i;else C[S.ch].ly=+b.dataset.i;renderLayer();audition();save()});
+$('#lyLv').addEventListener('input',e=>{C[S.ch].lv=e.target.value/100;$('#lyO').textContent=e.target.value;saveSoon()});
 $('#lyLv').addEventListener('change',()=>audition());
 function renderCanal(){const c=C[S.ch],sub=MEL(S.ch);$('#sndCh').textContent=CH[S.ch][1];renderPresets();renderLayer();
   $('#canT').textContent='Canal · '+CH[S.ch][1];$('#canKn').innerHTML=(S.ch===ACI?KA:S.ch===STI?KB:S.ch===LEI?KL:sub?KS:KD).map(([k,l])=>kn('c_'+k,l,c[k])).join('');
