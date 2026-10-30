@@ -262,7 +262,7 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .eqt button.mod::after{content:"•";margin-left:1px}
 #eqc{width:100%;height:230px;display:block;background:var(--lcd);border-radius:10px;touch-action:none}
 .eqk{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:8px}.eqk .k:first-child{grid-column:1/-1}#eqCtl{display:grid;gap:6px;margin-top:6px}#eqCtl[hidden],#eqSl[hidden],.eqk .k[hidden]{display:none}.eqact{display:flex;gap:4px}.eqm{min-width:44px;min-height:30px;border:1px solid var(--keyedge);border-radius:7px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:11.55px}.eqm[aria-pressed="true"]{background:var(--on);color:var(--onfg)}
-#eqStyle{width:100%;min-height:36px}.eqb{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:6px}
+#eqStyle{width:100%;min-height:36px}.kitname{display:flex;flex-direction:column;gap:5px;font-family:var(--disp);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.kitname input,.kitname select{min-height:40px;background:var(--key);border:1px solid var(--keyedge);border-radius:10px;padding:0 10px;color:var(--fg);font-family:var(--mono);font-size:14.7px;text-transform:none;letter-spacing:normal}.eqb{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:6px}
 .eqb button{min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--key);border:1px solid var(--keyedge);border-bottom:3px solid var(--c);border-radius:7px;color:var(--fg);padding:0}
 .eqb button span{font-size:14.7px;line-height:1}.eqb button small{font-family:var(--mono);font-size:9.45px;opacity:.8}
 .eqb button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}
@@ -466,7 +466,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
 /* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
 /* v1.8: navegación por tareas; Mix, FX, EQ y Canal agrupados dentro de Mezcla */
-/* v2.0: parámetros detallados de FX plegables; controles rápidos y motor intactos */
+/* v2.1: parámetros detallados de FX plegables; controles rápidos y motor intactos */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -497,7 +497,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.0">v2.0</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.1">v2.1</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -652,6 +652,14 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
         <div class="seg"><button id="smpL">⬆ Cargar audio</button><button id="smpX" disabled>✕ Quitar</button></div>
         <input id="smpF" type="file" accept="audio/*" hidden>
         <p class="note">Con sample: Tono cambia la afinación y Caída lo acorta. Máx. 8 s. Se guarda en este móvil (no va dentro del .json ni del código).</p>
+      </div>
+      <div class="card" id="kitCard">
+        <div class="hd2"><h3>🥁 Kits de batería</h3><span class="smpn">6 canales</span></div>
+        <label class="kitname" for="kitName">Nombre del kit<input id="kitName" type="text" maxlength="32" placeholder="Mi kit" autocomplete="off"></label>
+        <div class="saverow"><button id="kitSave" class="fn" type="button">Guardar kit</button></div>
+        <label class="kitname" for="kitList">Kits guardados<select id="kitList"><option value="">Aún no hay kits</option></select></label>
+        <div class="seg"><button id="kitLoad" disabled>Aplicar kit</button><button id="kitDel" disabled>Eliminar</button></div>
+        <p class="note">Guarda tonos, caídas, drive y muestras propias de los 6 sonidos de batería. Solo en este dispositivo; las muestras no se incluyen en el proyecto JSON.</p>
       </div>
       <div class="card" id="subx" hidden>
         <h3 id="subxT">Sub bass</h3>
@@ -1155,7 +1163,7 @@ function showTab(t){S.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='
   $$('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-pressed',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','group');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
   ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{$('#t-'+n).hidden=n!==t});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
-  if(t==='canal')renderCanal();if(t==='mix'){updMixUI();kick()}if(t==='fx'){FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)});kick()}upd()}
+  if(t==='canal'){renderCanal();renderKits()};if(t==='mix'){updMixUI();kick()}if(t==='fx'){FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)});kick()}upd()}
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){const g=b.dataset.g;showTab(lastT[g]||TG[g][0])}});
 $('#subs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)showTab(b.dataset.t)});
 
@@ -1215,9 +1223,14 @@ function renderCanal(){const c=C[S.ch],sub=MEL(S.ch);
   $('#oct').hidden=S.ch!==SUBI;$('#oct').setAttribute('aria-pressed',S.layer);$('#subxT').textContent=S.ch===SUBI?'Sub bass':S.ch===ACI?'Acid 303 · tonalidad':'Stab · tonalidad'}
 const idb=()=>new Promise((res,rej)=>{try{const r=indexedDB.open('pocketsub',1);r.onupgradeneeded=()=>r.result.createObjectStore('smp');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}catch(e){rej(e)}});
 const idbDo=(mode,fn)=>idb().then(db=>new Promise((res,rej)=>{const tx=db.transaction('smp',mode),q=fn(tx.objectStore('smp'));tx.oncomplete=()=>res(q&&q.result);tx.onerror=()=>rej(tx.error)}));
+async function renderKits(){const sel=$('#kitList');if(!sel)return;const prev=sel.value;let keys=[];try{keys=await idbDo('readonly',st=>st.getAllKeys())||[]}catch(e){}const names=keys.filter(k=>typeof k==='string'&&k.startsWith('kit:')).map(k=>k.slice(4)).sort((a,b)=>a.localeCompare(b,'es'));sel.replaceChildren(new Option(names.length?'Elige un kit':'Aún no hay kits',''));names.forEach(n=>sel.add(new Option(n,n)));sel.value=names.includes(prev)?prev:'';$('#kitLoad').disabled=!sel.value;$('#kitDel').disabled=!sel.value}
+$('#kitList').addEventListener('change',()=>{$('#kitLoad').disabled=!$('#kitList').value;$('#kitDel').disabled=!$('#kitList').value;$('#kitName').value=$('#kitList').value});
+$('#kitSave').addEventListener('click',async()=>{const name=$('#kitName').value.trim().slice(0,32);if(!name){flash('ESCRIBE UN NOMBRE');$('#kitName').focus();return}try{const smp=[];let total=0;for(let i=0;i<6;i++){const r=await idbDo('readonly',st=>st.get(i));if(r&&r.ab){total+=r.ab.byteLength;smp.push({name:r.name,ab:r.ab})}else smp.push(null)}if(total>24e6){flash('KIT DEMASIADO GRANDE · MÁX. 24 MB');return}const sound=C.slice(0,6).map(c=>({tn:c.tn,dc:c.dc,drv:c.drv}));await idbDo('readwrite',st=>st.put({name,sound,smp,date:Date.now()},'kit:'+name));await renderKits();$('#kitList').value=name;$('#kitLoad').disabled=false;$('#kitDel').disabled=false;flash('KIT GUARDADO')}catch(e){flash('NO HAY ESPACIO PARA GUARDAR EL KIT')}});
+$('#kitLoad').addEventListener('click',async()=>{const name=$('#kitList').value;if(!name)return;if(S.play){flash('DETÉN PLAY PARA CAMBIAR KIT');return}try{const k=await idbDo('readonly',st=>st.get('kit:'+name));if(!k||!Array.isArray(k.sound)||k.sound.length!==6||!k.sound.every(x=>x&&typeof x==='object'))throw new Error('bad');const decoded=[];for(let i=0;i<6;i++){const sm=k.smp&&k.smp[i];if(sm&&sm.ab){const buf=await decodeAB(sm.ab);if(buf.duration>8.05)throw new Error('long');decoded.push({buf,name:sm.name||'Sample',ab:sm.ab})}else decoded.push(null)}const val=(x,d)=>Number.isFinite(+x)?+x:d;for(let i=0;i<6;i++){C[i].tn=clamp(val(k.sound[i].tn,.5),0,1);C[i].dc=clamp(val(k.sound[i].dc,.5),0,1);C[i].drv=clamp(val(k.sound[i].drv,0),0,1);const sm=decoded[i];if(sm){SMP[i]=sm.buf;SMPN[i]=sm.name;await idbDo('readwrite',st=>st.put({name:sm.name,ab:sm.ab},i))}else{SMP[i]=null;SMPN[i]='';await idbDo('readwrite',st=>st.delete(i))}}applyAll();queueWarm();save();renderCanal();flash('KIT APLICADO: '+name.toUpperCase().slice(0,18))}catch(e){flash('NO SE PUDO CARGAR EL KIT')}});
+let kitDelArmed=false;$('#kitDel').addEventListener('click',async()=>{const b=$('#kitDel'),name=$('#kitList').value;if(!name)return;if(!kitDelArmed){kitDelArmed=true;b.textContent='¿Seguro?';setTimeout(()=>{kitDelArmed=false;b.textContent='Eliminar'},3000);return}try{await idbDo('readwrite',st=>st.delete('kit:'+name));kitDelArmed=false;await renderKits();$('#kitName').value='';flash('KIT ELIMINADO')}catch(e){flash('NO SE PUDO ELIMINAR')}});
 function decodeAB(ab){const OC=window.OfflineAudioContext||window.webkitOfflineAudioContext,x=LIVE||new OC(1,1,48000);return new Promise((res,rej)=>{const p=x.decodeAudioData(ab.slice(0),res,rej);if(p&&p.then)p.then(res,rej)})}
 async function setSmp(i,name,ab,keep){const b=await decodeAB(ab);if(b.duration>8.05)throw new Error('long');SMP[i]=b;SMPN[i]=name;if(keep)try{await idbDo('readwrite',st=>st.put({name,ab},i))}catch(e){}}
-(async()=>{let any=false;for(let i=0;i<6;i++){try{const r=await idbDo('readonly',st=>st.get(i));if(r&&r.ab){await setSmp(i,r.name,r.ab,false);any=true}}catch(e){}}if(any&&S.tab==='canal')renderCanal()})();
+(async()=>{let any=false;for(let i=0;i<6;i++){try{const r=await idbDo('readonly',st=>st.get(i));if(r&&r.ab){await setSmp(i,r.name,r.ab,false);any=true}}catch(e){}}if(any&&S.tab==='canal')renderCanal();renderKits()})();
 $('#smpL').addEventListener('click',()=>$('#smpF').click());
 $('#smpF').addEventListener('change',async e=>{if(laneTgt){const id=laneTgt;laneTgt=null;return loadLane(id,e)}const f=e.target.files&&e.target.files[0];e.target.value='';const i=S.ch;if(!f||i>=SUBI)return;if(f.size>12e6){flash('ARCHIVO MUY GRANDE');return}
   try{await setSmp(i,f.name.replace(/\.[^.]+$/,'').slice(0,24),await f.arrayBuffer(),true);flash('SAMPLE EN '+CH[i][1]);renderCanal();audition()}catch(err){flash(err&&err.message==='long'?'MÁX. 8 SEGUNDOS':'AUDIO NO VÁLIDO')}});
@@ -1665,7 +1678,7 @@ $('#t-song').addEventListener('input',e=>{const id=e.target.dataset.lv;if(!id)re
 
 function upd(){updLcd();renderChips();renderNotes();updGrid();renderPbar();updSteppers()}
 rs.value=S.root;ss.value=S.scale;
-paintEqStyle();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);
+paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);
 })();
 </script>
 
