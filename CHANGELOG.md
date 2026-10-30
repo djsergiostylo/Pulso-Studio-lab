@@ -225,3 +225,13 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Pantallas LCD de onda/espectro a 15 imágenes por segundo en vez de 30 (con Luces extra siguen a 30) y medidores de Mix a 20 por segundo.
 - Medido con un contador de cambios en la página durante 4 s de Play: **661 cambios/s con luces → 272/s sin ellas (−59 %)**, y 248/s con la Mix abierta tras limitar los medidores. Medición de actividad del navegador, no de CPU ni de batería real.
 - Para revertir: git revert del commit v2.27.
+
+## v2.28 (2026-10-30) — Claude
+- **Optimización de rendimiento** contra cortes de audio y lentitud:
+  - Audio con más margen: la latencia por defecto pasa de «Rápido» a **«Equilibrado»** (botón **Audio: …** en ⚙ Aspecto · Estilo · Ayuda; Rápido / Equilibrado / Estable; se aplica al recargar). Con búferes más grandes el móvil tolera mejor los picos de carga.
+  - Efectos apagados = **ramas desconectadas del grafo** (chorus, filtro LFO, bitcrusher, reverb, delay y compresor): el navegador ya no los calcula. Antes todos procesaban siempre aunque estuvieran en Off.
+  - Menos sobremuestreo: el recorte final sin sobremuestreo (solo actúa cerca de 0 dBFS) y el drive de canal/master a 2x en vez de 4x; las baterías precalculadas a 2x en vez de 4x (la mitad de trabajo al arrancar y al mover Tono/Caída).
+  - **Guardado agrupado**: antes cada toque escribía todo el proyecto en el móvil de forma inmediata; ahora se junta en una sola escritura 0,4 s después del último cambio y se fuerza al salir de la página.
+  - EQ y FX en vivo a 20 imágenes/s (antes 30).
+- Medido (exportando 2 vueltas con el mismo proyecto limpio): **3,7 s → 2,7 s (−27 %)**; con baterías de drive (kits 808/909/Techno) hasta **−50 %**. Nivel idéntico (pico 0,569, RMS −12,7 dB) en ambas versiones. No es una medición en un móvil real.
+- Para revertir: git revert del commit v2.28.
