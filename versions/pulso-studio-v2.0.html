@@ -585,7 +585,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 
     <section id="t-eq" class="tab" hidden>
       <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
-      <button id="eqStyle" class="fn" type="button" aria-pressed="true">EQ BYPASS · NO</button>
+      <button id="eqStyle" class="fn" type="button" aria-pressed="false">EQ BYPASS · NO</button>
       <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
       <div class="card">
         <div class="hd2"><h3>Banda <span id="eqBn"></span></h3><span class="eqact"><button id="eqOn" class="eqm" aria-pressed="true">ON</button><button id="eqDel" class="eqm" aria-label="Borrar banda">🗑</button></span></div>
@@ -1482,8 +1482,8 @@ $('#eqTy').addEventListener('click',e=>{const b=e.target.closest('button');if(b)
 $('#eqSl').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setBand(eqBand,{s:+b.dataset.s})});
 $('#eqOn').addEventListener('click',()=>{const b=eqbOf(eqObj())[eqBand];if(b)setBand(eqBand,{on:b.on?0:1})});
 $('#eqDel').addEventListener('click',delBand);
-function paintEqStyle(){const b=$('#eqStyle');if(!b)return;b.setAttribute('aria-pressed',String(eqDefaultOn));b.textContent=eqDefaultOn?'EQ BYPASS · NO':'EQ BYPASS · SÍ'}
-$('#eqStyle').addEventListener('click',()=>{eqDefaultOn=!eqDefaultOn;try{localStorage.setItem('pulsoEqDefaultOn',eqDefaultOn?'1':'0')}catch(e){}paintEqStyle();applyAll();flash(eqDefaultOn?'EQ PREDETERMINADA ACTIVADA':'EQ EN BYPASS')});
+function paintEqStyle(){const b=$('#eqStyle');if(!b)return;b.setAttribute('aria-pressed',String(!eqDefaultOn));b.textContent=eqDefaultOn?'EQ BYPASS · NO':'EQ BYPASS · SÍ'}
+$('#eqStyle').addEventListener('click',()=>{eqDefaultOn=!eqDefaultOn;try{localStorage.setItem('pulsoEqDefaultOn',eqDefaultOn?'1':'0')}catch(e){}paintEqStyle();applyAll();flash(eqDefaultOn?'EQ ACTIVA':'BYPASS ACTIVADO')});
 (()=>{const g=$('#eq_g'),f=$('#eq_f'),q=$('#eq_q');
   g.addEventListener('input',()=>setBand(eqBand,{g:+g.value}));f.addEventListener('input',()=>setBand(eqBand,{f:s2f(+f.value)}));q.addEventListener('input',()=>setBand(eqBand,{q:s2q(+q.value)}));
   let lg=0;g.addEventListener('pointerup',()=>{const n=Date.now();if(n-lg<300){setBand(eqBand,{g:0});lg=0}else lg=n})})();
