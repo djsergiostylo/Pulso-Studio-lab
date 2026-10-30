@@ -55,3 +55,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - El apartado Proyecto muestra cuándo se han guardado los cambios y avisa si hay cambios pendientes o no se pudo guardar en este dispositivo.
 - Repara el marcador del estado de guardado para conservar el listado de proyectos y la inicialización del resto de controles.
 - Sin cambios en el motor de audio.
+## v2.3 (2026-10-30)
+- La navegación principal y las herramientas secundarias se anuncian como pestañas accesibles, con paneles asociados y selección actual explícita.
+- Añade navegación por teclado con flechas, Inicio y Fin; los botones táctiles siguen funcionando igual.
+- Sin cambios en el motor de audio.
