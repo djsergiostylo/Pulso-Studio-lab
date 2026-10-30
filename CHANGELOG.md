@@ -24,3 +24,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Añade Vista táctil para ampliar una pista y editar 8 pasos por página (1–8 / 9–16).
 - Conserva las 9 pistas y el modo de 16 pasos; amplía el ancho disponible en pantallas grandes.
 - Solo cambian la interfaz y los estilos; motor de audio intacto.
+
+
+## v1.6 (2026-10-30)
+- En pantallas de 360–420 px, los 8 pasos de Vista táctil se distribuyen en el ancho disponible y alcanzan 44 px de alto.
+- En pantallas más estrechas se conserva el desplazamiento horizontal para mantener un tamaño de toque útil.
+- Cambio exclusivamente visual; motor de audio y formato de proyecto intactos.
