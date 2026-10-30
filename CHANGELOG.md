@@ -43,5 +43,5 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 
 ## v2.0 (2026-10-30)
 - Guarda como perfil EQ predeterminado las curvas ajustadas para cada sonido: Kick, Snare, Clap, Hat, Open Hat, Tom, Sub, Acid y Stab; master plano.
-- Añade **EQ predeterminada · SÍ/NO** para alternar la EQ global entre activa y bypass. Conserva los valores de todas las bandas y recuerda la preferencia en el navegador.
+- Añade **EQ Bypass · NO/SÍ** para alternar la EQ global entre activa y bypass. Conserva los valores de todas las bandas y recuerda la preferencia en el navegador.
 - Reutiliza los nodos de EQ existentes; sin cambios en voces, scheduler, mezcla, efectos ni generación de sonido.
