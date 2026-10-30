@@ -643,3 +643,4 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 
 /* v2.26: la etiqueta de versión ya no tapa el BPM */
 .lcd .ver{right:116px;top:19px}
+:root[data-lights="0"] .lsteps{display:none}

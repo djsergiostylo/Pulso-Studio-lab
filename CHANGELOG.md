@@ -218,3 +218,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.26 (2026-10-30) — Claude
 - La etiqueta de versión de la pantalla LCD ya no tapa el BPM: pasa a la línea de abajo, a la izquierda del tempo. Comprobado en las tres vistas de la pantalla (info, onda y espectro).
 - Para revertir: git revert del commit v2.26.
+
+## v2.27 (2026-10-30) — Claude
+- **Menos luces, menos consumo**: al reproducir solo se anima el cursor del secuenciador. Se apagan por defecto los destellos de los LED de cada canal, el pulso de luz de la rejilla con el bombo, los destellos de pads y chips y los 16 puntos de la pantalla LCD (que además libera una línea de altura).
+- Botón **Luces extra** en ⚙ Aspecto · Estilo · Ayuda para volver a encenderlas. Se recuerda (`lights`).
+- Pantallas LCD de onda/espectro a 15 imágenes por segundo en vez de 30 (con Luces extra siguen a 30) y medidores de Mix a 20 por segundo.
+- Medido con un contador de cambios en la página durante 4 s de Play: **661 cambios/s con luces → 272/s sin ellas (−59 %)**, y 248/s con la Mix abierta tras limitar los medidores. Medición de actividad del navegador, no de CPU ni de batería real.
+- Para revertir: git revert del commit v2.27.
