@@ -292,6 +292,12 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .fxh .fxi{font-size:16.8px;line-height:1}
 .fxh h3{flex:1;color:var(--fg);font-size:11.55px}
 .fxc .tg[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}
+.fxmore{border-top:1px solid var(--keyedge);padding-top:3px}
+.fxmore>summary{cursor:pointer;list-style:none;display:flex;align-items:center;min-height:40px;font-family:var(--disp);font-size:9.45px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);touch-action:manipulation}
+.fxmore>summary::-webkit-details-marker{display:none}
+.fxmore>summary::after{content:"＋";margin-left:auto;color:var(--c);font-size:14px}
+.fxmore[open]>summary::after{content:"−"}
+.fxparams{display:flex;flex-direction:column;gap:9px;padding-bottom:2px}
 .fxg{width:100%;height:64px;display:block;background:var(--lcd);border-radius:8px;box-shadow:inset 0 2px 6px rgba(0,0,0,.3)}
 .fxc:not(.on) .fxg{opacity:.4}
 .fxc .seg>button[aria-pressed="true"]{background:var(--c);color:#0b0f17}
@@ -460,6 +466,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
 /* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
 /* v1.8: navegación por tareas; Mix, FX, EQ y Canal agrupados dentro de Mezcla */
+/* v1.9: parámetros detallados de FX plegables; controles rápidos y motor intactos */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -490,7 +497,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.8">v1.8</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.9">v1.9</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -1245,10 +1252,10 @@ function fxCard(d){const o=fxObj(d.id),on=d.id==='ms'||o.on;
   const tog=d.tog?`<button class="tg" data-fx="${d.id}" data-act="tog" data-key="${d.tog[0]}" aria-pressed="${!!o[d.tog[0]]}">${d.tog[1]}</button>`:'';
   const kn2=d.k.map(([key,l,f])=>`<div class="k"><label for="k_${d.id}_${key}">${l} <output id="o_${d.id}_${key}">${f(o[key])}</output></label><input id="k_${d.id}_${key}" data-fx="${d.id}" data-key="${key}" type="range" min="0" max="1000" value="${Math.round(o[key]*1000)}"></div>`).join('');
   return`<div class="fxc${on?' on':''}" id="fx_${d.id}" style="--c:${d.c}"><div class="fxh"><span class="fxi" aria-hidden="true">${d.ic}</span><h3>${d.n}</h3>${tog}${d.id==='ms'?'':`<button class="tg" data-fx="${d.id}" data-act="on" aria-pressed="${on}">${on?'On':'Off'}</button>`}</div>`+
-    `<canvas class="fxg" id="g_${d.id}" aria-hidden="true"></canvas>${segs}<div class="knobs">${kn2}</div>${d.note?`<p class="note">${d.note}</p>`:''}</div>`}
+    `<canvas class="fxg" id="g_${d.id}" aria-hidden="true"></canvas><details class="fxmore"><summary>Parámetros avanzados</summary><div class="fxparams">${segs}<div class="knobs">${kn2}</div>${d.note?`<p class="note">${d.note}</p>`:''}</div></details></div>`}
 function renderFxNav(){$('#fxNav').innerHTML=FXDEF.map(d=>{const on=d.id==='ms'||fxObj(d.id).on;return`<button data-go="${d.id}" class="${on?'on':''}" style="--c:${d.c}"><i></i>${d.ic} ${d.n.split(' ')[0]}</button>`}).join('')}
 function renderFx(){fxCol=null;$('#fxList').innerHTML=FXDEF.map(fxCard).join('');renderFxNav();FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)})}
-function rerenderCard(id){const el=$('#fx_'+id);if(!el)return;el.outerHTML=fxCard(FXI[id]);fxCv[id]=null;renderFxNav();drawFxG(id)}
+function rerenderCard(id){const el=$('#fx_'+id);if(!el)return;const open=!!el.querySelector('.fxmore')?.open;el.outerHTML=fxCard(FXI[id]);const next=$('#fx_'+id);if(next&&next.querySelector('.fxmore'))next.querySelector('.fxmore').open=open;fxCv[id]=null;renderFxNav();drawFxG(id)}
 function fxColors(){if(fxCol)return fxCol;const cs=getComputedStyle(document.documentElement);return fxCol={fg:cs.getPropertyValue('--lcdfg').trim()||'#3ee6d0',bg:cs.getPropertyValue('--lcd').trim(),font:getComputedStyle(document.body).fontFamily}}
 function fxCanvas(id){let o=fxCv[id];if(!o){const cv=$('#g_'+id);if(!cv)return null;const r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1,w=Math.round(r.width*d),h=Math.round(r.height*d);if(!w)return null;
   if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}o=fxCv[id]={cv,g:cv.getContext('2d'),W:w,H:h,d}}return o}
@@ -1293,7 +1300,7 @@ function drawFxG(id){const C2=fxCanvas(id);if(!C2)return;const{g,W,H,d}=C2,k=fxC
 let msPk=0,fltN=null,msN=null;try{const OC=window.OfflineAudioContext||window.webkitOfflineAudioContext,oc=new OC(1,128,44100);fltN=oc.createBiquadFilter();const B=t=>{const f=oc.createBiquadFilter();f.type=t;return f};msN={lp:B('lowpass'),hp:B('highpass'),mid:B('peaking'),air:B('highshelf')};msN.hp.Q.value=.7;msN.mid.Q.value=.9;msN.air.frequency.value=9000}catch(e){}
 const FXLIVE=['sc','cho','flt','cmp','ms'];
 function drawFxLive(){FXLIVE.forEach(drawFxG)}
-$('#fxNav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const el=$('#fx_'+b.dataset.go);if(el)el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})});
+$('#fxNav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const el=$('#fx_'+b.dataset.go);if(el){const det=el.querySelector('.fxmore');if(det)det.open=true;el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}});
 $('#fxList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const box=b.closest('[data-fx]')||b,id=box.dataset.fx,o=fxObj(id);if(!o)return;
   if(b.dataset.act==='on')o.on=!o.on;else if(b.dataset.act==='tog')o[b.dataset.key]=!o[b.dataset.key];
   else if(box.classList.contains('fxs')){const key=box.dataset.key,v=b.dataset.v;o[key]=typeof FXD[id][key]==='number'?+v:v}else return;
