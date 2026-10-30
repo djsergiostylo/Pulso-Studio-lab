@@ -60,3 +60,4 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - La navegación principal y las herramientas secundarias se anuncian como pestañas accesibles, con paneles asociados y selección actual explícita.
 - Añade navegación por teclado con flechas, Inicio y Fin; los botones táctiles siguen funcionando igual.
 - Sin cambios en el motor de audio.
+- Navegación por teclado verificada en GitHub Pages (30-10-2026): pestañas principales y secundarias responden a flechas, Inicio y Fin; resultado correcto.
