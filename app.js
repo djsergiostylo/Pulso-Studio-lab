@@ -987,7 +987,11 @@ function drawLane(id){const cv=$('#wv_'+id),b=LB[id];if(!cv)return;const r=cv.ge
 async function loadLane(id,e){const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;if(f.size>40e6){flash('ARCHIVO MUY GRANDE');return}
   try{const ab=await f.arrayBuffer(),b=await decodeAB(ab),nm=f.name.replace(/\.[^.]+$/,'').slice(0,28);LB[id]=b;LN[id]=nm;try{await idbDo('readwrite',st=>st.put({name:nm,ab},id))}catch(err){}
     if(!S.lanes[id].on.some(Boolean))for(let i=0;i<S.song.len;i++)S.lanes[id].on[i]=1;flash('AUDIO '+(id==='a1'?1:2)+' CARGADO');renderSong();save()}catch(err){flash('AUDIO NO VÁLIDO')}}
+let spT=0,spDone=false;
+$('#t-song').addEventListener('pointerdown',e=>{const b=e.target.closest('.sc[data-r="pat"]');if(!b)return;spDone=false;clearTimeout(spT);spT=setTimeout(()=>{const v=S.song.bars[+b.dataset.b];if(!(v>=0))return;spDone=true;S.pat=v;showTab('seq');upd();save();flash('EDITANDO PATRÓN '+'ABCD'[v])},500)});
+['pointerup','pointerleave','pointercancel'].forEach(ev=>$('#t-song').addEventListener(ev,()=>clearTimeout(spT)));
 $('#t-song').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  if(spDone){spDone=false;return}
   if(b.classList.contains('sc')){const r=b.dataset.r,i=+b.dataset.b;if(r==='pat'){const v=S.song.bars[i];S.song.bars[i]=v>=3?-1:v+1}else S.lanes[r].on[i]=S.lanes[r].on[i]?0:1;renderSong();save();return}
   const sm=b.closest('#songMode');if(sm){S.song.on=b.dataset.v==='1';flash(S.song.on?'MODO CANCIÓN':'MODO PATRÓN');renderSong();updLcd();save();return}
   const sl=b.closest('#songLen');if(sl){S.song.len=+b.dataset.n;renderSong();updLcd();save();return}

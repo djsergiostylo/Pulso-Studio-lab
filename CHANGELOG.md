@@ -69,3 +69,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.5 (2026-10-30)
 - Añade una vibración breve al tocar pasos y pads en dispositivos que admiten la API háptica del navegador.
 - Sin cambios intencionales en el motor de audio. Comprobación funcional pendiente para una sesión posterior.
+
+## v2.6 (2026-10-30) — Claude
+- Verificadas v2.4 y v2.5 en navegador (400 px): sin errores de consola, pestañas, subpestañas, reproducción, pads y vibración funcionan.
+- Canción: al mantener pulsada una casilla de patrón se abre ese patrón en el secuenciador (pendiente heredado de v1.2). Un toque corto sigue cambiando A→B→C→D→vacío.
+- Deshacer ya tenía 100 pasos y rehacer; no requiere cambios.
+- Pendiente: ACID de 32 pasos (cambia el formato de datos; requiere migración en fixP).
+- Para revertir: git revert del commit v2.6.
