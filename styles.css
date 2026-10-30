@@ -526,3 +526,24 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .dkm::before{content:"Macros";grid-column:1/-1;margin-bottom:2px}
 #t-song .pbar::before{content:"Patrones"}
 .dkm{background:var(--pnl);border:1px solid var(--pedge);border-top-color:color-mix(in srgb,var(--fg) 14%,var(--pedge));border-radius:10px;padding:8px;box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 8%,transparent),0 1px 0 color-mix(in srgb,#000 18%,transparent)}
+
+/* v2.16: contraste de botones y letras en todas las carátulas */
+@media (prefers-color-scheme:light){:root:not([data-skin]){--onfg:#16110d}}
+:root[data-skin="light"]{--onfg:#16110d}
+:root[data-skin="papel"]{--on:#c8381f;--led:#c8381f}
+:root[data-skin="mpc"]{--on:#cf352f}
+#play:not([aria-pressed="true"]){color:var(--fg);box-shadow:inset 0 -3px 0 var(--on)}
+.tabs>button{color:color-mix(in srgb,var(--fg) 75%,transparent)}
+.tabs>button[aria-selected="true"]{color:var(--fg)}
+.trk .rn{color:var(--fg)}
+label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 85%,transparent)}
+:root[data-skin="mpc"]{--mute:#d3d6da}
+:root[data-skin="orange"]{--mute:#3a1503}
+:root[data-skin="plata"]{--mute:#363b41}
+:root[data-skin="papel"]{--mute:#4d4c45}
+.tabs>button{color:color-mix(in srgb,var(--fg) 88%,transparent)}
+.more2 .sk{color:var(--fg);border-color:var(--pedge)}
+.more2 .sk[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
+:root[data-skin="mpc"]{--pnl:#454950}
+label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
+:root[data-skin="mpc"]{--dev:#52565c}

@@ -141,3 +141,13 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
   - Canción: nuevos módulos **Patrones** y **Reproducción** (agrupa PATRÓN/CANCIÓN y 8/16/32 compases).
 - Solo CSS y una tarjeta en el HTML. No cambia audio ni datos.
 - Para revertir: git revert del commit v2.15.
+
+## v2.16 (2026-10-30) — Claude
+- Contraste de botones y letras: medí en las 10 carátulas y 6 pantallas (Crear, Canción, Mix, FX, Canal, Proyecto) el contraste entre texto y fondo. Arreglados los que estaban por debajo de 4,5:1.
+  - **Plata, Papel, Claro, Auto, Naranja, Gris MPC:** Play, pestañas de abajo y subpestañas, nombres de canal, etiquetas de mandos, notas y resúmenes.
+  - El botón Play en reposo usa el color del texto y una barra de acento debajo; el color de acento se reserva para los botones activados.
+  - En Claro, Auto, Papel y Gris MPC los botones activados (acento) tienen texto con contraste suficiente.
+  - Los botones de estilo del pie (⚙ Aspecto · Estilo · Ayuda) se leen en todas las carátulas.
+- Resultado: Neón, Oscuro, Verde y Violeta ya estaban bien. Tras los cambios solo quedan lecturas de 4,3:1 en Gris MPC, que he subido con un fondo algo más oscuro.
+- Solo CSS. No cambia audio ni datos.
+- Para revertir: git revert del commit v2.16.
