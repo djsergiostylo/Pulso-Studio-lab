@@ -437,8 +437,9 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .tabs{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:100%;max-width:540px;z-index:30;display:flex;background:var(--dev);border:0;border-top:1px solid var(--edge);border-radius:0;padding-bottom:env(safe-area-inset-bottom);overflow:visible;box-shadow:0 -6px 18px rgba(0,0,0,.25)}
 .tabs>button{flex:1;min-height:var(--nav)!important;border:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:transparent;color:var(--mute);font-family:var(--disp);font-size:8.93px;letter-spacing:.04em;text-transform:uppercase;padding:0;position:relative}
 .tabs>button i{font-style:normal;font-size:18.9px;line-height:1}
-.tabs>button[aria-pressed="true"]{background:transparent;color:var(--on)}
-.tabs>button[aria-pressed="true"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--on)}
+ .tabs>button[aria-selected="true"]{background:transparent;color:var(--on)}
+#subs>button[aria-selected="true"]{background:var(--on);color:var(--onfg)}
+.tabs>button[aria-selected="true"]::before{content:"";position:absolute;top:0;left:22%;right:22%;height:3px;border-radius:0 0 3px 3px;background:var(--on)}
 .sheet{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav) + env(safe-area-inset-bottom) + 6px);width:calc(100% - 24px);max-width:516px;z-index:25;background:var(--dev);border:1px solid var(--keyedge);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:8px;box-shadow:0 -8px 24px rgba(0,0,0,.4)}
 .sheet .emode{flex-wrap:wrap}
 .sheet .emode>button{flex:1 0 25%;min-height:36px;font-size:9.98px;border-top:1px solid var(--keyedge)}
@@ -466,7 +467,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
 /* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
 /* v1.8: navegación por tareas; Mix, FX, EQ y Canal agrupados dentro de Mezcla */
-/* v2.2: parámetros detallados de FX plegables; controles rápidos y motor intactos */
+/* v2.3: parámetros detallados de FX plegables; controles rápidos y motor intactos */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -497,7 +498,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.2">v2.2</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.3">v2.3</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -517,11 +518,11 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="prow"><div class="pchips" id="pchips" role="group" aria-label="Patrón"></div><button class="modeb" id="modeB" aria-expanded="false">Modo: Paso ▾</button></div>
     </div>
 
-    <nav class="tabs" id="tabs" aria-label="Secciones principales">
-      <button data-g="crear" aria-pressed="true"><i>▦</i><span>Crear</span></button>
-      <button data-g="song" aria-pressed="false"><i>♫</i><span>Canción</span></button>
-      <button data-g="mezcla" aria-pressed="false"><i>🎚</i><span>Mezcla</span></button>
-      <button data-g="file" aria-pressed="false" aria-label="Proyecto: guardar, importar y exportar"><i>💾</i><span>Proyecto</span></button>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones principales">
+      <button type="button" role="tab" id="tab-crear" data-g="crear" aria-selected="true" aria-controls="t-seq" tabindex="0"><i>▦</i><span>Crear</span></button>
+      <button type="button" role="tab" id="tab-song" data-g="song" aria-selected="false" aria-controls="t-song" tabindex="-1"><i>♫</i><span>Canción</span></button>
+      <button type="button" role="tab" id="tab-mezcla" data-g="mezcla" aria-selected="false" aria-controls="t-mix" tabindex="-1"><i>🎚</i><span>Mezcla</span></button>
+      <button type="button" role="tab" id="tab-file" data-g="file" aria-selected="false" aria-controls="t-file" aria-label="Proyecto: guardar, importar y exportar" tabindex="-1"><i>💾</i><span>Proyecto</span></button>
     </nav>
     <div class="seg subtabs" id="subs">
       <button data-t="seq" aria-pressed="true">Secuenciador</button>
@@ -1172,12 +1173,15 @@ $('#paste').addEventListener('click',()=>{if(!CB)return;snap();if(CB.t==='pat')P
 /* ---------- tabs ---------- */
 const TG={crear:['seq','pads'],song:['song'],mezcla:['mix','fx','eq','canal'],file:['file']},TL={seq:'Secuenciador',pads:'Pads',mix:'Mix',fx:'FX',eq:'EQ',canal:'Canal'},lastT={crear:'seq',mezcla:'mix'};
 function showTab(t){S.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
-  $$('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-pressed',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
-  const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','group');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button data-t="${n}" aria-pressed="${n===t}">${TL[n]}</button>`).join('');
-  ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{$('#t-'+n).hidden=n!==t});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
+  $('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;b.setAttribute('aria-controls','t-'+(active?t:TG[b.dataset.g][0]));if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+  const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','tablist');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button type="button" role="tab" id="subtab-${n}" data-t="${n}" aria-controls="t-${n}" aria-selected="${n===t}" tabindex="${n===t?0:-1}">${TL[n]}</button>`).join('');
+  ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{const p=$('#t-'+n);p.hidden=n!==t;p.setAttribute('role','tabpanel');if(n===t)p.setAttribute('aria-labelledby',TG[g].length>1?'subtab-'+t:'tab-'+g)});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
   if(t==='canal'){renderCanal();renderKits()};if(t==='mix'){updMixUI();kick()}if(t==='fx'){FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)});kick()}upd()}
+function moveTabByKey(e,root){if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;const a=[...root.querySelectorAll('[role="tab"]')];if(!a.length)return;let i=a.indexOf(document.activeElement);if(e.key==='Home')i=0;else if(e.key==='End')i=a.length-1;else i=(i+(e.key==='ArrowRight'?1:-1)+a.length)%a.length;e.preventDefault();a[i].click();a[i].focus()}
 $('#tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b){const g=b.dataset.g;showTab(lastT[g]||TG[g][0])}});
 $('#subs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)showTab(b.dataset.t)});
+$('#tabs').addEventListener('keydown',e=>moveTabByKey(e,e.currentTarget));
+$('#subs').addEventListener('keydown',e=>moveTabByKey(e,e.currentTarget));
 
 /* ---------- mixer ---------- */
 function drag(el,vert,fn,reset){let last=0,on=false;
