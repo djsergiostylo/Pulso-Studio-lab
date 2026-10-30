@@ -54,6 +54,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Incluye deshacer específico para la última edición de compases.
 - El apartado Proyecto muestra cuándo se han guardado los cambios y avisa si hay cambios pendientes o no se pudo guardar en este dispositivo.
 - Repara el marcador del estado de guardado para conservar el listado de proyectos y la inicialización del resto de controles.
+- Corrige el recorrido de pestañas con teclado y conserva el clic normal.
 - Sin cambios en el motor de audio.
 ## v2.3 (2026-10-30)
 - La navegación principal y las herramientas secundarias se anuncian como pestañas accesibles, con paneles asociados y selección actual explícita.
