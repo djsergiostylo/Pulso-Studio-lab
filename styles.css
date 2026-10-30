@@ -603,3 +603,22 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 :root[data-dock="open"][data-tab="seq"] .lcd .big,:root[data-dock="open"][data-tab="pads"] .lcd .big{font-size:24px}
 :root[data-dock="open"][data-tab="seq"] .lcd canvas,:root[data-dock="open"][data-tab="pads"] .lcd canvas{height:28px}
 .sdb{max-height:34dvh}
+
+/* v2.23: el panel Sonido tiene su propio color (distinto del acento del secuenciador) */
+:root{--snd:#ff9f43;--sndfg:#1a1008}
+:root[data-skin="light"],:root[data-skin="papel"]{--snd:#6d3fd1;--sndfg:#fff}
+@media (prefers-color-scheme:light){:root:not([data-skin]){--snd:#6d3fd1;--sndfg:#fff}}
+:root[data-skin="orange"]{--snd:#26262b;--sndfg:#fff}
+:root[data-skin="plata"]{--snd:#1f5fa8;--sndfg:#fff}
+:root[data-skin="mpc"]{--snd:#5cf0ff;--sndfg:#04181b}
+:root[data-skin="sub"],:root[data-skin="green"]{--snd:#ffb347;--sndfg:#1a1008}
+.sdock{--bc:var(--snd);border-top:3px solid var(--snd);background:color-mix(in srgb,var(--snd) 9%,var(--dev))}
+.sdh{background:color-mix(in srgb,var(--snd) 16%,var(--dev));border-bottom:1px solid color-mix(in srgb,var(--snd) 45%,transparent)}
+#sndTog{border-color:var(--snd);color:var(--fg)}#sndTog b{color:var(--snd)}
+.sdh .seg{border-color:var(--snd);background:color-mix(in srgb,var(--snd) 8%,var(--key))}
+.sdh .seg>button[aria-pressed="true"],.sdb .seg>button[aria-pressed="true"],.sdb .tg[aria-pressed="true"],.sdb .pre[aria-pressed="true"],.sdb #chipsCan .nm[aria-pressed="true"]{background:var(--snd);border-color:var(--snd);color:var(--sndfg)}
+.sdb{--bc:var(--snd)}
+.sdb .card,.sdb .mg,.sdb .fxc{border-top-color:var(--snd)}
+#t-canal input[type=range]::-webkit-slider-thumb{background:var(--snd)}
+#t-canal input[type=range]::-moz-range-thumb{background:var(--snd)}
+.sdb .card h3,.sdb .card .hd2 h3,.sdb .mgt,.sdb .fxgt{border-left-color:var(--snd)}

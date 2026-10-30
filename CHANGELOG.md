@@ -193,3 +193,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Datos nuevos guardados en este móvil: `snd` (vista) y `dockOpen`. No cambia el formato de proyectos, audio ni códigos.
 - Probado a 390 px: abrir/cerrar, cambiar entre Canal/Mix/FX/EQ, editar un mando de Canal, aplicar un kit, cambiar de patrón con el panel abierto, Play, panel en Pads, desaparición en Canción; sin errores. Pendiente de probar en móvil real el espacio útil (con el panel abierto se ven unas 5–6 pistas a la vez y el resto se desplaza).
 - Para revertir: git revert del commit v2.22 (vuelve la pestaña Mezcla).
+
+## v2.23 (2026-10-30) — Claude
+- El panel **Sonido** (Canal · Mix · FX · EQ) tiene su **propio color**, distinto del acento del secuenciador, para que se vea como un conjunto aparte: borde superior grueso, cabecera tintada, botón Sonido, pestañas, canal elegido, mandos de Canal y marcas de título.
+- Color por carátula: naranja en Neón, Oscuro, Auto oscuro, Violeta y Verde; violeta en Claro y Papel; azul en Plata; cian en Gris MPC; gris casi negro en Naranja.
+- Solo CSS. Probado en Neón; las otras carátulas se comprobaron por valores (contraste de texto sobre el color del panel, todos por encima de 4,5:1).
+- Para revertir: git revert del commit v2.23.
