@@ -113,3 +113,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - La capa no corta el Open con el Hat ni se encadena con otras capas.
 - Probado: elegir capa, nivel, guardado, Play sin errores. No escuchado en móvil.
 - Para revertir: git revert del commit v2.11.
+
+## v2.12 (2026-10-30) — Claude
+- Canción: 4 pistas de audio en vez de 2 (AUDIO 1–4), cada una con su archivo, BPM original, bucle y volumen. Copiar, mover, repetir y deshacer compás las incluyen.
+- Datos: `lanes` guarda ahora a1–a4. Los proyectos antiguos de 2 pistas se completan solos (`fixSong`). Los audios se guardan en este móvil, igual que antes.
+- Probado: 4 filas en la cuadrícula, marcar compases, copiar/deshacer, cargar un audio de prueba en AUDIO 4, reproducir en modo canción y quitar el audio, sin errores. No probado el export WAV con las 4 pistas ni en móvil.
+- Para revertir: git revert del commit v2.12.
