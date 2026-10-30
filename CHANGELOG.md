@@ -106,3 +106,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - iPhone: Safari no tiene pantalla completa por botón; usa Compartir → Añadir a pantalla de inicio.
 - Probado a 375 px: sin scroll horizontal y sin errores. No probado en móvil real.
 - Para revertir: git revert del commit v2.10.
+
+## v2.11 (2026-10-30) — Claude
+- Capas en las 6 baterías: en Mezcla → Canal, tarjeta **Capas**. Cada batería puede sumar una segunda voz (por ejemplo Kick + Tom, Snare + Clap) dentro del mismo canal, con su nivel ajustable. La voz de la capa usa el tono y la caída de su propia batería y pasa por el volumen, EQ y efectos del canal que la lleva.
+- Datos: cada canal guarda `ly` (voz de la capa, -1 = sin capa) y `lv` (nivel). Proyectos antiguos se completan solos (`fixC`).
+- La capa no corta el Open con el Hat ni se encadena con otras capas.
+- Probado: elegir capa, nivel, guardado, Play sin errores. No escuchado en móvil.
+- Para revertir: git revert del commit v2.11.
