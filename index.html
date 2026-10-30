@@ -458,14 +458,15 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .mc .fv{order:0;font-size:9.45px}
 .mc .fad{height:120px}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
-/* v1.6: 8 pasos adaptados al ancho real de móviles estrechos */
+/* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
 .focus-pages{display:flex;gap:6px;margin-left:auto}
 .focus-pages[hidden]{display:none}
 .focus-pages>button{min-width:64px}
-#grid .step{touch-action:manipulation}
+.touchhint{font-size:10px;line-height:1.25;text-align:center;color:var(--mute);margin:-4px 0 0}
+#grid .step{touch-action:pan-y}
 #grid.focus .trk.sel .cells{grid-template-columns:repeat(8,minmax(40px,1fr));gap:4px;overflow-x:auto;scrollbar-width:none}
 #grid.focus .trk.sel .cells::-webkit-scrollbar{display:none}
 #grid.focus .trk.sel .step{height:42px!important;min-height:42px;aspect-ratio:auto;font-size:14px}
@@ -473,6 +474,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 #grid.focus[data-page="1"] .trk.sel .step:nth-child(-n+8){display:none}
 #grid.focus .trk:not(.sel){min-height:24px;max-height:24px;gap:2px}
 #grid.focus .trk:not(.sel) .step{height:8px!important;min-height:8px;aspect-ratio:auto}
+@media (max-width:359px){#grid.focus .trk.sel .step{touch-action:manipulation}}
 @media (min-width:360px) and (max-width:420px){
   #grid.focus .trk.sel .cells{grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;overflow-x:hidden}
   #grid.focus .trk.sel .step{height:44px!important;min-height:44px;min-width:0}
@@ -487,7 +489,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.6">v1.6</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.7">v1.7</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -528,7 +530,8 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
           <button type="button" data-page="1" aria-pressed="false">9–16</button>
         </div>
       </div>
-      <div class="mtx" id="grid" role="group" aria-label="Secuenciador"></div>
+      <p id="dragHint" class="touchhint" role="note" hidden>Arrastra en horizontal para activar o borrar varios pasos · mantén pulsado para cambiar la velocidad</p>
+      <div class="mtx" id="grid" role="group" aria-label="Secuenciador; arrastra en horizontal para pintar varios pasos y mantén pulsado para cambiar la velocidad"></div>
       <div class="nrow"><span id="nlab">NOTA SUB</span><div class="notes" id="notes"></div></div>
       <details class="more"><summary>⚙ Más herramientas (largo, copiar)</summary>
       <div class="strip">
@@ -993,16 +996,39 @@ grid.innerHTML=CH.map((c,ch)=>`<div class="trk" id="trk${ch}" style="--c:${CHC[c
 CH.forEach((_,ch)=>rows.push($$('#trk'+ch+' .step')));
 const trkEl=CH.map((_,ch)=>$('#trk'+ch)),riEl=CH.map((_,ch)=>$('#ri'+ch)),trM=trkEl.map(t=>t.querySelector('.m')),trS=trkEl.map(t=>t.querySelector('.s')),cN=rows.map(r=>r.map(b=>b.querySelector('.n'))),cV=rows.map(r=>r.map(b=>b.querySelector('.v'))),cX=rows.map(r=>r.map(b=>b.querySelector('.x')));
 glowEl=document.createElement('div');glowEl.className='glow';grid.prepend(glowEl);rnLed=$$('.rn .led',grid);
-let lpT=0,lpDone=false;
-grid.addEventListener('pointerdown',e=>{const b=e.target.closest('.step');if(!b)return;lpDone=false;clearTimeout(lpT);lpT=setTimeout(()=>{lpDone=true;cyc(+b.dataset.c,+b.dataset.s)},420)});
-['pointerup','pointercancel','pointerleave'].forEach(ev=>grid.addEventListener(ev,()=>clearTimeout(lpT)));
+let lpT=0,lpDone=false,paint=null,suppressPaintClick=false;
+function stepUnder(e){const t=document.elementFromPoint(e.clientX,e.clientY),b=t&&t.closest('#grid .step');return b&&grid.contains(b)?b:null}
+function paintCell(ch,i,on){const p=P[S.pat],drumCh=ch<SUBI,a=drumCh?p.d[ch]:p[NK[ch]],was=velAt(p,ch,i)>0;if(was===on)return false;
+  if(drumCh){if(on)a[i]=2;else{a[i]=0;clrX(p,ch,i)}}
+  else if(on){a[i]=SC[S.scale][S.subSel];p[VK[ch]][i]=2}
+  else{a[i]=-1;clrX(p,ch,i);if(ch===ACI)p.asl[i]=0}
+  const vel=velAt(p,ch,i),active=vel>0,b=rows[ch][i],ac=active&&p.ac[ch][i],rt=active?p.rt[ch][i]:1,nd=active?p.nd[ch][i]:0;
+  b.classList.toggle('on',active);b.classList.toggle('out',i>=C[ch].len);b.classList.toggle('ac',!!ac);b.dataset.v=vel;
+  cN[ch][i].textContent=(!drumCh&&active)?NN[(S.root+p[NK[ch]][i])%12]:i+1;cV[ch][i].style.width=vel?vel*28+'%':'0';
+  cX[ch][i].textContent=(ac?'!':'')+(rt>1?'⋮':'')+(nd?(nd>0?'›':'‹').repeat(Math.abs(nd)):'')+(active&&ch===ACI&&p.asl[i]?'↗':'');return true}
+function paintStep(s,i){if(s.seen.has(i))return;s.seen.add(i);paintCell(s.ch,i,s.on)}
+function paintSpan(s,to){const d=Math.sign(to-s.last);if(!d)return;for(let i=s.last+d;d>0?i<=to:i>=to;i+=d)paintStep(s,i);s.last=to}
+function beginPaint(s,e,b){if(S.em!=='step'||+b.dataset.c!==s.ch||+b.dataset.s===s.i)return false;
+  if(grid.classList.contains('focus')&&(S.ch!==s.ch||innerWidth<360))return false;
+  const dx=Math.abs(e.clientX-s.x),dy=Math.abs(e.clientY-s.y);if(dx<10||dx<dy*1.25)return false;
+  clearTimeout(lpT);s.drag=true;s.on=velAt(P[S.pat],s.ch,s.i)===0;s.seen=new Set();setCh(s.ch);snap();
+  try{grid.setPointerCapture(e.pointerId)}catch(err){}
+  paintStep(s,s.i);s.last=s.i;paintSpan(s,+b.dataset.s);return true}
+grid.addEventListener('pointerdown',e=>{const b=e.target.closest('.step');if(!b||!e.isPrimary||e.button!==0)return;lpDone=false;suppressPaintClick=false;clearTimeout(lpT);
+  const s={id:e.pointerId,first:b,ch:+b.dataset.c,i:+b.dataset.s,x:e.clientX,y:e.clientY,last:+b.dataset.s,drag:false,long:false,on:false,seen:null};paint=s;
+  lpT=setTimeout(()=>{if(paint===s&&!s.drag){s.long=true;lpDone=true;cyc(s.ch,s.i)}},420)});
+grid.addEventListener('pointermove',e=>{const s=paint;if(!s||s.id!==e.pointerId||s.long)return;const b=stepUnder(e);if(!b||+b.dataset.c!==s.ch)return;
+  if(!s.drag){beginPaint(s,e,b);return}paintSpan(s,+b.dataset.s)});
+function finishPaint(e){const s=paint;if(!s||s.id!==e.pointerId)return;clearTimeout(lpT);
+  if(s.drag){suppressPaintClick=true;updGrid();renderChips();save();if(s.on)audition();setTimeout(()=>{suppressPaintClick=false},0)}
+  paint=null}
+['pointerup','pointercancel','pointerleave'].forEach(ev=>grid.addEventListener(ev,finishPaint));
 grid.addEventListener('contextmenu',e=>{if(e.target.closest('.step'))e.preventDefault()});
 grid.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.classList.contains('step')){if(lpDone){lpDone=false;return}hit(+b.dataset.c,+b.dataset.s);return}
-  const i=+b.dataset.i;if(b.classList.contains('m'))toggleMS(i,'m');else if(b.classList.contains('s'))toggleMS(i,'s');else if(b.classList.contains('rn'))selectCh(i)});
-const focusPages=$('#focusPages'),focusPageButtons=$$('#focusPages button');
+  if(b.classList.contains('step')){if(suppressPaintClick){suppressPaintClick=false;return}if(lpDone){lpDone=false;return}hit(+b.dataset.c,+b.dataset.s);return}
+  const i=+b.dataset.i;if(b.classList.contains('m'))toggleMS(i,'m');else if(b.classList.contains('s'))toggleMS(i,'s');else if(b.classList.contains('rn'))selectCh(i)});const focusPages=$('#focusPages'),focusPageButtons=$$('#focusPages button');
 const setFocusPage=page=>{grid.dataset.page=String(page);focusPageButtons.forEach((b,i)=>b.setAttribute('aria-pressed',i===page))};
-$('#focB').addEventListener('click',e=>{const on=grid.classList.toggle('focus');e.currentTarget.setAttribute('aria-pressed',on);focusPages.hidden=!on;if(on){setFocusPage(0);e.currentTarget.textContent='🔍 Vista táctil activa'}else{delete grid.dataset.page;e.currentTarget.textContent='🔍 Vista táctil'}});
+$('#focB').addEventListener('click',e=>{const on=grid.classList.toggle('focus');e.currentTarget.setAttribute('aria-pressed',on);focusPages.hidden=!on;dragHint.hidden=!on||S.em!=='step';if(on){setFocusPage(0);e.currentTarget.textContent='🔍 Vista táctil activa'}else{delete grid.dataset.page;e.currentTarget.textContent='🔍 Vista táctil'}});
 focusPageButtons.forEach(b=>b.addEventListener('click',()=>setFocusPage(+b.dataset.page)));
 function setCh(ch){if(S.ch!==ch){const m=MEL(S.ch)!==MEL(ch)||MEL(ch);S.ch=ch;renderChips();updSteppers();renderCanal();if(m)renderNotes()}}
 const clrX=(p,ch,i)=>{p.ac[ch][i]=0;p.rt[ch][i]=1;p.nd[ch][i]=0},NDC=[0,1,2,-2,-1];
@@ -1094,7 +1120,7 @@ function setSheet(o){sheet.hidden=!o;modeB.setAttribute('aria-expanded',o)}
 modeB.addEventListener('click',e=>{e.stopPropagation();setSheet(sheet.hidden)});
 document.addEventListener('click',e=>{if(!sheet.hidden&&!e.target.closest('#sheet'))setSheet(false)});
 $('#emode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.em=b.dataset.m;$$('#emode button').forEach(x=>x.setAttribute('aria-pressed',x===b));
-  modeB.textContent='Modo: '+ML[S.em]+' ▾';modeB.setAttribute('aria-pressed',S.em!=='step');if(S.em!=='prob'&&S.em!=='euc')setSheet(false);
+  modeB.textContent='Modo: '+ML[S.em]+' ▾';modeB.setAttribute('aria-pressed',S.em!=='step');dragHint.hidden=!grid.classList.contains('focus')||S.em!=='step';if(S.em!=='prob'&&S.em!=='euc')setSheet(false);
   $('#probX').hidden=S.em!=='prob';$('#euc').hidden=S.em!=='euc';$('#modeX').hidden=S.em!=='prob'&&S.em!=='euc';
   flash({step:'TOCAR: PASO',acc:'TOCAR: ACENTO',rt:'TOCAR: REDOBLE',nd:'TOCAR: NUDGE',sl:'TOCAR: SLIDE (ACID)',prob:'PROBABILIDAD DE LA PISTA',euc:'EUCLÍDEO: + / − / ↻'}[S.em]);updGrid()});
 let eucK=4,eucR=0;
