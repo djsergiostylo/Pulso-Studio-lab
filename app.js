@@ -361,7 +361,6 @@ function paintCell(ch,i,on){const p=P[S.pat],drumCh=ch<SUBI,a=drumCh?p.d[ch]:p[N
 function paintStep(s,i){if(s.seen.has(i))return;s.seen.add(i);paintCell(s.ch,i,s.on)}
 function paintSpan(s,to){const d=Math.sign(to-s.last);if(!d)return;for(let i=s.last+d;d>0?i<=to:i>=to;i+=d)paintStep(s,i);s.last=to}
 function beginPaint(s,e,b){if(S.em!=='step'||+b.dataset.c!==s.ch||gs(b)===s.i)return false;
-  if(grid.classList.contains('focus')&&(S.ch!==s.ch||innerWidth<360))return false;
   const dx=Math.abs(e.clientX-s.x),dy=Math.abs(e.clientY-s.y);if(dx<10||dx<dy*1.25)return false;
   clearTimeout(lpT);s.drag=true;s.on=velAt(P[S.pat],s.ch,s.i)===0;s.seen=new Set();setCh(s.ch);snap();
   try{grid.setPointerCapture(e.pointerId)}catch(err){}
@@ -378,10 +377,7 @@ function finishPaint(e){const s=paint;if(!s||s.id!==e.pointerId)return;clearTime
 grid.addEventListener('contextmenu',e=>{if(e.target.closest('.step'))e.preventDefault()});
 grid.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
   if(b.classList.contains('step')){if(suppressPaintClick){suppressPaintClick=false;return}if(lpDone){lpDone=false;return}haptic();hit(+b.dataset.c,gs(b));return}
-  const i=+b.dataset.i;if(b.classList.contains('m'))toggleMS(i,'m');else if(b.classList.contains('s'))toggleMS(i,'s');else if(b.classList.contains('rn'))selectCh(i)});const focusPages=$('#focusPages'),focusPageButtons=$$('#focusPages button');
-const setFocusPage=page=>{grid.dataset.page=String(page);focusPageButtons.forEach((b,i)=>b.setAttribute('aria-pressed',i===page))};
-$('#focB').addEventListener('click',e=>{const on=grid.classList.toggle('focus');e.currentTarget.setAttribute('aria-pressed',on);focusPages.hidden=!on;dragHint.hidden=!on||S.em!=='step';if(on){setFocusPage(0);e.currentTarget.textContent='🔍 Vista táctil activa'}else{delete grid.dataset.page;e.currentTarget.textContent='🔍 Vista táctil'}});
-focusPageButtons.forEach(b=>b.addEventListener('click',()=>setFocusPage(+b.dataset.page)));
+  const i=+b.dataset.i;if(b.classList.contains('m'))toggleMS(i,'m');else if(b.classList.contains('s'))toggleMS(i,'s');else if(b.classList.contains('rn'))selectCh(i)});
 function setCh(ch){if(S.ch!==ch){const m=MEL(S.ch)!==MEL(ch)||MEL(ch);S.ch=ch;renderChips();updSteppers();renderCanal();if(m)renderNotes()}}
 const clrX=(p,ch,i)=>{p.ac[ch][i]=0;p.rt[ch][i]=1;p.nd[ch][i]=0},NDC=[0,1,2,-2,-1];
 function haptic(){try{if(navigator.vibrate)navigator.vibrate(8)}catch(e){}}
@@ -444,7 +440,7 @@ $('#pts').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)
 $('#chain').addEventListener('click',()=>{S.chain=!S.chain;upd();save()});
 $('#dup').addEventListener('click',()=>{snap();const n=(S.pat+1)%4;P[n]=JSON.parse(JSON.stringify(P[S.pat]));S.pat=n;flash('COPIA → '+'ABCD'[n]+' · ↶');upd();save()});
 
-function updSteppers(){const c=C[S.ch],big=C[ACI].len>16;$('#lenv').textContent='LEN '+c.len;$('#stepPg').hidden=!big;if(!big&&pgOff)setPg(0);$('#prbv').textContent='PROB '+Math.round(c.prob*100)+'%'}
+function updSteppers(){const c=C[S.ch],big=C[ACI].len>16;$('#lenv').textContent='LEN '+c.len;$('#stepPg').hidden=!big;$('.seqview').hidden=!big;if(!big&&pgOff)setPg(0);$('#prbv').textContent='PROB '+Math.round(c.prob*100)+'%'}
 function stepK(k,d){if(k==='bpm'){S.bpm=clamp(S.bpm+d,60,200);applyDelay()}else if(k==='len')C[S.ch].len=clamp(C[S.ch].len+d,1,S.ch===ACI?32:16);
   else C[S.ch].prob=clamp(Math.round(C[S.ch].prob*100+d*5)/100,0,1);updLcd();updSteppers();updGrid();saveSoon()}
 function hold(btn,fn){let t,iv;const stop=()=>{clearTimeout(t);clearInterval(iv)};
@@ -475,7 +471,7 @@ function setSheet(o){sheet.hidden=!o;modeB.setAttribute('aria-expanded',o)}
 modeB.addEventListener('click',e=>{e.stopPropagation();setSheet(sheet.hidden)});
 document.addEventListener('click',e=>{if(!sheet.hidden&&!e.target.closest('#sheet'))setSheet(false)});
 $('#emode').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.em=b.dataset.m;$$('#emode button').forEach(x=>x.setAttribute('aria-pressed',x===b));
-  modeB.textContent='Modo: '+ML[S.em]+' ▾';modeB.setAttribute('aria-pressed',S.em!=='step');dragHint.hidden=!grid.classList.contains('focus')||S.em!=='step';if(S.em!=='prob'&&S.em!=='euc')setSheet(false);
+  modeB.textContent='Modo: '+ML[S.em]+' ▾';modeB.setAttribute('aria-pressed',S.em!=='step');if(S.em!=='prob'&&S.em!=='euc')setSheet(false);
   $('#probX').hidden=S.em!=='prob';$('#euc').hidden=S.em!=='euc';$('#modeX').hidden=S.em!=='prob'&&S.em!=='euc';
   flash({step:'TOCAR: PASO',acc:'TOCAR: ACENTO',rt:'TOCAR: REDOBLE',nd:'TOCAR: NUDGE',sl:'TOCAR: SLIDE (ACID)',prob:'PROBABILIDAD DE LA PISTA',euc:'EUCLÍDEO: + / − / ↻'}[S.em]);updGrid()});
 let eucK=4,eucR=0;

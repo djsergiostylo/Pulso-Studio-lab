@@ -13,8 +13,6 @@
 #t-seq .cells{flex:1;min-width:0;gap:2px}
 #t-seq #grid .step{height:26px;border-radius:4px}
 #t-seq #grid .step .n{display:none}
-#t-seq #grid.focus .trk:not(.sel) .step{height:12px}
-#t-seq #grid.focus .trk.sel .step{height:34px}
 .more,.more2{border:1px solid var(--keyedge);border-radius:10px;padding:0 10px}
 .more>summary,.more2>summary{cursor:pointer;font-family:var(--disp);font-size:9.45px;letter-spacing:.08em;color:var(--mute);min-height:30px;display:flex;align-items:center;list-style:none}
 .more[open]{padding-bottom:10px;display:flex;flex-direction:column;gap:8px}.more[open]>summary{margin-bottom:2px}
@@ -81,12 +79,6 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .tabs>button{min-height:38px;font-size:11.55px}
 .subtabs[hidden]{display:none}.subtabs>button{min-height:32px;font-size:10.5px}
 /* modo foco: pista elegida grande (2x8), resto mini */
-#grid.focus .trk:not(.sel) .step{aspect-ratio:auto;height:12px;border-radius:4px;box-shadow:none}
-#grid.focus .trk:not(.sel) .step :is(.n,.v,.x){display:none}
-#grid.focus .trk:not(.sel){gap:2px}
-#grid.focus .trk.sel .cells{grid-template-columns:repeat(8,1fr);gap:5px}
-#grid.focus .trk.sel .step{font-size:16.8px}
-#grid.focus .trk:not(.sel) .ms{display:none}
 .tab{display:flex;flex-direction:column;gap:12px}
 .tab[hidden]{display:none}
 .fn{background:var(--key);border:1px solid var(--keyedge);border-radius:10px;min-height:40px;font-family:var(--disp);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg);box-shadow:0 2px 0 var(--keyedge)}
@@ -471,20 +463,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .focus-pages{display:flex;gap:6px;margin-left:auto}
 .focus-pages[hidden]{display:none}
 .focus-pages>button{min-width:64px}
-.touchhint{font-size:10px;line-height:1.25;text-align:center;color:var(--mute);margin:-4px 0 0}
 #grid .step{touch-action:pan-y}
-#grid.focus .trk.sel .cells{grid-template-columns:repeat(8,minmax(40px,1fr));gap:4px;overflow-x:auto;scrollbar-width:none}
-#grid.focus .trk.sel .cells::-webkit-scrollbar{display:none}
-#grid.focus .trk.sel .step{height:42px!important;min-height:42px;aspect-ratio:auto;font-size:14px}
-#grid.focus[data-page="0"] .trk.sel .step:nth-child(n+9){display:none}
-#grid.focus[data-page="1"] .trk.sel .step:nth-child(-n+8){display:none}
-#grid.focus .trk:not(.sel){min-height:24px;max-height:24px;gap:2px}
-#grid.focus .trk:not(.sel) .step{height:8px!important;min-height:8px;aspect-ratio:auto}
-@media (max-width:359px){#grid.focus .trk.sel .step{touch-action:manipulation}}
-@media (min-width:360px) and (max-width:420px){
-  #grid.focus .trk.sel .cells{grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;overflow-x:hidden}
-  #grid.focus .trk.sel .step{height:44px!important;min-height:44px;min-width:0}
-}
 
 @media (min-width:700px){.wrap{max-width:760px}:root[data-stage] .wrap{max-width:900px}.tabs{max-width:760px}}
 /* v2.8: presets de sonido */
@@ -644,3 +623,4 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 /* v2.26: la etiqueta de versión ya no tapa el BPM */
 .lcd .ver{right:116px;top:19px}
 :root[data-lights="0"] .lsteps{display:none}
+.seqview[hidden]{display:none}

@@ -235,3 +235,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
   - EQ y FX en vivo a 20 imágenes/s (antes 30).
 - Medido (exportando 2 vueltas con el mismo proyecto limpio): **3,7 s → 2,7 s (−27 %)**; con baterías de drive (kits 808/909/Techno) hasta **−50 %**. Nivel idéntico (pico 0,569, RMS −12,7 dB) en ambas versiones. No es una medición en un móvil real.
 - Para revertir: git revert del commit v2.28.
+
+## v2.29 (2026-10-30) — Claude
+- **Quitada la Vista táctil** (botón, páginas 1–8/9–16, aviso de arrastre y todo su código y estilos): no se usaba y ocupaba una fila entera. El secuenciador sube ~40 px más.
+- La fila de encima de la rejilla solo aparece cuando el ACID tiene 32 pasos (Pasos 1–16 / 17–32); si no, no ocupa sitio.
+- Sigue funcionando tocar, mantener pulsado (fuerza) y arrastrar en horizontal para pintar varios pasos.
+- Probado: tocar pasos, ACID 16↔32 (la fila aparece y desaparece), Play; sin errores.
+- Para revertir: git revert del commit v2.29 (vuelve la Vista táctil).

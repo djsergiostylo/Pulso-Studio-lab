@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.28">v2.28</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.29">v2.29</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -43,15 +43,9 @@
 
     <section id="t-seq" class="tab">
       <div class="seqview">
-        <button id="focB" aria-pressed="false" aria-label="Ampliar una pista para editar 8 pasos cada vez">🔍 Vista táctil</button>
-        <div id="focusPages" class="focus-pages" role="group" aria-label="Bloque de pasos" hidden>
-          <button type="button" data-page="0" aria-pressed="true">1–8</button>
-          <button type="button" data-page="1" aria-pressed="false">9–16</button>
-        </div>
         <div id="stepPg" class="focus-pages" role="group" aria-label="Página de pasos (ACID de 32)" hidden> <button type="button" data-pg="0" aria-pressed="true">Pasos 1–16</button> <button type="button" data-pg="1" aria-pressed="false">Pasos 17–32</button> </div>
       </div>
       
-      <p id="dragHint" class="touchhint" role="note" hidden>Arrastra en horizontal para activar o borrar varios pasos · mantén pulsado para cambiar la velocidad</p>
       <div class="mtx" id="grid" role="group" aria-label="Secuenciador; arrastra en horizontal para pintar varios pasos y mantén pulsado para cambiar la velocidad"></div>
       <div class="nrow"><span id="nlab">NOTA SUB</span><div class="notes" id="notes"></div></div>
       <details class="more"><summary>⚙ Más herramientas (largo, copiar)</summary>
