@@ -622,3 +622,15 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #t-canal input[type=range]::-webkit-slider-thumb{background:var(--snd)}
 #t-canal input[type=range]::-moz-range-thumb{background:var(--snd)}
 .sdb .card h3,.sdb .card .hd2 h3,.sdb .mgt,.sdb .fxgt{border-left-color:var(--snd)}
+
+/* v2.24: cada canal conserva su color dentro del panel Sonido (Canal, Mix, EQ) */
+.sdb #chipsCan .chip .nm{border-bottom:3px solid var(--c);color:color-mix(in srgb,var(--c) 55%,var(--fg))}
+.sdb #chipsCan .chip .nm[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}
+#sndTog b{color:var(--ch,var(--snd))}
+#t-canal input[type=range]::-webkit-slider-thumb{background:var(--ch,var(--snd))}
+#t-canal input[type=range]::-moz-range-thumb{background:var(--ch,var(--snd))}
+.sdb #t-canal .card h3,.sdb #t-canal .card .hd2 h3{border-left-color:var(--ch,var(--snd))}
+.sdb #t-canal .pre[aria-pressed="true"],.sdb #t-canal .tg[aria-pressed="true"]{background:var(--ch,var(--snd));border-color:var(--ch,var(--snd));color:#0b0f17}
+.sdb .mc{border-top:3px solid var(--c);border-radius:6px 6px 0 0}
+.sdb .mc .nm2{border-bottom:3px solid var(--c);background:color-mix(in srgb,var(--c) 20%,var(--key));color:var(--fg)}
+.sdb .mc .seg>button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}

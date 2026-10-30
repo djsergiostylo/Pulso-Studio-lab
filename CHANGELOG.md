@@ -199,3 +199,13 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Color por carátula: naranja en Neón, Oscuro, Auto oscuro, Violeta y Verde; violeta en Claro y Papel; azul en Plata; cian en Gris MPC; gris casi negro en Naranja.
 - Solo CSS. Probado en Neón; las otras carátulas se comprobaron por valores (contraste de texto sobre el color del panel, todos por encima de 4,5:1).
 - Para revertir: git revert del commit v2.23.
+
+## v2.24 (2026-10-30) — Claude
+- Dentro del panel **Sonido**, cada canal conserva **su color** (el mismo que en el secuenciador):
+  - **Canal:** botones KICK, SNRE, CLAP… con su color (borde inferior y texto); el canal elegido se rellena con su color. Mandos, botón Sidechain, título y presets usan el color del canal elegido.
+  - **Mix:** cada tira con borde superior y nombre teñidos de su color; Mute/Solo activados en el color del canal.
+  - **EQ:** ya lo tenía; se mantiene.
+  - El rótulo **Sonido · CANAL** del panel toma el color del canal elegido.
+- El conjunto Sonido sigue con su color propio (naranja/violeta/azul/cian según carátula) en borde, cabecera y pestañas.
+- Solo CSS. Probado en Neón con ACID y en Mix; sin errores.
+- Para revertir: git revert del commit v2.24.
