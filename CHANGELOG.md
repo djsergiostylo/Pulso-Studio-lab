@@ -91,3 +91,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Valores elegidos sin escucharlos en un móvil: ajústalos a oído.
 - Probado: aplicar kits y presets, mandos y guardado se actualizan, sin errores de consola.
 - Para revertir: git revert del commit v2.8.
+
+## v2.9 (2026-10-30) — Claude
+- Nuevo canal melódico LEAD (10.ª pista): dos osciladores desafinados, filtro con envolvente, glide, acento, onda elegible. Mandos: Corte, Ancho, Glide, Largo, Filtro, Drive, Reverb, Delay. Presets: Saw lead, Square, Pluck, Glide.
+- Datos: cada patrón guarda ahora también las notas de LEAD (`cn`/`cv`). Proyectos y códigos antiguos de 9 pistas se amplían solos (fixP) y siguen funcionando. Nuevo ajuste `lwave` (onda del LEAD).
+- Entra en rejilla, mezclador, EQ, canal, aleatorio, euclídeo y copiar/pegar sin cambios extra.
+- Probado: aparece la pista, se editan pasos, se guarda, suena Play y los mandos/presets cambian, sin errores de consola. No escuchado en móvil.
+- Para revertir: git revert del commit v2.9 (los patrones ya guardados conservan las notas de LEAD sin usarlas).
