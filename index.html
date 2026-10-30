@@ -262,7 +262,7 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .eqt button.mod::after{content:"•";margin-left:1px}
 #eqc{width:100%;height:230px;display:block;background:var(--lcd);border-radius:10px;touch-action:none}
 .eqk{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:8px}.eqk .k:first-child{grid-column:1/-1}#eqCtl{display:grid;gap:6px;margin-top:6px}#eqCtl[hidden],#eqSl[hidden],.eqk .k[hidden]{display:none}.eqact{display:flex;gap:4px}.eqm{min-width:44px;min-height:30px;border:1px solid var(--keyedge);border-radius:7px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:11.55px}.eqm[aria-pressed="true"]{background:var(--on);color:var(--onfg)}
-#eqStyle{width:100%;min-height:36px}.kitname{display:flex;flex-direction:column;gap:5px;font-family:var(--disp);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.kitname input,.kitname select{min-height:40px;background:var(--key);border:1px solid var(--keyedge);border-radius:10px;padding:0 10px;color:var(--fg);font-family:var(--mono);font-size:14.7px;text-transform:none;letter-spacing:normal}.eqb{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:6px}
+#eqStyle{width:100%;min-height:36px}#saveState{min-height:1.5em;margin:0;text-align:left}.kitname{display:flex;flex-direction:column;gap:5px;font-family:var(--disp);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}.kitname input,.kitname select{min-height:40px;background:var(--key);border:1px solid var(--keyedge);border-radius:10px;padding:0 10px;color:var(--fg);font-family:var(--mono);font-size:14.7px;text-transform:none;letter-spacing:normal}.eqb{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:6px}
 .eqb button{min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--key);border:1px solid var(--keyedge);border-bottom:3px solid var(--c);border-radius:7px;color:var(--fg);padding:0}
 .eqb button span{font-size:14.7px;line-height:1}.eqb button small{font-family:var(--mono);font-size:9.45px;opacity:.8}
 .eqb button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}
@@ -466,7 +466,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
 /* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
 /* v1.8: navegación por tareas; Mix, FX, EQ y Canal agrupados dentro de Mezcla */
-/* v2.1: parámetros detallados de FX plegables; controles rápidos y motor intactos */
+/* v2.2: parámetros detallados de FX plegables; controles rápidos y motor intactos */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -497,7 +497,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.1">v2.1</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.2">v2.2</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -566,6 +566,16 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="seg" id="songMode"><button data-v="0">PATRÓN</button><button data-v="1">CANCIÓN</button></div>
       <div class="seg" id="songLen"><button data-n="8">8 comp.</button><button data-n="16">16</button><button data-n="32">32</button></div>
       <div class="sg" id="songGrid"></div>
+      <div class="card" id="barTools">
+        <h3>Editar compases</h3>
+        <div class="selects">
+          <label>Desde<select id="songSrc" aria-label="Compás de origen"></select></label>
+          <label>Hacia<select id="songDst" aria-label="Compás de destino"></select></label>
+        </div>
+        <div class="seg"><button id="songCopy">Copiar compás</button><button id="songMove">Mover compás</button><button id="songRepeat">Repetir al resto</button></div>
+        <button id="songUndo" class="tg" type="button" disabled>Deshacer edición de compás</button>
+        <p class="note">Copia patrón y activación de audios. Copiar y mover sustituyen el compás de destino; cada acción se puede deshacer aquí.</p>
+      </div>
       <div class="seg"><button id="songFill">Rellenar A·B·C·D</button><button id="songClr">Vaciar</button></div>
       <div id="lanes"></div>
       <p class="note">Modo CANCIÓN: cada compás toca el patrón que pongas (toca la casilla: A → B → C → D → vacío). Las pistas de audio suenan en los compases marcados y se ajustan al tempo con su BPM original.</p>
@@ -610,7 +620,8 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="card">
         <h3>Guardar en este móvil</h3>
         <div class="saverow"><input id="pname" type="text" maxlength="40" placeholder="Nombre del proyecto" autocomplete="off"><button class="fn" id="psave">💾 Guardar</button></div>
-        <div class="plist" id="plist"></div>
+        <p id="saveState" class="note">Se guarda automáticamente en este dispositivo.</p>
+        <div class="plist id="plist"></div>
       </div>
       <div class="card">
         <h3>Archivo de proyecto</h3>
@@ -737,8 +748,9 @@ let P=[mk(),mk(),mk(),mk()];
 
 /* storage: per viewer only */
 const SAVE=['awave','song','lanes','hum','mres','mhp','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
-const save=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}))}catch(e){}};
-let st;const saveSoon=()=>{clearTimeout(st);st=setTimeout(save,300)};
+function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
+const save=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}}
+let st;const saveSoon=()=>{clearTimeout(st);saveMessage('Cambios pendientes de guardar…');st=setTimeout(save,300)};
 try{const r=localStorage.getItem('pulsostudio1')||localStorage.getItem('pocketsub2');if(r){const o=JSON.parse(r);
   if(o.P&&o.P.length===4&&o.P.every(p=>p.d&&p.d.length===6&&p.s&&p.sv))P=o.P;
   if(o.C&&o.C.length>=7)C=C.map((c,i)=>Object.assign({},c,o.C[i]||{}));
@@ -1525,7 +1537,7 @@ function project(name){const s={};PROJ.forEach(k=>{s[k]=S[k]});return JSON.parse
 function loadProject(o){const ok=o&&Array.isArray(o.P)&&o.P.length===4&&o.P.every(p=>p&&Array.isArray(p.d)&&p.d.length===6&&p.d.every(r=>Array.isArray(r)&&r.length===16)&&Array.isArray(p.s)&&p.s.length===16&&Array.isArray(p.sv)&&p.sv.length===16);
   if(!ok)throw new Error('bad');
   P=JSON.parse(JSON.stringify(o.P)).map(fixP);if(Array.isArray(o.C)&&o.C.length>=7)C=CH.map((_,i)=>Object.assign(CHDEF(i),o.C[i]||{}));
-  if(o.S)PROJ.forEach(k=>{if(o.S[k]!==undefined)S[k]=o.S[k]});S.meq=Object.assign({},EQD,S.meq);mergeFx();fixSong();
+  if(o.S)PROJ.forEach(k=>{if(o.S[k]!==undefined)S[k]=o.S[k]});S.meq=Object.assign({},EQD,S.meq);mergeFx();fixSong();songUndoState=null;if($('#songUndo'))$('#songUndo').disabled=true;
   if(o.name)$('#pname').value=o.name;rs.value=S.root;ss.value=S.scale;
   applyAll();setIR();queueWarm();renderFx();renderMsBar();renderCanal();updMixUI();if(S.tab==='eq')renderEq();if(S.tab==='song')renderSong();upd();save()}
 function renderSlots(){const a=getSlots(),el=$('#plist');
@@ -1643,6 +1655,9 @@ function djSet(v){if(Math.abs(v)<.04)v=0;setFxVal('ms','mcut',v<0?1+v*.75:1);set
 
 /* ---------- SONG (arrangement + audio lanes) ---------- */
 const PCOL=['#2ee6d6','#ff764d','#c58bff','#a6f03d'],LCOL={a1:'#4db8ff',a2:'#ffd24d'};
+let songUndoState=null;
+function rememberSong(){songUndoState={bars:[...S.song.bars],a1:[...S.lanes.a1.on],a2:[...S.lanes.a2.on]};$('#songUndo').disabled=false}
+function renderSongOps(n){const src=$('#songSrc'),dst=$('#songDst');if(!src||!dst)return;const a=src.value,b=dst.value;src.replaceChildren();dst.replaceChildren();for(let i=0;i<n;i++){src.add(new Option('Compás '+(i+1),i));dst.add(new Option('Compás '+(i+1),i))}src.value=a!==''&&+a<n?a:'0';dst.value=b!==''&&+b<n?b:(n>1?'1':'0');$('#songUndo').disabled=!songUndoState}
 function renderSong(){const g=S.song,n=g.len;
   $$('#songMode button').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.v==='1')===g.on));
   $$('#songLen button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.n===n));
@@ -1654,8 +1669,13 @@ function renderSong(){const g=S.song,n=g.len;
     `<span class="fnm">${LN[id]?LN[id]+' · '+LB[id].duration.toFixed(1)+' s':'Sin audio'}</span><canvas id="wv_${id}" aria-hidden="true"></canvas>`+
     `<div class="lrow"><label>BPM original<input type="number" inputmode="numeric" min="40" max="240" data-lb="${id}" value="${L.bpm}"></label><label>Bucle<div class="seg" data-ll="${id}">${[1,2,4,8].map(x=>`<button data-n="${x}" aria-pressed="${L.loop===x}">${x}</button>`).join('')}</div></label></div>`+
     `<div class="k"><label for="lv_${id}">Volumen <output id="lvo_${id}">${Math.round(L.vol*100)}</output></label><input id="lv_${id}" type="range" min="0" max="100" value="${Math.round(L.vol*100)}" data-lv="${id}"></div></div>`}).join('');
-  ['a1','a2'].forEach(drawLane);paintSongPH()}
+  ['a1','a2'].forEach(drawLane);renderSongOps(n);paintSongPH()}
 function paintSongPH(){$$('#songGrid .sc').forEach(c=>c.classList.toggle('ph',S.play&&S.song.on&&+c.dataset.b===S.bar))}
+function songEdit(mode){const src=+$('#songSrc').value,dst=+$('#songDst').value,n=S.song.len;if(!Number.isInteger(src)||src<0||src>=n)return;if(mode!=='repeat'&&src===dst){flash('ELIGE OTRO COMPÁS');return}rememberSong();const p=S.song.bars[src],a1=S.lanes.a1.on[src],a2=S.lanes.a2.on[src],end=mode==='repeat'?n:dst+1,start=mode==='repeat'?src+1:dst;if(mode==='repeat'&&start>=end){songUndoState=null;$('#songUndo').disabled=true;flash('NO HAY COMPASES DESPUÉS');return}for(let i=start;i<end;i++){S.song.bars[i]=p;S.lanes.a1.on[i]=a1;S.lanes.a2.on[i]=a2}if(mode==='move'){S.song.bars[src]=-1;S.lanes.a1.on[src]=0;S.lanes.a2.on[src]=0}renderSong();$('#songSrc').value=src;$('#songDst').value=dst;save();flash(mode==='move'?'COMPÁS MOVIDO':mode==='repeat'?'REPETIDO AL FINAL':'COMPÁS COPIADO')}
+$('#songCopy').addEventListener('click',()=>songEdit('copy'));
+$('#songMove').addEventListener('click',()=>songEdit('move'));
+$('#songRepeat').addEventListener('click',()=>songEdit('repeat'));
+$('#songUndo').addEventListener('click',()=>{if(!songUndoState)return;S.song.bars=[...songUndoState.bars];S.lanes.a1.on=[...songUndoState.a1];S.lanes.a2.on=[...songUndoState.a2];songUndoState=null;renderSong();save();flash('COMPÁS DESHECHO')});
 function drawLane(id){const cv=$('#wv_'+id),b=LB[id];if(!cv)return;const r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1,W=Math.round(r.width*d),H=Math.round(r.height*d);if(!W)return;cv.width=W;cv.height=H;
   const g=cv.getContext('2d');g.clearRect(0,0,W,H);if(!b)return;const x=b.getChannelData(0),stp=Math.max(1,Math.floor(x.length/W)),L=S.lanes[id],bo=60/L.bpm*4;g.fillStyle=LCOL[id];
   for(let i=0;i<W;i++){let mn=1,mx=-1;const s=i*stp;for(let j=0;j<stp&&s+j<x.length;j+=4){const v=x[s+j];if(v<mn)mn=v;if(v>mx)mx=v}g.fillRect(i,(1-mx)*H/2,1,Math.max(1,(mx-mn)*H/2))}
