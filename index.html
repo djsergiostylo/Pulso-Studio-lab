@@ -262,7 +262,7 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .eqt button.mod::after{content:"•";margin-left:1px}
 #eqc{width:100%;height:230px;display:block;background:var(--lcd);border-radius:10px;touch-action:none}
 .eqk{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;margin-top:8px}.eqk .k:first-child{grid-column:1/-1}#eqCtl{display:grid;gap:6px;margin-top:6px}#eqCtl[hidden],#eqSl[hidden],.eqk .k[hidden]{display:none}.eqact{display:flex;gap:4px}.eqm{min-width:44px;min-height:30px;border:1px solid var(--keyedge);border-radius:7px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:11.55px}.eqm[aria-pressed="true"]{background:var(--on);color:var(--onfg)}
-.eqb{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:6px}
+#eqStyle{width:100%;min-height:36px}.eqb{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;margin-top:6px}
 .eqb button{min-height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--key);border:1px solid var(--keyedge);border-bottom:3px solid var(--c);border-radius:7px;color:var(--fg);padding:0}
 .eqb button span{font-size:14.7px;line-height:1}.eqb button small{font-family:var(--mono);font-size:9.45px;opacity:.8}
 .eqb button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}
@@ -466,7 +466,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .lcd .ver{position:absolute;right:40px;top:4px;font-family:var(--disp);font-size:8px;letter-spacing:.1em;opacity:.75;pointer-events:none;z-index:1}
 /* v1.7: edición táctil por arrastre, con toque largo de velocidad preservado */
 /* v1.8: navegación por tareas; Mix, FX, EQ y Canal agrupados dentro de Mezcla */
-/* v1.9: parámetros detallados de FX plegables; controles rápidos y motor intactos */
+/* v2.0: parámetros detallados de FX plegables; controles rápidos y motor intactos */
 .seqview{display:flex;align-items:center;gap:6px;min-height:40px}
 .seqview>button,.focus-pages>button{min-height:40px;padding:0 12px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.45px;letter-spacing:.04em;touch-action:manipulation}
 .seqview>button[aria-pressed="true"],.focus-pages>button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
@@ -497,7 +497,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v1.9">v1.9</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.0">v2.0</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -585,6 +585,7 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 
     <section id="t-eq" class="tab" hidden>
       <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
+      <button id="eqStyle" class="fn" type="button" aria-pressed="true">EQ PREDETERMINADA · SÍ</button>
       <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
       <div class="card">
         <div class="hd2"><h3>Banda <span id="eqBn"></span></h3><span class="eqact"><button id="eqOn" class="eqm" aria-pressed="true">ON</button><button id="eqDel" class="eqm" aria-label="Borrar banda">🗑</button></span></div>
@@ -710,7 +711,8 @@ const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2
 const SONGD={on:false,len:16,bars:[0,0,1,1,0,0,1,1,2,2,3,3,2,2,3,3].concat(new Array(16).fill(-1))},LANED=()=>({bpm:120,loop:4,vol:.8,on:new Array(32).fill(0)});
 const S={awave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:110,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
   swing:0,mdrive:.1,mcut:1,mvol:.8,lim:.3,rev:{on:true,size:.4,mix:.3},dly:{on:true,div:2,fb:.4,mix:.25},sc:{on:true,amt:.55,rel:.3},skin:'neon',style:'abl',lcdv:'info',stage:false,ui3:false,meq:Object.assign({},EQD)};
-const CHDEF=i=>Object.assign({},DEF,i===SUBI?{vol:.85,sc:1}:i===ACI?{vol:.62,sc:1,tn:.35,br:.6,gl:.5,dc:.35,dly:.15}:i===STI?{vol:.5,sc:1,tn:.5,br:.4,dc:.35,rev:.3,dly:.25}:{});
+const EQSTYLE=[[[21.6093,0,"hp",48,1.09],[13918.629,0,"bell",24,1.09]],[[71.646,0,"hp",24,1.09],[226.707,-9.5,"bell",24,1.09],[7584.727,-5.5,"bell",24,.1964],[17716.707,0,"lp",24,1.09]],[[529.551,0,"hp",24,1.09]],[[7584.727,0,"hp",24,1.09]],[[2359.98,0,"hp",24,1.09]],[[52.072,0,"hp",24,1.09]],[[145.476,0,"lp",24,1.09]],[],[],[]].map(a=>a.map(([f,g,t,s,q])=>({on:1,f,g,t,s,q})));
+const CHDEF=i=>Object.assign({},DEF,{eqb:EQSTYLE[i].map(b=>({...b}))},i===SUBI?{vol:.85,sc:1}:i===ACI?{vol:.62,sc:1,tn:.35,br:.6,gl:.5,dc:.35,dly:.15}:i===STI?{vol:.5,sc:1,tn:.5,br:.4,dc:.35,rev:.3,dly:.25}:{});
 let C=CH.map((_,i)=>CHDEF(i));
 C[1].rev=.2;C[2].rev=.3;C[4].dly=.3;C[4].rev=.15;
 let P=[mk(),mk(),mk(),mk()];
@@ -1405,7 +1407,8 @@ function eqBuild(e,list){try{e.i.disconnect()}catch(_){}e.ns.forEach(a=>a.forEac
   e.ns=list.map(b=>{const T=EQC[b.t];if(isCut(b.t))return bwQ(b.s/12).map(q=>{const n=e.x.createBiquadFilter();n.type=T;n.Q.value=20*Math.log10(q);return n});
     const n=e.x.createBiquadFilter();n.type=T;return[n]});
   let prev=e.i;e.ns.forEach(a=>a.forEach(n=>{prev.connect(n);prev=n}));prev.connect(e.o)}
-function setEq(e,o,t){const list=eqbOf(o).filter(b=>b.on),sig=list.map(b=>b.t+(isCut(b.t)?b.s:'')).join(),rb=sig!==e.sig;if(rb){e.sig=sig;eqBuild(e,list)}
+let eqDefaultOn=(()=>{try{return localStorage.getItem('pulsoEqDefaultOn')!=='0'}catch(e){return true}})();
+function setEq(e,o,t){const list=eqbOf(o).filter(b=>b.on&&eqDefaultOn),sig=(eqDefaultOn?'1':'0')+list.map(b=>b.t+(isCut(b.t)?b.s:'')).join(),rb=sig!==e.sig;if(rb){e.sig=sig;eqBuild(e,list)}
   const mx=e.x.sampleRate*.45;list.forEach((b,k)=>{const f=clamp(b.f,FMIN,mx);e.ns[k].forEach(n=>{if(rb)n.frequency.value=f;else n.frequency.setTargetAtTime(f,t,.02);
     if(hasG(b.t)){if(rb)n.gain.value=b.g;else n.gain.setTargetAtTime(b.g,t,.02)}
     if(hasQ(b.t)){if(rb)n.Q.value=b.q;else n.Q.setTargetAtTime(b.q,t,.02)}})})}
@@ -1479,6 +1482,8 @@ $('#eqTy').addEventListener('click',e=>{const b=e.target.closest('button');if(b)
 $('#eqSl').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setBand(eqBand,{s:+b.dataset.s})});
 $('#eqOn').addEventListener('click',()=>{const b=eqbOf(eqObj())[eqBand];if(b)setBand(eqBand,{on:b.on?0:1})});
 $('#eqDel').addEventListener('click',delBand);
+function paintEqStyle(){const b=$('#eqStyle');if(!b)return;b.setAttribute('aria-pressed',String(eqDefaultOn));b.textContent=eqDefaultOn?'EQ PREDETERMINADA · SÍ':'EQ PREDETERMINADA · NO'}
+$('#eqStyle').addEventListener('click',()=>{eqDefaultOn=!eqDefaultOn;try{localStorage.setItem('pulsoEqDefaultOn',eqDefaultOn?'1':'0')}catch(e){}paintEqStyle();applyAll();flash(eqDefaultOn?'EQ PREDETERMINADA ACTIVADA':'EQ EN BYPASS')});
 (()=>{const g=$('#eq_g'),f=$('#eq_f'),q=$('#eq_q');
   g.addEventListener('input',()=>setBand(eqBand,{g:+g.value}));f.addEventListener('input',()=>setBand(eqBand,{f:s2f(+f.value)}));q.addEventListener('input',()=>setBand(eqBand,{q:s2q(+q.value)}));
   let lg=0;g.addEventListener('pointerup',()=>{const n=Date.now();if(n-lg<300){setBand(eqBand,{g:0});lg=0}else lg=n})})();
@@ -1660,7 +1665,7 @@ $('#t-song').addEventListener('input',e=>{const id=e.target.dataset.lv;if(!id)re
 
 function upd(){updLcd();renderChips();renderNotes();updGrid();renderPbar();updSteppers()}
 rs.value=S.root;ss.value=S.scale;
-buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);
+paintEqStyle();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);
 })();
 </script>
 
