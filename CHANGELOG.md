@@ -159,3 +159,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Las 4 pistas de audio son filas plegables con su color: nombre, archivo y botones Cargar/Quitar siempre a la vista; BPM original, bucle, volumen y onda se abren al tocar la fila.
 - Probado a 390 px: mute, fader, abrir canal desde la mezcla, abrir/cerrar pistas de audio, modo canción y editar compases; sin errores.
 - Para revertir: git revert del commit v2.17.
+
+## v2.18 (2026-10-30) — Claude
+- **FX** en acordeón y por grupos: **Master**, **Espacio** (Reverb, Delay), **Color y modulación** (Chorus, Filtro, Bitcrush) y **Dinámica** (Sidechain, Compresor). Solo se muestra abierto el gráfico de un efecto a la vez; el resto queda en una fila con su interruptor On/Off. Tocar la fila (o su chip arriba) lo abre. De ~1990 px a ~1230 px.
+- **Canal**: las pestañas de canal ya no repiten M/S (están en Mix) y **Sample propio** y **Mis kits guardados** quedan plegados. De ~1360 px a ~950 px.
+- Probado: abrir/cerrar efectos, interruptor On/Off sin cerrar el acordeón, cambio de canal; sin errores.
+- Para revertir: git revert del commit v2.18.

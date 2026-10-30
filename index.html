@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.17">v2.17</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.18">v2.18</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -193,20 +193,20 @@
         <div class="k" id="lyK" hidden><label for="lyLv">Nivel de la capa <output id="lyO"></output></label><input id="lyLv" type="range" min="0" max="100" value="50"></div>
         <p class="note">Suma una segunda batería a este canal (por ejemplo Kick + Tom o Snare + Clap). Usa el tono y la caída de esa batería; su nivel se ajusta aquí.</p>
       </div>
-      <div class="card" id="smpx">
-        <div class="hd2"><h3>🎤 Sample propio</h3><span class="smpn" id="smpN">Sintetizado</span></div>
+      <details class="card" id="smpx">
+        <summary class="hd2"><h3>🎤 Sample propio</h3><span class="smpn" id="smpN">Sintetizado</span></summary>
         <div class="seg"><button id="smpL">⬆ Cargar audio</button><button id="smpX" disabled>✕ Quitar</button></div>
         <input id="smpF" type="file" accept="audio/*" hidden>
         <p class="note">Con sample: Tono cambia la afinación y Caída lo acorta. Máx. 8 s. Se guarda en este móvil (no va dentro del .json ni del código).</p>
-      </div>
-      <div class="card" id="kitCard">
-        <div class="hd2"><h3>🥁 Kits de batería</h3><span class="smpn">6 canales</span></div>
+      </details>
+      <details class="card" id="kitCard">
+        <summary class="hd2"><h3>🥁 Mis kits guardados</h3><span class="smpn">6 canales</span></summary>
         <label class="kitname" for="kitName">Nombre del kit<input id="kitName" type="text" maxlength="32" placeholder="Mi kit" autocomplete="off"></label>
         <div class="saverow"><button id="kitSave" class="fn" type="button">Guardar kit</button></div>
         <label class="kitname" for="kitList">Kits guardados<select id="kitList"><option value="">Aún no hay kits</option></select></label>
         <div class="seg"><button id="kitLoad" disabled>Aplicar kit</button><button id="kitDel" disabled>Eliminar</button></div>
         <p class="note">Guarda tonos, caídas, drive y muestras propias de los 6 sonidos de batería. Solo en este dispositivo; las muestras no se incluyen en el proyecto JSON.</p>
-      </div>
+      </details>
       <div class="card" id="subx" hidden>
         <h3 id="subxT">Sub bass</h3>
         <div class="seg" id="waves" role="group" aria-label="Onda">

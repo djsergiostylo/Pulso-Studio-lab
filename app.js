@@ -620,14 +620,17 @@ const FXDEF=[
 const FXI={};FXDEF.forEach(d=>{FXI[d.id]=d});
 const fxObj=id=>id==='ms'?S:S[id],fxDef=(id,k)=>id==='ms'?MSD[k]:FXD[id][k];
 let fxCol=null;const fxCv={};
+let fxOpen='rev';
+const FXG={ms:['Master','#9fb0c8'],rev:['Espacio','#a98bff'],dly:['Espacio','#a98bff'],cho:['Color y modulación','#4de0c8'],flt:['Color y modulación','#4de0c8'],cr:['Color y modulación','#4de0c8'],sc:['Dinámica','#ffd24d'],cmp:['Dinámica','#ffd24d']};
+const fxOrder=()=>{const ids=['ms','rev','dly','cho','flt','cr','sc','cmp'],all=ids.map(id=>FXI[id]).filter(Boolean);FXDEF.forEach(d=>{if(!all.includes(d))all.push(d)});return all};
 function fxCard(d){const o=fxObj(d.id),on=d.id==='ms'||o.on;
   const segs=(d.seg||[]).map(([key,opts])=>`<div class="seg fxs" data-fx="${d.id}" data-key="${key}">${opts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${String(o[key])===String(v)}">${l}</button>`).join('')}</div>`).join('');
   const tog=d.tog?`<button class="tg" data-fx="${d.id}" data-act="tog" data-key="${d.tog[0]}" aria-pressed="${!!o[d.tog[0]]}">${d.tog[1]}</button>`:'';
   const kn2=d.k.map(([key,l,f])=>`<div class="k"><label for="k_${d.id}_${key}">${l} <output id="o_${d.id}_${key}">${f(o[key])}</output></label><input id="k_${d.id}_${key}" data-fx="${d.id}" data-key="${key}" type="range" min="0" max="1000" value="${Math.round(o[key]*1000)}"></div>`).join('');
-  return`<div class="fxc${on?' on':''}" id="fx_${d.id}" style="--c:${d.c}"><div class="fxh"><span class="fxi" aria-hidden="true">${d.ic}</span><h3>${d.n}</h3>${tog}${d.id==='ms'?'':`<button class="tg" data-fx="${d.id}" data-act="on" aria-pressed="${on}">${on?'On':'Off'}</button>`}</div>`+
+  return`<div class="fxc${on?' on':''}${fxOpen===d.id?'':' sh'}" id="fx_${d.id}" style="--c:${d.c}"><div class="fxh"><span class="fxi" aria-hidden="true">${d.ic}</span><h3>${d.n}</h3>${tog}${d.id==='ms'?'':`<button class="tg" data-fx="${d.id}" data-act="on" aria-pressed="${on}">${on?'On':'Off'}</button>`}</div>`+
     `<canvas class="fxg" id="g_${d.id}" aria-hidden="true"></canvas><details class="fxmore"><summary>Parámetros avanzados</summary><div class="fxparams">${segs}<div class="knobs">${kn2}</div>${d.note?`<p class="note">${d.note}</p>`:''}</div></details></div>`}
 function renderFxNav(){$('#fxNav').innerHTML=FXDEF.map(d=>{const on=d.id==='ms'||fxObj(d.id).on;return`<button data-go="${d.id}" class="${on?'on':''}" style="--c:${d.c}"><i></i>${d.ic} ${d.n.split(' ')[0]}</button>`}).join('')}
-function renderFx(){fxCol=null;$('#fxList').innerHTML=FXDEF.map(fxCard).join('');renderFxNav();FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)})}
+function renderFx(){fxCol=null;let lg='';$('#fxList').innerHTML=fxOrder().map(d=>{const g=FXG[d.id],t=g&&g[0]!==lg?`<div class="fxgt" style="--gc:${g[1]}">${g[0]}</div>`:'';if(g)lg=g[0];return t+fxCard(d)}).join('');renderFxNav();FXDEF.forEach(d=>{fxCv[d.id]=null;drawFxG(d.id)})}
 function rerenderCard(id){const el=$('#fx_'+id);if(!el)return;const open=!!el.querySelector('.fxmore')?.open;el.outerHTML=fxCard(FXI[id]);const next=$('#fx_'+id);if(next&&next.querySelector('.fxmore'))next.querySelector('.fxmore').open=open;fxCv[id]=null;renderFxNav();drawFxG(id)}
 function fxColors(){if(fxCol)return fxCol;const cs=getComputedStyle(document.documentElement);return fxCol={fg:cs.getPropertyValue('--lcdfg').trim()||'#3ee6d0',bg:cs.getPropertyValue('--lcd').trim(),font:getComputedStyle(document.body).fontFamily}}
 function fxCanvas(id){let o=fxCv[id];if(!o){const cv=$('#g_'+id);if(!cv)return null;const r=cv.getBoundingClientRect(),d=window.devicePixelRatio||1,w=Math.round(r.width*d),h=Math.round(r.height*d);if(!w)return null;
@@ -673,7 +676,9 @@ function drawFxG(id){const C2=fxCanvas(id);if(!C2)return;const{g,W,H,d}=C2,k=fxC
 let msPk=0,fltN=null,msN=null;try{const OC=window.OfflineAudioContext||window.webkitOfflineAudioContext,oc=new OC(1,128,44100);fltN=oc.createBiquadFilter();const B=t=>{const f=oc.createBiquadFilter();f.type=t;return f};msN={lp:B('lowpass'),hp:B('highpass'),mid:B('peaking'),air:B('highshelf')};msN.hp.Q.value=.7;msN.mid.Q.value=.9;msN.air.frequency.value=9000}catch(e){}
 const FXLIVE=['sc','cho','flt','cmp','ms'];
 function drawFxLive(){FXLIVE.forEach(drawFxG)}
-$('#fxNav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const el=$('#fx_'+b.dataset.go);if(el){const det=el.querySelector('.fxmore');if(det)det.open=true;el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})}});
+$('#fxNav').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fxShow(b.dataset.go);const el=$('#fx_'+b.dataset.go);if(el)el.scrollIntoView({behavior:RM?'auto':'smooth',block:'start'})});
+function fxShow(id){fxOpen=id;$$('#fxList .fxc').forEach(c=>c.classList.toggle('sh',c.id!=='fx_'+id));fxCv[id]=null;requestAnimationFrame(()=>drawFxG(id))}
+$('#fxList').addEventListener('click',e=>{const h=e.target.closest('.fxh');if(!h||e.target.closest('button'))return;const id=h.parentElement.id.slice(3);if(fxOpen===id){fxOpen='';$$('#fxList .fxc').forEach(c=>c.classList.add('sh'))}else fxShow(id)});
 $('#fxList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const box=b.closest('[data-fx]')||b,id=box.dataset.fx,o=fxObj(id);if(!o)return;
   if(b.dataset.act==='on')o.on=!o.on;else if(b.dataset.act==='tog')o[b.dataset.key]=!o[b.dataset.key];
   else if(box.classList.contains('fxs')){const key=box.dataset.key,v=b.dataset.v;o[key]=typeof FXD[id][key]==='number'?+v:v}else return;

@@ -567,3 +567,12 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .lane .fnm{flex:1;min-width:0}.lane .seg>button{min-height:34px;padding:0 10px}
 .lane .lbody{display:flex;flex-direction:column;gap:8px;margin-top:8px}.lane{margin-bottom:6px;padding:8px}
 .lane .seg>button{white-space:nowrap}.lane .seg{flex:0 0 auto}
+
+/* v2.18: FX en acordeón con grupos; Canal más compacto */
+.fxgt{font-family:var(--disp);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pttl);border-left:3px solid var(--gc);padding-left:6px;margin:10px 0 2px;line-height:1}
+.fxc.sh .fxg,.fxc.sh .fxmore{display:none}
+.fxh{cursor:pointer}
+.fxh h3::after{content:" ▾";opacity:.6}.fxc.sh .fxh h3::after{content:" ▸"}
+#chipsCan .m,#chipsCan .s{display:none}
+#smpx>summary,#kitCard>summary{cursor:pointer;list-style:none}
+#smpx[open],#kitCard[open]{display:flex;flex-direction:column;gap:10px}
