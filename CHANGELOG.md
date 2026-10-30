@@ -30,3 +30,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - En pantallas de 360–420 px, los 8 pasos de Vista táctil se distribuyen en el ancho disponible y alcanzan 44 px de alto.
 - En pantallas más estrechas se conserva el desplazamiento horizontal para mantener un tamaño de toque útil.
 - Cambio exclusivamente visual; motor de audio y formato de proyecto intactos.
+
+
+## v1.7 (2026-10-30)
+- En modo Paso, arrastra horizontalmente por una pista para activar o borrar varios pasos de una vez; si el primero está encendido, el gesto apaga la fila atravesada.
+- El toque corto sigue editando un paso y el toque largo sigue cambiando su velocidad; el gesto de arrastre se agrupa como una sola acción de deshacer.
+- La vista táctil muestra una indicación breve y conserva el desplazamiento en pantallas de menos de 360 px.
+- El motor de audio queda intacto; la preescucha reutiliza la función existente una vez por gesto.
