@@ -250,3 +250,10 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Coste: cada capa activa duplica las voces de ese canal. Medido con las 4 capas encendidas: 112 osciladores creados en 5 s frente a 47 sin capas. Si el móvil va justo, apaga capas o sube Audio a **Estable**.
 - Probado: botones en los 4 sintes, guardado, batería sin cambios, Play con capas; sin errores. No escuchado en móvil.
 - Para revertir: git revert del commit v2.30.
+
+## v2.31 (2026-10-30) — Claude
+- **Más volumen sin saturar**: medí la salida del proyecto por defecto. El limitador final dejaba el pico en 0,569 (−4,9 dBFS), unos 5 dB por debajo del máximo. Subida de ganancia final de +2 dB: pico **0,684 (−3,3 dBFS)** y nivel medio **−11,3 dB** en vez de −13,7 dB (**+2,4 dB**), sin ninguna muestra cerca de 1,0. Afecta a todos los proyectos (también a la exportación).
+- Capas: el nivel por defecto de una capa nueva baja del 50 % al **40 %** (las capas ya guardadas no cambian).
+- Hallazgos de la medición (proyecto por defecto, cada canal en solo): Kick, Snare, SUB y ACID llegan al techo del limitador; la capa de octava/quinta apenas cambia el nivel porque el limitador la comprime; Hat y Stab quedan ~10–12 dB por debajo del pico del bombo (normal en hats; Stab algo bajo, se puede subir en Mix).
+- No he escuchado el resultado: son ajustes basados en medidas. Si algo suena fuerte o duro, baja el Master en Mix o el limitador.
+- Para revertir: git revert del commit v2.31.

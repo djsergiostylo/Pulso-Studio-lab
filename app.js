@@ -26,7 +26,7 @@ const EQB=[{g:'el',f:'fl',t:'lowshelf',df:120,lo:30,hi:400,n:'Graves',ic:'🔈'}
   {g:'em',f:'ef',t:'peaking',df:1000,lo:300,hi:5000,n:'Medios',ic:'🎙'},{g:'e4',f:'f4',t:'peaking',df:3500,lo:1500,hi:10000,n:'Medio-agudos',ic:'🔔'},{g:'eh',f:'fh',t:'highshelf',df:6000,lo:3000,hi:16000,n:'Agudos',ic:'✨'}];
 const EQD={};EQB.forEach(b=>{EQD[b.g]=0;EQD[b.f]=b.df});
 const gv=(o,k,d)=>o[k]==null?d:o[k];
-const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.5,lo:0},EQD);
+const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.4,lo:0},EQD);
 
 const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.55,rel:.3,att:.1},
   cho:{on:false,mode:'cho',rate:.35,depth:.5,fb:.3,mix:.4},flt:{on:false,type:'lowpass',freq:.55,res:.3,div:3,depth:.5,shape:'sine'},cr:{on:false,bits:.45,down:.25,mix:.5},cmp:{on:false,thr:.6,ratio:.25,att:.15,rel:.3,mk:.2}};
@@ -64,7 +64,7 @@ try{const r=localStorage.getItem('pulsostudio1')||localStorage.getItem('pocketsu
 if(!S.ui3){S.skin='neon';S.style='abl';S.ui3=true}
 P.forEach(fixP);fixSong();C.forEach(fixC);if(!['canal','mix','fx','eq'].includes(S.snd))S.snd='canal';S.dockOpen=!!S.dockOpen;if(!['interactive','balanced','playback'].includes(S.lat))S.lat='balanced';S.lights=!!S.lights;document.documentElement.dataset.lights=S.lights?'1':'0';S.dockH=Number.isFinite(+S.dockH)&&S.dockH>0?clamp(Math.round(S.dockH),110,900):0;
 S.meq=Object.assign({},EQD,S.meq);
-function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lo=i>=SUBI&&[12,-12,7,24].includes(Math.round(+c.lo))?Math.round(+c.lo):0;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.5,0,1)}
+function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lo=i>=SUBI&&[12,-12,7,24].includes(Math.round(+c.lo))?Math.round(+c.lo):0;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.4,0,1)}
 function fixSong(){const g=S.song||{};S.song={on:!!g.on,len:[8,16,32].includes(g.len)?g.len:16,bars:ok16x32(g.bars)};
   const L=S.lanes||{};S.lanes={};LID.forEach(id=>{const x=L[id]||{},d=LANED();S.lanes[id]={bpm:clamp(+x.bpm||120,40,240),loop:[1,2,4,8].includes(x.loop)?x.loop:4,vol:typeof x.vol==='number'?clamp(x.vol,0,1):.8,on:Array.from({length:32},(_,i)=>x.on&&x.on[i]?1:0)}})}
 function ok16x32(a){return Array.from({length:32},(_,i)=>{const v=a&&a[i];return typeof v==='number'&&v>=-1&&v<=3?Math.round(v):(a?-1:SONGD.bars[i])})}
@@ -172,7 +172,7 @@ function applyFx(t){const T=(p,v,tc)=>p.setTargetAtTime(v,t,tc||.02);
   wire('cmp',Q.on,m=>{if(m==='connect'){M.eq.o.disconnect(M.cmk);M.eq.o.connect(M.cmp);M.cmp.connect(M.cmk)}else{M.eq.o.disconnect(M.cmp);M.cmp.disconnect(M.cmk);M.eq.o.connect(M.cmk)}})}
 function applyDelay(){if(!ctx)return;const t=ctx.currentTime,dt=DIVS[S.dly.div][1]*60/S.bpm/4;M.dL.delayTime.setTargetAtTime(dt,t,.05);M.dR.delayTime.setTargetAtTime(dt,t,.05);M.lfo2.frequency.setTargetAtTime(S.bpm/60/FDIV[S.flt.div][1],t,.05)}
 function applyMaster(){if(!ctx)return;const t=ctx.currentTime;setEq(M.eq,S.meq,t);if(M._drv!==S.mdrive){M._drv=S.mdrive;setShape(M.sh,S.mdrive)}
-  M.lp.frequency.setTargetAtTime(180*Math.pow(110,S.mcut),t,.02);M.vol.gain.setTargetAtTime(S.mvol*.9,t,.02);if(M.lim._wk){M.lim.parameters.get('drive').setTargetAtTime(Math.pow(10,S.lim*12/20),t,.02);M.mk.gain.setTargetAtTime(1,t,.02)}else{M.lim.threshold.value=-6-S.lim*18;M.mk.gain.setTargetAtTime(1.7,t,.02)}
+  M.lp.frequency.setTargetAtTime(180*Math.pow(110,S.mcut),t,.02);M.vol.gain.setTargetAtTime(S.mvol*.9,t,.02);if(M.lim._wk){M.lim.parameters.get('drive').setTargetAtTime(Math.pow(10,S.lim*12/20),t,.02);M.mk.gain.setTargetAtTime(1.26,t,.02)}else{M.lim.threshold.value=-6-S.lim*18;M.mk.gain.setTargetAtTime(1.7,t,.02)}
   applyMs(t);applyFx(t);applyDelay()}
 function applyLanes(){if(!ctx||!M.lg)return;const t=ctx.currentTime;LID.forEach(id=>M.lg[id].gain.setTargetAtTime(S.lanes[id].vol,t,.02))}
 let anaLive=true;function anaOn(on){if(!ctx||!chs.length||on===anaLive)return;anaLive=on;chs.forEach(c=>{try{if(on)c.pan.connect(c.ana);else c.pan.disconnect(c.ana)}catch(e){}})}
