@@ -634,3 +634,9 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .sdb .mc{border-top:3px solid var(--c);border-radius:6px 6px 0 0}
 .sdb .mc .nm2{border-bottom:3px solid var(--c);background:color-mix(in srgb,var(--c) 20%,var(--key));color:var(--fg)}
 .sdb .mc .seg>button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#0b0f17}
+
+/* v2.25: asa para cambiar la altura del panel Sonido */
+.sdgrip{height:18px;display:grid;place-items:center;cursor:ns-resize;touch-action:none;background:color-mix(in srgb,var(--snd) 16%,var(--dev))}
+.sdgrip i{display:block;width:44px;height:5px;border-radius:3px;background:var(--snd);opacity:.85}
+.sdgrip:focus-visible{outline:2px solid var(--snd);outline-offset:-2px}
+.sdb{max-height:34dvh}
