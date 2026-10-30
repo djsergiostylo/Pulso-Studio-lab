@@ -45,3 +45,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Guarda como perfil EQ predeterminado las curvas ajustadas para cada sonido: Kick, Snare, Clap, Hat, Open Hat, Tom, Sub, Acid y Stab; master plano.
 - Añade **EQ Bypass · NO/SÍ** para alternar la EQ global entre activa y bypass. Conserva los valores de todas las bandas y recuerda la preferencia en el navegador.
 - Reutiliza los nodos de EQ existentes; sin cambios en voces, scheduler, mezcla, efectos ni generación de sonido.
+## v2.1 (2026-10-30)
+- Añade una biblioteca local para guardar, aplicar y eliminar kits de batería personales con los ajustes de tono, caída, drive y las muestras cargadas en los seis canales de batería.
+- Limita los kits a 24 MB y conserva las muestras fuera del proyecto JSON. Se bloquea la aplicación del kit durante la reproducción para evitar cambios de sonido en mitad del compás.
+- El cambio no altera patrones ni modifica la estructura del motor de audio.
