@@ -547,3 +547,23 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 85%,transparent)}
 :root[data-skin="mpc"]{--pnl:#454950}
 label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 :root[data-skin="mpc"]{--dev:#52565c}
+
+/* v2.17: Mezcla y Canción en bloques con color */
+:root[data-tab="mix"] .prow,:root[data-tab="fx"] .prow,:root[data-tab="eq"] .prow,:root[data-tab="canal"] .prow,:root[data-tab="file"] .prow{display:none}
+.card h3,.mtx::before,.dkm::before,#t-song .pbar::before,.mgt{border-left-color:var(--bc,var(--on))}
+.mix{display:flex;flex-direction:column;gap:8px}
+.mg{background:var(--pnl);border:1px solid var(--pedge);border-top:2px solid var(--bc);border-radius:10px;padding:8px 6px 6px}
+.mgt{border-left:3px solid var(--bc);padding-left:6px;margin-bottom:6px;font-family:var(--disp);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pttl);line-height:1}
+.mgr{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:4px}
+.mg .mc{min-width:0}.mg .fad{height:104px}
+#t-song .pbar{--bc:#4de0c8}#repCard{--bc:#ffd24d}#arrCard{--bc:#ff6ad5}#barTools{--bc:#a98bff}
+#t-song .pbar,#t-song .card{border-top:2px solid var(--bc)}
+#repCard{flex-direction:row;flex-wrap:wrap;align-items:center}#repCard h3{flex:0 0 100%}#repCard .seg{flex:1 1 130px}
+#arrCard .sg{background:none;border:0;padding:0;box-shadow:none}
+.pts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.pts .seg{flex-direction:column}.pts .seg>button{min-height:34px}
+#barTools>summary{cursor:pointer;list-style:none;font-family:var(--disp);font-size:10px;letter-spacing:.14em;text-transform:uppercase;border-left:3px solid var(--bc);padding-left:6px}
+#barTools[open]>summary{margin-bottom:8px}#barTools[open]{display:flex;flex-direction:column;gap:8px}
+.lane>summary{list-style:none;display:flex;align-items:center;gap:8px;cursor:pointer}.lane>summary::-webkit-details-marker{display:none}
+.lane .fnm{flex:1;min-width:0}.lane .seg>button{min-height:34px;padding:0 10px}
+.lane .lbody{display:flex;flex-direction:column;gap:8px;margin-top:8px}.lane{margin-bottom:6px;padding:8px}
+.lane .seg>button{white-space:nowrap}.lane .seg{flex:0 0 auto}

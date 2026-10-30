@@ -151,3 +151,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Resultado: Neón, Oscuro, Verde y Violeta ya estaban bien. Tras los cambios solo quedan lecturas de 4,3:1 en Gris MPC, que he subido con un fondo algo más oscuro.
 - Solo CSS. No cambia audio ni datos.
 - Para revertir: git revert del commit v2.16.
+
+## v2.17 (2026-10-30) — Claude
+- **Mezcla → Mix** en bloques con color: **Baterías** (naranja: Kick, Snare, Clap, Hat, Open, Tom) y **Sintes y master** (violeta: Sub, Acid, Stab, Lead, Mst). Los 11 faders caben en una pantalla sin desplazarse (antes 2 filas desiguales y master suelto).
+- La fila de patrones A·B·C·D de la cabecera se oculta en Mezcla (Mix/FX/EQ/Canal) y Proyecto, donde no sirve: ~44 px más de sitio.
+- **Canción** de ~2300 px a ~1250 px, en bloques con color: **Patrones** (turquesa, en una fila), **Reproducción · compases** (amarillo, en una línea), **Arreglo** (rosa: cuadrícula + Rellenar/Vaciar). **Editar compases** pasa a estar plegado.
+- Las 4 pistas de audio son filas plegables con su color: nombre, archivo y botones Cargar/Quitar siempre a la vista; BPM original, bucle, volumen y onda se abren al tocar la fila.
+- Probado a 390 px: mute, fader, abrir canal desde la mezcla, abrir/cerrar pistas de audio, modo canción y editar compases; sin errores.
+- Para revertir: git revert del commit v2.17.

@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.16">v2.16</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.17">v2.17</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -80,11 +80,14 @@
         <div class="pts" id="pts"></div>
         <div class="seg"><button id="chain" aria-pressed="false">Cadena A-D</button><button id="dup">Duplicar →</button></div>
       </div>
-      <div class="card"><h3>Reproducción</h3><div class="seg" id="songMode"><button data-v="0">PATRÓN</button><button data-v="1">CANCIÓN</button></div>
-      <div class="seg" id="songLen"><button data-n="8">8 comp.</button><button data-n="16">16</button><button data-n="32">32</button></div></div>
-      <div class="sg" id="songGrid"></div>
-      <div class="card" id="barTools">
-        <h3>Editar compases</h3>
+      <div class="card" id="repCard"><h3>Reproducción · compases</h3><div class="seg" id="songMode"><button data-v="0">PATRÓN</button><button data-v="1">CANCIÓN</button></div>
+      <div class="seg" id="songLen"><button data-n="8" aria-label="8 compases">8</button><button data-n="16" aria-label="16 compases">16</button><button data-n="32" aria-label="32 compases">32</button></div></div>
+      <div class="card" id="arrCard"><h3>Arreglo</h3>
+        <div class="sg" id="songGrid"></div>
+        <div class="seg"><button id="songFill">Rellenar A·B·C·D</button><button id="songClr">Vaciar</button></div>
+      </div>
+      <details class="card" id="barTools">
+        <summary>Editar compases</summary>
         <div class="selects">
           <label>Desde<select id="songSrc" aria-label="Compás de origen"></select></label>
           <label>Hacia<select id="songDst" aria-label="Compás de destino"></select></label>
@@ -92,8 +95,7 @@
         <div class="seg"><button id="songCopy">Copiar compás</button><button id="songMove">Mover compás</button><button id="songRepeat">Repetir al resto</button></div>
         <button id="songUndo" class="tg" type="button" disabled>Deshacer edición de compás</button>
         <p class="note">Copia patrón y activación de audios. Copiar y mover sustituyen el compás de destino; cada acción se puede deshacer aquí.</p>
-      </div>
-      <div class="seg"><button id="songFill">Rellenar A·B·C·D</button><button id="songClr">Vaciar</button></div>
+      </details>
       <div id="lanes"></div>
       <p class="note">Modo CANCIÓN: cada compás toca el patrón que pongas (toca la casilla: A → B → C → D → vacío; mantén pulsada una casilla para abrir ese patrón y editarlo). Las pistas de audio suenan en los compases marcados y se ajustan al tempo con su BPM original.</p>
     </section>

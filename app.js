@@ -486,7 +486,7 @@ $('#paste').addEventListener('click',()=>{if(!CB)return;snap();if(CB.t==='pat')P
 
 /* ---------- tabs ---------- */
 const TG={crear:['seq','pads'],song:['song'],mezcla:['mix','fx','eq','canal'],file:['file']},TL={seq:'Secuenciador',pads:'Pads',mix:'Mix',fx:'FX',eq:'EQ',canal:'Canal'},lastT={crear:'seq',mezcla:'mix'};
-function showTab(t){S.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
+function showTab(t){S.tab=t;document.documentElement.dataset.tab=t;$('#msBar').hidden=t!=='fx';$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
   $$('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;b.setAttribute('aria-controls','t-'+(active?t:TG[b.dataset.g][0]));if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','tablist');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button type="button" role="tab" id="subtab-${n}" data-t="${n}" aria-controls="t-${n}" aria-selected="${n===t}" tabindex="${n===t?0:-1}">${TL[n]}</button>`).join('');
   ['seq','pads','song','mix','fx','eq','canal','file'].forEach(n=>{const p=$('#t-'+n);p.hidden=n!==t;p.setAttribute('role','tabpanel');if(n===t)p.setAttribute('aria-labelledby',TG[g].length>1?'subtab-'+t:'tab-'+g)});anaOn(t==='mix'||t==='eq');if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='eq'){eqDirty=true;renderEq();kick()}if(t==='file')renderSlots();
@@ -505,12 +505,12 @@ function drag(el,vert,fn,reset){let last=0,on=false;
 const toDb=v=>v<.001?'-∞ dB':(20*Math.log10(v)>-.05?'0.0':(20*Math.log10(v)).toFixed(1))+' dB';
 const DBT=[[1,'0'],[.708,'-3'],[.5,'-6'],[.25,'-12'],[0,'-∞']].map(([v,l])=>`<span${v===1?' class="z"':''} style="bottom:${v*100}%">${l}</span>`).join('');
 function buildMix(){let h='';
-  for(let i=0;i<=NCH;i++){const ms=i===NCH,nm=ms?'MST':CH[i][1];
+  for(let i=0;i<=NCH;i++){const ms=i===NCH,nm=ms?'MST':CH[i][1];if(i===0)h+='<div class="mg" style="--bc:#ff9f43"><div class="mgt">Baterías</div><div class="mgr" style="--n:6">';if(i===SUBI)h+='</div></div><div class="mg" style="--bc:#a98bff"><div class="mgt">Sintes y master</div><div class="mgr" style="--n:5">';
     h+=`<div class="mc" id="mc${i}" style="--c:${ms?'var(--fg)':CHC[i]}"><div class="fw"><div class="meter" aria-hidden="true"><i id="mt${i}"></i></div><div class="fad" id="fad${i}"><div class="cap" id="cap${i}"></div><div class="dbs" aria-hidden="true">${DBT}</div></div></div><span class="fv" id="fv${i}"></span>`+
     `<div class="pn" id="pn${i}"${ms?' style="visibility:hidden"':''}><b id="pb${i}"></b></div>`+
     (ms?`<div class="seg ms" style="visibility:hidden"><button tabindex="-1">M</button><button tabindex="-1">S</button></div>`:`<div class="seg ms"><button class="m" data-i="${i}" aria-pressed="false" aria-label="Mute ${CH[i][0]}">M</button><button class="s" data-i="${i}" aria-pressed="false" aria-label="Solo ${CH[i][0]}">S</button></div>`)+
     `<button class="nm2" data-i="${i}">${nm}</button></div>`}
-  $('#mix').innerHTML=h;mtEl=[];for(let i=0;i<=NCH;i++)mtEl.push($('#mt'+i));
+  $('#mix').innerHTML=h+'</div></div>';mtEl=[];for(let i=0;i<=NCH;i++)mtEl.push($('#mt'+i));
   for(let i=0;i<=NCH;i++){
     drag($('#fad'+i),true,v=>{if(i<NCH){C[i].vol=v;applyCh(i)}else{S.mvol=v;applyMaster()}updMixUI();saveSoon()},()=>{if(i<NCH){C[i].vol=.8;applyCh(i)}else{S.mvol=.8;applyMaster()}updMixUI();saveSoon()});
     if(i<NCH)drag($('#pn'+i),false,v=>{C[i].pan=v*2-1;applyCh(i);updMixUI();saveSoon()},()=>{C[i].pan=0;applyCh(i);updMixUI();saveSoon()})}}
@@ -1021,10 +1021,10 @@ function renderSong(){const g=S.song,n=g.len;
   h+='<div class="lab">PATRÓN</div>';for(let b=0;b<n;b++){const v=g.bars[b];h+=`<button class="sc${v>=0?' on':''}" data-r="pat" data-b="${b}" style="--c:${v>=0?PCOL[v]:'transparent'}" aria-label="Compás ${b+1}: ${v>=0?'patrón '+'ABCD'[v]:'vacío'}">${v>=0?'ABCD'[v]:'·'}</button>`}
   LID.forEach((id,k)=>{h+=`<div class="lab">AUDIO ${k+1}</div>`;for(let b=0;b<n;b++)h+=`<button class="sc${S.lanes[id].on[b]?' on':''}" data-r="${id}" data-b="${b}" style="--c:${LCOL[id]}" aria-label="Audio ${k+1} compás ${b+1}"></button>`});
   $('#songGrid').innerHTML=h+'</div>';
-  $('#lanes').innerHTML=LID.map((id,k)=>{const L=S.lanes[id];return`<div class="lane" style="--c:${LCOL[id]}"><div class="lh"><b>AUDIO ${k+1}</b><div class="seg"><button data-la="load" data-id="${id}">⬆ Cargar</button><button data-la="del" data-id="${id}"${LB[id]?'':' disabled'}>✕</button></div></div>`+
-    `<span class="fnm">${LN[id]?LN[id]+' · '+LB[id].duration.toFixed(1)+' s':'Sin audio'}</span><canvas id="wv_${id}" aria-hidden="true"></canvas>`+
+  const openL=new Set($$('#lanes details[open]').map(d=>d.dataset.id));
+  $('#lanes').innerHTML=LID.map((id,k)=>{const L=S.lanes[id],nm=LN[id]?LN[id]+' · '+LB[id].duration.toFixed(1)+' s':'Sin audio';return`<details class="lane" data-id="${id}" style="--c:${LCOL[id]}"${openL.has(id)?' open':''}><summary class="lh"><b>AUDIO ${k+1}</b><span class="fnm">${nm}</span><div class="seg"><button data-la="load" data-id="${id}">⬆ Cargar</button><button data-la="del" data-id="${id}"${LB[id]?'':' disabled'} aria-label="Quitar audio ${k+1}">✕</button></div></summary><div class="lbody"><canvas id="wv_${id}" aria-hidden="true"></canvas>`+
     `<div class="lrow"><label>BPM original<input type="number" inputmode="numeric" min="40" max="240" data-lb="${id}" value="${L.bpm}"></label><label>Bucle<div class="seg" data-ll="${id}">${[1,2,4,8].map(x=>`<button data-n="${x}" aria-pressed="${L.loop===x}">${x}</button>`).join('')}</div></label></div>`+
-    `<div class="k"><label for="lv_${id}">Volumen <output id="lvo_${id}">${Math.round(L.vol*100)}</output></label><input id="lv_${id}" type="range" min="0" max="100" value="${Math.round(L.vol*100)}" data-lv="${id}"></div></div>`}).join('');
+    `<div class="k"><label for="lv_${id}">Volumen <output id="lvo_${id}">${Math.round(L.vol*100)}</output></label><input id="lv_${id}" type="range" min="0" max="100" value="${Math.round(L.vol*100)}" data-lv="${id}"></div></div></details>`}).join('');
   LID.forEach(drawLane);renderSongOps(n);paintSongPH()}
 function paintSongPH(){$$('#songGrid .sc').forEach(c=>c.classList.toggle('ph',S.play&&S.song.on&&+c.dataset.b===S.bar))}
 function songEdit(mode){const src=+$('#songSrc').value,dst=+$('#songDst').value,n=S.song.len;if(!Number.isInteger(src)||src<0||src>=n)return;if(mode!=='repeat'&&src===dst){flash('ELIGE OTRO COMPÁS');return}rememberSong();const p=S.song.bars[src],ls=LID.map(id=>S.lanes[id].on[src]),end=mode==='repeat'?n:dst+1,start=mode==='repeat'?src+1:dst;if(mode==='repeat'&&start>=end){songUndoState=null;$('#songUndo').disabled=true;flash('NO HAY COMPASES DESPUÉS');return}for(let i=start;i<end;i++){S.song.bars[i]=p;LID.forEach((id,k)=>{S.lanes[id].on[i]=ls[k]})}if(mode==='move'){S.song.bars[src]=-1;LID.forEach(id=>{S.lanes[id].on[src]=0})}renderSong();$('#songSrc').value=src;$('#songDst').value=dst;save();flash(mode==='move'?'COMPÁS MOVIDO':mode==='repeat'?'REPETIDO AL FINAL':'COMPÁS COPIADO')}
@@ -1039,6 +1039,8 @@ function drawLane(id){const cv=$('#wv_'+id),b=LB[id];if(!cv)return;const r=cv.ge
 async function loadLane(id,e){const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;if(f.size>40e6){flash('ARCHIVO MUY GRANDE');return}
   try{const ab=await f.arrayBuffer(),b=await decodeAB(ab),nm=f.name.replace(/\.[^.]+$/,'').slice(0,28);LB[id]=b;LN[id]=nm;try{await idbDo('readwrite',st=>st.put({name:nm,ab},id))}catch(err){}
     if(!S.lanes[id].on.some(Boolean))for(let i=0;i<S.song.len;i++)S.lanes[id].on[i]=1;flash('AUDIO '+(LID.indexOf(id)+1)+' CARGADO');renderSong();save()}catch(err){flash('AUDIO NO VÁLIDO')}}
+$('#lanes').addEventListener('click',e=>{if(e.target.closest('summary button'))e.preventDefault()});
+$('#lanes').addEventListener('toggle',e=>{const d=e.target;if(d.open){const c=d.querySelector('canvas');if(c)drawLane(c.id.slice(3))}},true);
 let spT=0,spDone=false;
 $('#t-song').addEventListener('pointerdown',e=>{const b=e.target.closest('.sc[data-r="pat"]');if(!b)return;spDone=false;clearTimeout(spT);spT=setTimeout(()=>{const v=S.song.bars[+b.dataset.b];if(!(v>=0))return;spDone=true;S.pat=v;showTab('seq');upd();save();flash('EDITANDO PATRÓN '+'ABCD'[v])},500)});
 ['pointerup','pointerleave','pointercancel'].forEach(ev=>$('#t-song').addEventListener(ev,()=>clearTimeout(spT)));
