@@ -37,3 +37,5 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - El toque corto sigue editando un paso y el toque largo sigue cambiando su velocidad; el gesto de arrastre se agrupa como una sola acción de deshacer.
 - La vista táctil muestra una indicación breve y conserva el desplazamiento en pantallas de menos de 360 px.
 - El motor de audio queda intacto; la preescucha reutiliza la función existente una vez por gesto.
+| v1.7 | 2026-10-30 | Arrastre horizontal por fila, con toque corto, toque largo de velocidad y Deshacer en una acción; motor intacto. |
+| v1.8 | 2026-10-30 | Navegación principal agrupada en Crear, Canción, Mezcla y Proyecto. Mix, FX, EQ y Canal comparten el espacio Mezcla; se recuerda el último subapartado. Acceso guardar renombrado Proyecto. Motor intacto. |
