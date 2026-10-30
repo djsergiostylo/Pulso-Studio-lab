@@ -178,3 +178,9 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Botones de esa fila algo más bajos (36 px).
 - Probado: ACID 16↔32, cambio de página, Vista táctil; sin errores.
 - Para revertir: git revert del commit v2.20.
+
+## v2.21 (2026-10-30) — Claude
+- **Compartir por enlace**: en 💾 Proyecto → Copias y compartir, nuevo botón **🔗 Enlace**. Crea una dirección de la web con el beat dentro (`...#PS1:código`) y abre el menú de compartir del móvil (o la copia al portapapeles). Quien abra el enlace ve un aviso "Este enlace trae un beat. ¿Cargarlo?" y, si acepta, el beat se carga y se puede deshacer con ↶.
+- Los botones quedan en "Código · 🔗 Enlace · Importar". El formato del código no cambia: los códigos antiguos siguen funcionando.
+- Probado: crear enlace, cambiar el tempo, abrir el enlace en la misma página y volver al beat original (aviso mostrado una vez, dirección limpiada, sin errores). No probado abriendo el enlace en una pestaña nueva ni con el menú de compartir real del móvil.
+- Para revertir: git revert del commit v2.21.

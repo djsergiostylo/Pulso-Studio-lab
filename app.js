@@ -934,6 +934,13 @@ async function decBeat(t){const m=t.replace(/\s+/g,'').match(/PS([01]):([A-Za-z0
   if(m[1]==='1'){if(!window.DecompressionStream)throw new Error('nods');u=await pipeU(u,new DecompressionStream('deflate-raw'))}return JSON.parse(new TextDecoder().decode(u))}
 $('#shC').addEventListener('click',async()=>{const t=$('#shT');try{t.value=await encBeat(project($('#pname').value.trim()||'Pulso Studio'));t.focus();t.select();let ok=false;
   try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(t.value);ok=true}}catch(e){}flash(ok?'CÓDIGO COPIADO':'CÓDIGO LISTO: CÓPIALO')}catch(e){flash('NO SE PUDO CREAR')}});
+/* enlace compartible: la app se abre con #PS1:código y carga ese beat (pregunta antes de sustituir el proyecto) */
+$('#shL').addEventListener('click',async()=>{const t=$('#shT');try{const url=location.href.split('#')[0]+'#'+await encBeat(project($('#pname').value.trim()||'Pulso Studio'));t.value=url;
+  if(navigator.share){try{await navigator.share({title:'Pulso Studio',text:'Mira mi beat',url});return}catch(e){if(e&&e.name==='AbortError')return}}
+  let ok=false;try{if(navigator.clipboard&&navigator.clipboard.writeText){await navigator.clipboard.writeText(url);ok=true}}catch(e){}t.focus();t.select();flash(ok?'ENLACE COPIADO':'ENLACE LISTO: CÓPIALO')}catch(e){flash('NO SE PUDO CREAR')}});
+async function fromHash(){const h=location.hash;if(!/^#PS[01]:/.test(h))return;history.replaceState(null,'',location.pathname+location.search);
+  try{const o=await decBeat(h.slice(1));if(!confirm('Este enlace trae un beat. ¿Cargarlo? Sustituye el proyecto actual (puedes deshacer con ↶).'))return;snap();loadProject(o);flash('BEAT DEL ENLACE CARGADO')}catch(e){flash(e&&e.message==='nods'?'NAVEGADOR SIN SOPORTE':'ENLACE NO VÁLIDO')}}
+window.addEventListener('hashchange',fromHash);
 $('#shI').addEventListener('click',async()=>{const t=$('#shT');if(!t.value.trim()){flash('PEGA UN CÓDIGO');t.focus();return}
   try{const o=await decBeat(t.value);snap();loadProject(o);flash('BEAT IMPORTADO')}catch(e){flash(e&&e.message==='nods'?'NAVEGADOR SIN SOPORTE':'CÓDIGO NO VÁLIDO')}});
 let recN=1,recOn=false;
@@ -1065,5 +1072,5 @@ $('#t-song').addEventListener('input',e=>{const id=e.target.dataset.lv;if(!id)re
 
 function upd(){updLcd();renderChips();renderNotes();updGrid();renderPbar();updSteppers()}
 rs.value=S.root;ss.value=S.scale;
-paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);
+paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);setTimeout(fromHash,0);
 })();
