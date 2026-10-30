@@ -735,6 +735,10 @@ function setStage(on){S.stage=on;const de=document.documentElement;
   $('#stage').setAttribute('aria-pressed',on);setTimeout(()=>{cvDirty=true;drawLcd()},80)}
 $('#stage').addEventListener('click',()=>setStage(!S.stage));
 $('#stageX').addEventListener('click',()=>setStage(false));
+/* pantalla completa (si el navegador la ofrece; en iPhone: Compartir → Añadir a pantalla de inicio) */
+const fsB=$('#fs');if(!document.documentElement.requestFullscreen)fsB.hidden=true;
+fsB.addEventListener('click',()=>{try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen({navigationUI:'hide'})}catch(e){}});
+document.addEventListener('fullscreenchange',()=>fsB.setAttribute('aria-pressed',!!document.fullscreenElement));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.stage)setStage(false)});
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&S.stage)setStage(false)});
 

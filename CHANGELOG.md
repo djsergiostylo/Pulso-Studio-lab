@@ -98,3 +98,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Entra en rejilla, mezclador, EQ, canal, aleatorio, euclídeo y copiar/pegar sin cambios extra.
 - Probado: aparece la pista, se editan pasos, se guarda, suena Play y los mandos/presets cambian, sin errores de consola. No escuchado en móvil.
 - Para revertir: git revert del commit v2.9 (los patrones ya guardados conservan las notas de LEAD sin usarlas).
+
+## v2.10 (2026-10-30) — Claude
+- Pantalla completa en móvil (ancho ≤ 700 px): sin marco, sin sombra, sin esquinas redondeadas y con solo 6 px de margen. La rejilla gana ~15 % de ancho en un móvil de 375 px. Escritorio y tablet no cambian.
+- Botón **Pantalla completa** en ⚙ Aspecto · Estilo · Ayuda (se oculta si el navegador no la ofrece).
+- Preparada para instalarse como app: `manifest.webmanifest` (modo fullscreen) e `icon.svg`, más meta de tema. Para que se ofrezca instalar hace falta servirla por HTTPS (p. ej. GitHub Pages); no verificado.
+- iPhone: Safari no tiene pantalla completa por botón; usa Compartir → Añadir a pantalla de inicio.
+- Probado a 375 px: sin scroll horizontal y sin errores. No probado en móvil real.
+- Para revertir: git revert del commit v2.10.

@@ -491,3 +491,6 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .presets{display:flex;flex-wrap:wrap;gap:6px}
 .pre{min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--keyedge);background:var(--key);color:var(--fg);font-family:var(--disp);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
 .pre:active{background:var(--on);color:var(--onfg)}
+
+/* v2.10: pantalla completa en móvil */
+@media (max-width:700px){body{padding-inline:0}.wrap{max-width:none;gap:0}.device{border:0;border-radius:0;box-shadow:none;padding:6px 6px}.tabs{max-width:none}.more2{margin:0 8px 8px}}
