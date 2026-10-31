@@ -321,3 +321,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.46 (2026-10-31) — Claude
 - FX: la cadena de efectos es ahora una tira de modulos (Envios: Reverb, Delay · Master: Master, Chorus, Filtro, Crush, Sidechain, Compresor) con LED de encendido en cada uno. Se toca un modulo y solo se muestra ese efecto debajo; ya no hay que hacer scroll entre efectos. Toca el LED para encender o apagar sin cambiar de efecto.
 - Para revertir: git revert del commit v2.46.
+
+## v2.47 (2026-10-31) — Claude
+- Doble toque para resetear (Macros, barra Master y deslizadores de FX): ahora solo cuenta un toque corto y quieto sobre el mismo control; un arrastre ya no cuenta, asi que ajustar varias veces seguidas no resetea por error ni afecta a otro macro.
+- Para revertir: git revert del commit v2.47.

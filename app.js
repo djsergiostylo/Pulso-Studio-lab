@@ -553,13 +553,18 @@ function updMixUI(){updDock();['k_ms_mvol','b_ms_mvol'].forEach(id=>{const mv=$(
 
 /* ---------- dock Directo: volumen, M/S y macros siempre a mano ---------- */
 let dockOK=false;
+/* doble toque para resetear: solo cuenta toques cortos y quietos sobre el MISMO control (un arrastre nunca cuenta) */
+function dblTap(root,sel,fn){let down=null,prev=null;
+  root.addEventListener('pointerdown',e=>{const el=e.target.closest(sel);down=el?{el,x:e.clientX,y:e.clientY,t:Date.now()}:null});
+  root.addEventListener('pointerup',e=>{if(!down)return;const d=down;down=null;const n=Date.now();if(Math.abs(e.clientX-d.x)>6||Math.abs(e.clientY-d.y)>6||n-d.t>300){prev=null;return}
+    if(prev&&prev.el===d.el&&n-prev.t<400){prev=null;fn(d.el)}else prev={el:d.el,t:n}});
+  root.addEventListener('pointercancel',()=>{down=null;prev=null})}
 const DKM=[['dj','DJ'],['rev:mix','Reverb'],['dly:mix','Delay'],['ms:mdrive','Drive'],['sc:amt','Sidechain'],['ms:mvol','Master']];
 function buildDock(){
   $('#dkM').innerHTML='<button type="button" class="dkh" id="dkH"><span>Macros</span><i aria-hidden="true"></i></button>'+DKM.map(([k,l])=>{const dj=k==='dj';return`<div class="k"><label for="dm_${k.replace(':','_')}">${l} <output id="do_${k.replace(':','_')}"></output></label><input id="dm_${k.replace(':','_')}" data-m="${k}" type="range" min="${dj?-100:0}" max="${dj?100:1000}" value="0"></div>`}).join('');
   const dkFold=()=>{const f=S.mfold!==false;$('#dkM').classList.toggle('fold',f);$('#dkH').setAttribute('aria-expanded',!f)};dkFold();$('#dkH').addEventListener('click',()=>{S.mfold=S.mfold===false;dkFold();saveSoon()});
   $('#dkM').addEventListener('input',e=>{const el=e.target,k=el.dataset.m;if(!k)return;if(k==='dj'){djSet(el.value/100);$('#do_dj').textContent=djOut(S.mhp>0?S.mhp/.8:S.mcut<1?(S.mcut-1)/.75:0)}else{const[id,key]=k.split(':');setFxVal(id,key,el.value/1000)}});
-  (()=>{let last=0,lastEl=null;$('#dkM').addEventListener('pointerup',e=>{const el=e.target;if(el.type!=='range')return;const n=Date.now();
-    if(lastEl===el&&n-last<300){const k=el.dataset.m;if(k==='dj'){el.value=0;djSet(0)}else{const[id,key]=k.split(':');setFxVal(id,key,fxDef(id,key))}last=0}else{last=n;lastEl=el}})})();
+  dblTap($('#dkM'),'input[type=range]',el=>{const k=el.dataset.m;if(!k)return;if(k==='dj'){el.value=0;djSet(0);$('#do_dj').textContent=djOut(0)}else{const[id,key]=k.split(':');setFxVal(id,key,fxDef(id,key))}});
   dockOK=true;updDock()}
 function updDock(){if(!dockOK)return;
   DKM.forEach(([k])=>{const id=k.replace(':','_'),inp=$('#dm_'+id),out=$('#do_'+id);if(!inp||document.activeElement===inp&&k!=='dj'&&false)return;
@@ -723,12 +728,10 @@ const MSB=[['mvol','Vol'],['mcut','LP'],['mhp','HP']];
 function renderMsBar(){const d=FXI.ms;$('#msBar').innerHTML='<span class="mt"><b>🎚</b>MST</span>'+MSB.map(([key,l])=>{const f=d.k.find(x=>x[0]===key)[2];
   return`<div class="k"><label for="b_ms_${key}">${l} <output id="ob_ms_${key}">${f(S[key])}</output></label><input id="b_ms_${key}" data-key="${key}" type="range" min="0" max="1000" value="${Math.round(S[key]*1000)}"></div>`}).join('')+'<span class="lvl" aria-hidden="true"><i id="msLvl"></i></span>'}
 $('#msBar').addEventListener('input',e=>{const el=e.target;if(el.dataset.key)setFxVal('ms',el.dataset.key,el.value/1000)});
-(()=>{let last=0,lastEl=null;$('#msBar').addEventListener('pointerup',e=>{const el=e.target;if(el.type!=='range')return;const n=Date.now();
-  if(lastEl===el&&n-last<300){setFxVal('ms',el.dataset.key,MSD[el.dataset.key]);last=0}else{last=n;lastEl=el}})})();
+dblTap($('#msBar'),'input[type=range]',el=>setFxVal('ms',el.dataset.key,MSD[el.dataset.key]));
 
 $('#fxList').addEventListener('change',e=>{if(e.target.dataset.fx==='rev'&&e.target.dataset.key==='size')setIR()});
-(()=>{let last=0,lastEl=null;$('#fxList').addEventListener('pointerup',e=>{const el=e.target;if(el.type!=='range'||!el.dataset.fx)return;const n=Date.now();
-  if(lastEl===el&&n-last<300){const id=el.dataset.fx,key=el.dataset.key,v=fxDef(id,key);fxObj(id)[key]=v;el.value=Math.round(v*1000);el.dispatchEvent(new Event('input',{bubbles:true}));if(key==='size')setIR();last=0}else{last=n;lastEl=el}})})();
+dblTap($('#fxList'),'input[type=range][data-fx]',el=>{const id=el.dataset.fx,key=el.dataset.key,v=fxDef(id,key);fxObj(id)[key]=v;el.value=Math.round(v*1000);el.dispatchEvent(new Event('input',{bubbles:true}));if(key==='size')setIR()});
 window.addEventListener('resize',()=>{for(const k in fxCv)fxCv[k]=null;if(sT()==='fx')FXDEF.forEach(d=>drawFxG(d.id))});
 document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.k;if(!k||!K[k])return;K[k](e.target.value/100);const o=$('#o_'+k);if(o)o.textContent=e.target.value;saveSoon()});
 
