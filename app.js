@@ -54,7 +54,7 @@ const SAVE=['scv','lat','lights','snd','dockOpen','dockH','mfold','awave','lwave
 function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
 /* guardar es costoso (JSON + localStorage): se agrupa en una sola escritura 400 ms después del último cambio y se fuerza al salir de la página */
 const saveNow=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}};
-let st=0;const saveSoon=()=>{clearTimeout(st);saveMessage('Cambios pendientes de guardar…');st=setTimeout(()=>{st=0;saveNow()},400)};
+let st=0;const saveSoon=()=>{histMark();clearTimeout(st);saveMessage('Cambios pendientes de guardar…');st=setTimeout(()=>{st=0;saveNow()},400)};
 const save=saveSoon,saveFlush=()=>{if(st){clearTimeout(st);st=0;saveNow()}};
 addEventListener('pagehide',saveFlush);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveFlush()});
 try{const r=localStorage.getItem('pulsostudio1')||localStorage.getItem('pocketsub2');if(r){const o=JSON.parse(r);
@@ -810,10 +810,27 @@ document.addEventListener('fullscreenchange',()=>fsB.setAttribute('aria-pressed'
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.stage)setStage(false)});
 document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&S.stage)setStage(false)});
 
-const UNDO=[],REDO=[],HMAX=100;
+/* historial global (v2.58): guarda todo el proyecto (patrones, canales, FX, EQ, master, canción, tempo...). Cada cambio que guarda
+   se agrupa en un paso tras 0,6 s de calma; snap() cierra el paso anterior antes de una edición suelta; grabar con pads es un solo paso */
+var UNDO=[],REDO=[],HMAX=100,histCur=null,histT=0,histHold=false;
+const histSer=()=>JSON.stringify({P,C,s:PROJ.map(k=>S[k])});
+function histCommit(){clearTimeout(histT);histT=0;if(!histCur)return false;const n=histSer();if(n===histCur)return false;UNDO.push(histCur);if(UNDO.length>HMAX)UNDO.shift();REDO.length=0;histCur=n;hBtn();return true}
+function histMark(){if(!histCur)return;const u=document.getElementById('undo');if(u)u.disabled=false;if(histHold)return;clearTimeout(histT);histT=setTimeout(histCommit,600)}
+const H_FX=['cho','flt','cr','cmp','rev','dly','sc'],H_MS=['hum','mres','mhp','mmid','mmf','mair','mwid','mdrive','mcut','mvol','lim','swing'],H_SG=['song','lanes','chain','chainSet'],H_SN=['awave','lwave','wave','layer','root','scale'],H_MIX=['vol','pan','mute','solo','rev','dly','sc'];
+function histWhat(a,b){const x=JSON.parse(a),y=JSON.parse(b),w=new Set(),ne=(m,n)=>JSON.stringify(m)!==JSON.stringify(n);
+  if(ne(x.P,y.P))w.add('SECUENCIA');
+  y.C.forEach((c,i)=>Object.keys(c).forEach(k=>{if(ne(c[k],x.C[i]&&x.C[i][k]))w.add(k==='eqb'?'EQ':H_MIX.includes(k)?'MEZCLA':'CANAL')}));
+  PROJ.forEach((k,i)=>{if(ne(x.s[i],y.s[i]))w.add(k==='meq'?'EQ MASTER':H_FX.includes(k)?'FX':H_MS.includes(k)?'MASTER':H_SG.includes(k)?'CANCIÓN':k==='bpm'?'TEMPO':'SONIDO')});
+  return [...w].slice(0,2).join(' + ')}
+function hApply(js){const o=JSON.parse(js),oc=C,osz=S.rev?S.rev.size:0,odm=S.rev?S.rev.damp:0;
+  P=o.P.map(fixP);C=CH.map((_,i)=>Object.assign(CHDEF(i),o.C[i]||{}));C.forEach(fixC);PROJ.forEach((k,i)=>{if(o.s[i]!==undefined)S[k]=JSON.parse(JSON.stringify(o.s[i]))});
+  S.meq=Object.assign({},EQD,S.meq);mergeFx();fixSong();rs.value=S.root;ss.value=S.scale;
+  applyAll();if(S.rev&&(S.rev.size!==osz||S.rev.damp!==odm))setIR();
+  if(C.some((c,i)=>Object.keys(c).some(k=>k!=='eqb'&&!H_MIX.includes(k)&&JSON.stringify(c[k])!==JSON.stringify(oc[i]&&oc[i][k]))))queueWarm();
+  renderFx();renderMsBar();updDock();renderCanal();updMixUI();if(sT()==='eq'){eqDirty=true;renderEq()}if(S.tab==='song')renderSong();upd();save()}
 const hBtn=()=>{$('#undo').disabled=!UNDO.length;$('#redo').disabled=!REDO.length};
-function snap(){UNDO.push(JSON.stringify(P));if(UNDO.length>HMAX)UNDO.shift();REDO.length=0;hBtn()}
-function hGo(from,to,msg){if(!from.length)return;to.push(JSON.stringify(P));P=JSON.parse(from.pop());P.forEach(fixP);hBtn();flash(msg);upd();save()}
+function snap(){histCommit()}
+function hGo(from,to,msg){histCommit();if(!from.length)return;const prev=histCur;to.push(prev);histCur=from.pop();const w=histWhat(prev,histCur);hApply(histCur);histCur=histSer();hBtn();flash(msg+(w?': '+w:''))}
 $('#undo').addEventListener('click',()=>hGo(UNDO,REDO,'DESHECHO'));
 $('#redo').addEventListener('click',()=>hGo(REDO,UNDO,'REHECHO'));
 document.addEventListener('keydown',e=>{if(!(e.ctrlKey||e.metaKey)||e.altKey||e.key.toLowerCase()!=='z')return;const t=e.target;if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)&&t.type!=='range')return;
@@ -1059,7 +1076,7 @@ $('#pads').addEventListener('pointerdown',e=>{const b=e.target.closest('.pad');i
   const i=+b.dataset.i;if(S.ch!==i){setCh(i);$$('#pads .pad').forEach(x=>x.setAttribute('aria-pressed',x===b))}
   if(i<SUBI){if(i===3)choke(ohV,t);drum(i,t,VEL[3]);if(i===0&&S.play)duck(t);padRecord(i)}else{const off=SC[S.scale][S.subSel];mel(i,off,t,VEL[3],false,false);padRecord(i,off)}});
 $('#pads').addEventListener('contextmenu',e=>e.preventDefault());
-$('#padRec').addEventListener('click',()=>{padRec=!padRec;if(padRec&&!S.play)start();renderPads();flash(padRec?'REC: TOCA LOS PADS':'REC APAGADO')});
+$('#padRec').addEventListener('click',()=>{padRec=!padRec;histHold=padRec;if(!padRec)histCommit();if(padRec&&!S.play)start();renderPads();flash(padRec?'REC: TOCA LOS PADS':'REC APAGADO')});
 $('#padQ').addEventListener('click',()=>{padQ=!padQ;renderPads();flash(padQ?'CUANTIZAR: SÍ':'CUANTIZAR: NO')});
 $('#padMel').addEventListener('click',()=>{padMel=!padMel;if(padMel&&!MEL(S.ch))setCh(ACI);renderPads()});
 /* DJ filter: one bipolar knob over master LP / HP */
@@ -1120,5 +1137,5 @@ $('#t-song').addEventListener('input',e=>{const id=e.target.dataset.lv;if(!id)re
 
 function upd(){updLcd();renderChips();renderNotes();updGrid();renderPbar();updSteppers()}
 rs.value=S.root;ss.value=S.scale;
-paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);syncDock();setTimeout(fromHash,0);
+paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderCanal();setStyle(S.style);skin(S.skin);upd();setLcd(S.lcdv);syncDock();setTimeout(fromHash,0);histCur=histSer();hBtn();
 })();

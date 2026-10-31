@@ -365,3 +365,8 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.57 (2026-10-31) — Claude
 - Secuenciador: el primer paso de cada tiempo (1, 5, 9, 13) ya no lleva un borde izquierdo grueso que parecia solaparse con la casilla de al lado; se marca solo con un fondo algo mas claro.
 - Para revertir: git revert del commit v2.57.
+
+## v2.58 (2026-10-31) — Claude
+- Deshacer/Rehacer globales: ahora guardan todo el proyecto (secuencia, canales, mezcla, FX, EQ de canal y master, master, cancion, tempo, escala), no solo los patrones. Los ajustes seguidos de un deslizador se agrupan en un paso (0,6 s de calma); grabar con los pads es un solo paso. El mensaje dice que se deshizo (SECUENCIA, FX, EQ, MEZCLA, CANAL, MASTER, CANCION, TEMPO, SONIDO). Al deshacer solo se vuelve a calcular lo necesario (reverb y voces solo si cambiaron).
+- No entran en el historial las preferencias de pantalla (caratula, estilo, luces, audio, EQ bypass) ni Play/Stop. Historial maximo 100 pasos.
+- Para revertir: git revert del commit v2.58.
