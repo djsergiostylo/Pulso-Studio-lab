@@ -301,3 +301,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.41 (2026-10-31) — Claude
 - Caratula Naranja: chasis mandarina con degradado suave, paneles y teclas en crema; el naranja queda como marco y acento. Textos y botones comprobados >= 4,5:1 en Crear, Canal, Mix, FX, EQ, Pads, Cancion y Proyecto.
 - Para revertir: git revert del commit v2.41.
+
+## v2.42 (2026-10-31) — Claude
+- Todas las caratulas: acentos de las oscuras (Neon, Oscuro, Violeta, Verde) y de Plata/Claro menos chillones, texto claro menos deslumbrante, rail de los deslizadores visible (--rail), nombres de canal y dB legibles en las claras. Contraste >= 4,5:1 medido en Crear, Canal, Mix, FX, EQ, Pads, Cancion y Proyecto en las 10 caratulas.
+- Para revertir: git revert del commit v2.42.
