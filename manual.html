@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Manual · Pulso Studio</title>
+<meta name="description" content="Manual de Pulso Studio con capturas de cada pantalla.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
+<style>
+:root{--bg:#05080f;--card:#0b1220;--fg:#d5deeb;--mute:#9fb0c8;--ac:#34c6b4;--onac:#03211d;--line:#22304b;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));background:var(--card);border-bottom:1px solid var(--line)}
+header a.back{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:10px;background:var(--ac);color:var(--onac);text-decoration:none;font-family:"Silkscreen",monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+header b{font-family:"Silkscreen",monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--fg);margin-left:auto}
+main{max-width:680px;margin:0 auto;padding:18px 16px 60px}
+h1{font-family:"Silkscreen",monospace;font-size:24px;line-height:1.2;letter-spacing:.04em;margin:8px 0 14px}
+h2{font-family:"Silkscreen",monospace;font-size:17px;letter-spacing:.06em;margin:42px 0 10px;padding-left:10px;border-left:4px solid var(--ac);text-transform:uppercase;line-height:1.3}
+h3{font-size:17px;margin:28px 0 6px;color:var(--ac)}
+p{margin:10px 0}
+a{color:var(--ac)}
+ul,ol{padding-left:22px;margin:10px 0}
+li{margin:5px 0}
+li::marker{color:var(--ac)}
+code{font-family:"DM Mono",monospace;font-size:.9em;background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+blockquote{margin:14px 0;padding:10px 14px;border-radius:10px;background:var(--card);border-left:4px solid var(--ac)}
+blockquote p{margin:4px 0}
+figure{margin:18px auto;max-width:360px;text-align:center}
+figure img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+figcaption{margin-top:6px;font-size:13px;color:var(--mute)}
+hr{border:0;border-top:1px solid var(--line);margin:34px 0 18px}
+nav.toc{margin:18px 0 6px;padding:12px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+nav.toc h2{margin:0 0 6px;font-size:13px;border:0;padding:0;color:var(--mute)}
+nav.toc ol{margin:0;padding-left:20px;columns:1}
+nav.toc a{text-decoration:none;display:inline-block;min-height:30px;padding:3px 0}
+.top{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));width:46px;height:46px;border-radius:50%;border:0;background:var(--ac);color:var(--onac);font-size:20px;display:none;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.top.on{display:block}
+#err{color:#ff8a80}
+</style>
+</head>
+<body>
+<header><a class="back" href="./" aria-label="Volver a la app">← Volver a la app</a><b>Manual</b></header>
+<main id="doc"><p>Cargando el manual…</p></main>
+<button class="top" id="top" aria-label="Subir al principio">↑</button>
+<script>
+(()=>{
+/* colores según la carátula elegida en la app */
+const SK={neon:['#05080f','#0b1220','#d5deeb','#9fb0c8','#34c6b4','#03211d','#22304b',1],orange:['#f6e3cf','#fbf3e6','#2a1306','#6b3a1a','#c24a12','#ffffff','#d9b48c',0],plata:['#d9dce0','#eceef0','#1c1f24','#4b5158','#c75a0a','#ffffff','#aeb3b9',0],mpc:['#26282c','#3a3d42','#eceef0','#c4c8ce','#e5594f','#1a0a09','#5a5d63',1],papel:['#ece9de','#f7f5ee','#1d1d1b','#55544c','#c8381f','#ffffff','#c9c5b8',0],auto:null,dark:['#090b0d','#16191d','#d9dfe3','#9aa5ad','#2bb8cf','#04181b','#2a3037',1],light:['#e6eaec','#f6f7f5','#1d2226','#56626a','#d1480f','#ffffff','#c3cacf',0],sub:['#07030d','#170a26','#ded3f2','#b9a6d6','#a678e6','#12061f','#2c1649',1],green:['#030a06','#0c1811','#d0e9da','#9cc9ac','#4fd98f','#04140a','#1c3426',1]};
+try{const s=JSON.parse(localStorage.getItem('pulsostudio1')||'{}').S||{};let k=SK[s.skin];if(!k&&matchMedia('(prefers-color-scheme: light)').matches)k=SK.light;if(k){const r=document.documentElement.style,n=['--bg','--card','--fg','--mute','--ac','--onac','--line'];n.forEach((v,i)=>r.setProperty(v,k[i]));r.colorScheme=k[7]?'dark':'light'}}catch(e){}
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const slug=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const inl=s=>esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/&lt;(https?:\/\/[^&\s]+)&gt;/g,'<a href="$1">$1</a>').replace(/\[([^\]]+)\]\(([^)]+)\)/g,'<a href="$2">$1</a>');
+function md(src){const L=src.replace(/\r/g,'').split('\n'),out=[],toc=[];let list='',para=[],bq=[];
+ const fp=()=>{if(para.length){out.push('<p>'+inl(para.join(' '))+'</p>');para=[]}};
+ const fl=()=>{if(list){out.push('</'+list+'>');list=''}};
+ const fq=()=>{if(bq.length){out.push('<blockquote><p>'+bq.map(inl).join('</p><p>')+'</p></blockquote>');bq=[]}};
+ const fa=()=>{fp();fl();fq()};
+ for(const raw of L){const l=raw.trimEnd();let m;
+  if(!l.trim()){fa();continue}
+  if(m=l.match(/^(#{1,3})\s+(.*)$/)){fa();const n=m[1].length,id=slug(m[2]);out.push(`<h${n} id="${id}">${inl(m[2])}</h${n}>`);if(n===2)toc.push([id,m[2]]);continue}
+  if(m=l.match(/^!\[([^\]]*)\]\(([^)]+)\)\s*$/)){fa();out.push(`<figure><img src="${esc(m[2])}" alt="${esc(m[1])}" loading="lazy"><figcaption>${inl(m[1])}</figcaption></figure>`);continue}
+  if(/^---+$/.test(l)){fa();out.push('<hr>');continue}
+  if(m=l.match(/^>\s?(.*)$/)){fp();fl();bq.push(m[1]);continue}
+  if(m=l.match(/^[-*]\s+(.*)$/)){fp();fq();if(list!=='ul'){fl();list='ul';out.push('<ul>')}out.push('<li>'+inl(m[1])+'</li>');continue}
+  if(m=l.match(/^\d+\.\s+(.*)$/)){fp();fq();if(list!=='ol'){fl();list='ol';out.push('<ol>')}out.push('<li>'+inl(m[1])+'</li>');continue}
+  fl();fq();para.push(l.trim())}
+ fa();let html=out.join('\n');
+ const t='<nav class="toc" aria-label="Índice"><h2>Índice</h2><ol>'+toc.map(([id,t])=>`<li><a href="#${id}">${inl(t.replace(/^\d+\.\s*/,''))}</a></li>`).join('')+'</ol></nav>';
+ return html.replace('</h1>','</h1>'+t)}
+const doc=document.getElementById('doc');
+fetch('MANUAL.md?v='+Date.now()).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{doc.innerHTML=md(t);const h=location.hash&&document.getElementById(decodeURIComponent(location.hash.slice(1)));if(h)h.scrollIntoView()}).catch(()=>{doc.innerHTML='<p id="err">No se pudo cargar el manual. Comprueba la conexión y recarga la página.</p>'});
+const tb=document.getElementById('top');addEventListener('scroll',()=>tb.classList.toggle('on',scrollY>600),{passive:true});tb.addEventListener('click',()=>scrollTo({top:0}));
+})();
+</script>
+</body>
+</html>

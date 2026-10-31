@@ -431,3 +431,8 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.73 (2026-10-31) — Claude
 - Subidon editable: 5 deslizadores muy compactos en dos columnas (Filtro tope 1-10 kHz, Resonancia Q 0,7-8, Pico de resonancia = en que punto del recorrido es maxima, Drive maximo, Espacio = reverb + delay maximos) y boton Valores de fabrica. Doble toque en un deslizador lo devuelve a su valor. Con los valores de fabrica el subidon suena igual que en v2.72. Se guardan con el proyecto (S.sb.p).
 - Para revertir: git revert del commit v2.73.
+
+## v2.74 (2026-10-31) — Claude
+- Manual completo: MANUAL.md (fuente unica, se ve en GitHub) con 15 capturas reales en manual/img/ (390x844, carátula Neon) y pagina manual.html que lo carga y lo muestra con indice y colores de la carátula elegida. Nuevo boton Abrir el manual en la pestana Aspecto. README enlaza el manual.
+- Las capturas se generaron con Chrome sin pantalla y un script; al cambiar la interfaz hay que rehacerlas.
+- Para revertir: git revert del commit v2.74.

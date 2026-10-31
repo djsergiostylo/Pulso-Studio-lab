@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.73"></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.74"></head><body>
 <title>Pulso Studio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
 
@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">132</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.73">v2.73</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.74">v2.74</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -18,7 +18,7 @@
           <button id="rand">Azar</button>
           <button id="clear">Borrar</button>
           <button id="undo" class="ur" aria-label="Deshacer (Ctrl+Z)" disabled>↶</button>
-          <button id="redo" class="ur" aria-label="Rehacer (Ctrl+Mayús+Z)" disabled>↷</button>
+          <button id="redo" class="ur" aria-label="Rehacer (Ctrl+Mayús+Z)" disabled>↷</button>
         </div>
         <div class="seg">
           <button class="hd" data-k="bpm" data-d="-1" aria-label="Bajar tempo">−</button>
@@ -131,6 +131,10 @@
         <button class="sk vt" id="lightsB" aria-pressed="false"><span class="tt"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Luces extra</span><em class="st"></em><small>Destellos al sonar en pads, nombres y pantalla. Gastan batería: mejor apagado si el audio suena entrecortado.</small></button>
         <button class="sk vt" id="latB"></button>
       </div>
+      </div>
+      <div class="card" id="manualCard">
+        <h3>Ayuda</h3>
+        <a class="mbtn" href="manual.html"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5zM4 5.5V21.5M8 7h8M8 11h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Abrir el manual<small>Guía completa con capturas de cada pantalla</small></span></a>
       </div>
     </section>
 
@@ -251,6 +255,6 @@
   
 </main>
 
-<script src="./app.js?v=2.73"></script>
+<script src="./app.js?v=2.74"></script>
 
 </body></html>
