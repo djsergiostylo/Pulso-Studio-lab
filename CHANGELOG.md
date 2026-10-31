@@ -325,3 +325,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.47 (2026-10-31) — Claude
 - Doble toque para resetear (Macros, barra Master y deslizadores de FX): ahora solo cuenta un toque corto y quieto sobre el mismo control; un arrastre ya no cuenta, asi que ajustar varias veces seguidas no resetea por error ni afecta a otro macro.
 - Para revertir: git revert del commit v2.47.
+
+## v2.48 (2026-10-31) — Claude
+- Cache: GitHub Pages guarda app.js y styles.css 10 minutos (max-age=600), por eso el navegador lateral y el movil iban por detras. index.html enlaza ahora app.js?v=2.48 y styles.css?v=2.48: cada version nueva cambia el numero y el navegador baja los archivos nuevos al instante. Al subir version hay que cambiarlo tambien.
+- Para revertir: git revert del commit v2.48.
