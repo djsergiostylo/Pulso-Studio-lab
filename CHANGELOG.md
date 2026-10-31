@@ -277,3 +277,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.35 (2026-10-31) — Claude
 - Boton Audio: debajo del nombre muestra que hace cada modo (menos/medio/mas bufer, retraso, cortes). Se aplica al recargar.
 - Para revertir: git revert del commit v2.35.
+
+## v2.36 (2026-10-31) — Claude
+- Audio ya no se corta al mover el panel Sonido (modo Escenario/pantalla completa): el secuenciador programa 0,6 s por adelantado mientras se arrastra, se abre/cierra el panel o cambia la ventana; el arrastre se limita a 1 vez por fotograma y guarda al soltar.
+- Para revertir: git revert del commit v2.36.
