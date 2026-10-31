@@ -1067,3 +1067,9 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .mixlim .limtk{height:20px}
 .mixlim .limtk span.l{transform:none;margin-left:-4px}
 .mixlim .limtk span.c{color:var(--fg);font-weight:700}
+
+/* v2.88 barra de volumen de escucha dentro de la LCD */
+.lcd .lvol{grid-column:1/-1;grid-row:4;display:flex;align-items:center;gap:6px;margin-top:4px;position:relative;z-index:2;cursor:default}
+.lcd .lvol button{background:none;border:0;color:inherit;font-size:13px;line-height:1;min-width:28px;height:26px;padding:0;text-shadow:none}
+.lcd .lvol input{flex:1;min-width:0;height:26px;margin:0;accent-color:var(--lcdfg);touch-action:none}
+.lcd .lvol output{flex:0 0 34px;text-align:right;font-size:9px;letter-spacing:.06em;opacity:.8;font-variant-numeric:tabular-nums}

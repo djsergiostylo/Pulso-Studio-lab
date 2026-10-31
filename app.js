@@ -32,7 +32,7 @@ const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2
   cho:{on:false,mode:'cho',rate:.35,depth:.5,fb:.3,mix:.4},flt:{on:false,type:'lowpass',freq:.55,res:.3,div:3,depth:.5,shape:'sine'},cr:{on:false,bits:.45,down:.25,mix:.5},cmp:{on:false,thr:.6,ratio:.25,att:.15,rel:.3,mk:0}};
 const SONGD={on:false,len:16,bars:[0,0,1,1,0,0,1,1,2,2,3,3,2,2,3,3].concat(new Array(16).fill(-1))},LANED=()=>({bpm:120,loop:4,vol:.8,on:new Array(32).fill(0)});
 const S={scv:0,lat:'balanced',lights:false,snd:'canal',dockOpen:false,dockH:0,awave:'sawtooth',lwave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED(),a3:LANED(),a4:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:132,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
-  swing:0,mdrive:0,mcut:1,mvol:.8,lim:.9167,lig:0,limv:3,rev:{on:true,size:.4,mix:.3},dly:{on:true,div:2,fb:.4,mix:.25},sc:{on:true,amt:.85,rel:.55},skin:'neon',style:'abl',lcdv:'info',stage:false,ui3:false,meq:Object.assign({},EQD)};
+  swing:0,mdrive:0,mcut:1,mvol:.8,ovol:1,omute:false,lim:.9167,lig:0,limv:3,rev:{on:true,size:.4,mix:.3},dly:{on:true,div:2,fb:.4,mix:.25},sc:{on:true,amt:.85,rel:.55},skin:'neon',style:'abl',lcdv:'info',stage:false,ui3:false,meq:Object.assign({},EQD)};
 const EQSTYLE=[[[21.6093,0,"hp",48,1.09],[13918.629,0,"bell",24,1.09]],[[71.646,0,"hp",24,1.09],[226.707,-9.5,"bell",24,1.09],[7584.727,-5.5,"bell",24,.1964],[17716.707,0,"lp",24,1.09]],[[529.551,0,"hp",24,1.09]],[[7584.727,0,"hp",24,1.09]],[[2359.98,0,"hp",24,1.09]],[[52.072,0,"hp",24,1.09]],[[145.476,0,"lp",24,1.09]],[],[],[]].map(a=>a.map(([f,g,t,s,q])=>({on:1,f,g,t,s,q})));
 const CHDEF=i=>Object.assign({},DEF,{eqb:EQSTYLE[i].map(b=>({...b}))},i===SUBI?{vol:.72,sc:1}:i===ACI?{vol:.55,sc:1,tn:.35,br:.6,gl:.5,dc:.35,dly:.15}:i===STI?{vol:.5,sc:1,tn:.5,br:.4,dc:.35,rev:.3,dly:.25}:i===LEI?{vol:.5,tn:.55,br:.35,gl:.2,dc:.4,rev:.2,dly:.25}:{});
 let C=CH.map((_,i)=>CHDEF(i));
@@ -51,7 +51,7 @@ let P=[mk(),mk(),mk(),mk()];
 
 /* storage: per viewer only */
 const migLim=so=>{if(!so||typeof so.lim!=='number'||so.limv===3)return;if(so.limv!==2)so.lim=.5+so.lim/2;const ld=(so.lim-.5)*24;so.lig=Math.max(0,ld)/12;so.lim=Math.max(0,Math.min(1,(12-.05+Math.min(0,ld))/12));so.limv=3};
-const SAVE=['scv','lat','lights','snd','dockOpen','dockH','mfold','sb','awave','lwave','song','lanes','hum','mres','mhp','mhres','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','lig','limv','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
+const SAVE=['ovol','omute','scv','lat','lights','snd','dockOpen','dockH','mfold','sb','awave','lwave','song','lanes','hum','mres','mhp','mhres','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','lig','limv','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
 function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
 /* guardar es costoso (JSON + localStorage): se agrupa en una sola escritura 400 ms después del último cambio y se fuerza al salir de la página */
 const saveNow=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}};
@@ -91,7 +91,7 @@ function build(){
   M.pre=ctx.createAnalyser();M.pre.fftSize=2048;M.mk.connect(M.pre);M.clip=ctx.createWaveShaper();M.clip.curve=SAFE;M.clip.oversample='none';
   M.vol=ctx.createGain();M.ana=ctx.createAnalyser();M.ana.fftSize=2048;M.ana.smoothingTimeConstant=.75;
   buildFx();M.in.connect(M.hp);M.hp.connect(M.ch.i);M.ch.o.connect(M.cr.i);M.cr.o.connect(M.fl.i);M.fl.o.connect(M.sh);M.sh.connect(M.sbg);M.sbg.connect(M.lp);M.eq=mkEq();buildMs();M.lp.connect(M.mhp);M.mhp.connect(M.mmid);M.mmid.connect(M.mair);M.mair.connect(M.eq.i);M.eq.o.connect(M.cmp);M.cmp.connect(M.cmk);M.cmk.connect(M.wsp);M.wmg.connect(M.limIn);M.limA=ctx.createAnalyser();M.limA.fftSize=1024;M.wmg.connect(M.limA);M.limIn.connect(M.lim);M.lim.connect(M.mk);M.mk.connect(M.clip);M.clip.connect(M.vol);
-  M.vol.connect(ctx.destination);M.vol.connect(M.ana);
+  M.out=ctx.createGain();M.vol.connect(M.out);M.out.connect(ctx.destination);M.vol.connect(M.ana);
   /* reverb: HPF send (no sub mud) -> pre-delay -> dark IR -> damping */
   M.rIn=ctx.createGain();M.rHp=ctx.createBiquadFilter();M.rHp.type='highpass';M.rHp.frequency.value=220;M.rPre=ctx.createDelay(.2);M.rPre.delayTime.value=.022;
   M.conv=ctx.createConvolver();M.rLp=ctx.createBiquadFilter();M.rLp.type='lowpass';M.rLp.frequency.value=7000;M.rRet=ctx.createGain();
@@ -114,7 +114,7 @@ function build(){
   const b=ctx.createBuffer(1,ctx.sampleRate,ctx.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;noise=b;
   setIR();applyAll();if(ctx===LIVE||!LIVE){anaLive=true;if(sT()!=='mix'&&sT()!=='eq')anaOn(false)}
 }
-function ensure(){if(!ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;try{ctx=new AC({latencyHint:S.lat,sampleRate:48000})}catch(e){try{ctx=new AC({latencyHint:S.lat})}catch(e2){ctx=new AC()}}iosFix();build();LIVE=ctx;const c0=ctx;loadCr(c0).then(()=>{if(ctx===c0){if(S.play)c0._pend=1;else{swapCr();swapLim()}}});queueWarm()}if(ctx.state==='suspended')ctx.resume();return true}
+function ensure(){if(!ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;try{ctx=new AC({latencyHint:S.lat,sampleRate:48000})}catch(e){try{ctx=new AC({latencyHint:S.lat})}catch(e2){ctx=new AC()}}iosFix();build();LIVE=ctx;applyOut();const c0=ctx;loadCr(c0).then(()=>{if(ctx===c0){if(S.play)c0._pend=1;else{swapCr();swapLim()}}});queueWarm()}if(ctx.state==='suspended')ctx.resume();return true}
 /* dark, decaying stereo IR: noise through a one-pole LPF that closes over time */
 function setIR(){if(!ctx)return;const sr=ctx.sampleRate,len=Math.floor(sr*(.3+S.rev.size*2.2)),b=ctx.createBuffer(2,len,sr);
   for(let c=0;c<2;c++){const d=b.getChannelData(c);let y=0;for(let i=0;i<len;i++){const r=i/len,a=.9-.78*r;y+=a*((Math.random()*2-1)-y);d[i]=y*Math.pow(1-r,2.4)/Math.sqrt(a)}}M.conv.buffer=b}
@@ -179,6 +179,8 @@ function applyMaster(){if(!ctx)return;const t=ctx.currentTime;setEq(M.eq,S.meq,t
   applyMs(t);applyFx(t);applyDelay()}
 function applyLanes(){if(!ctx||!M.lg)return;const t=ctx.currentTime;LID.forEach(id=>M.lg[id].gain.setTargetAtTime(S.lanes[id].vol,t,.02))}
 let anaLive=true;function anaOn(on){if(!ctx||!chs.length||on===anaLive)return;anaLive=on;chs.forEach(c=>{try{if(on)c.pan.connect(c.ana);else c.pan.disconnect(c.ana)}catch(e){}})}
+/* volumen de escucha: despues del master, solo en vivo; ni el WAV ni la grabacion lo llevan */
+function applyOut(){if(!ctx||ctx!==LIVE||!M.out)return;M.out.gain.setTargetAtTime(S.omute?0:S.ovol*S.ovol,ctx.currentTime,.02)}
 function applyAll(){CH.forEach((_,i)=>applyCh(i));applyMaster();applyLanes()}
 
 /* voice bus per hit; disconnects itself when its last source ends (no timers) */
@@ -813,6 +815,14 @@ $('#lcd').addEventListener('pointerup',e=>{const s=lcdSw;lcdSw=null;if(!s||s.id!
   if(Math.abs(dx)>45&&Math.abs(dy)<35){lcdSwiped=true;S.pat=(S.pat+(dx<0?1:3))%4;if(navigator.vibrate)try{navigator.vibrate(8)}catch(err){}flash('PATRÓN '+'ABCD'[S.pat]);upd();save()}});
 $('#lcd').addEventListener('pointercancel',()=>{lcdSw=null});
 $('#lcd').addEventListener('click',()=>{if(lcdSwiped){lcdSwiped=false;return}lcdNext()});
+/* barra de volumen dentro de la LCD */
+const lvEl=$('#lvol'),lvR=$('#lvr'),lvO=$('#lvo'),lvM=$('#lmute');let lvT=0,lvX=0;
+['pointerdown','pointerup','click','keydown'].forEach(ev=>lvEl.addEventListener(ev,e=>e.stopPropagation()));
+function updLvol(){const p=Math.round(S.ovol*100),m=S.omute||p===0;lvR.value=p;lvO.textContent=m?'MUTE':p+'%';lvM.textContent=m?'🔇':p<40?'🔉':'🔊';lvM.setAttribute('aria-pressed',m);lvM.setAttribute('aria-label',m?'Quitar silencio':'Silenciar')}
+lvR.addEventListener('input',()=>{S.ovol=+lvR.value/100;if(S.ovol>0)S.omute=false;applyOut();updLvol();saveSoon()});
+lvR.addEventListener('pointerdown',e=>{const n=performance.now();if(n-lvT<320&&Math.abs(e.clientX-lvX)<24){e.preventDefault();S.ovol=1;S.omute=false;applyOut();updLvol();saveSoon();flash('VOLUMEN 100%')}lvT=n;lvX=e.clientX});
+lvM.addEventListener('click',()=>{if(S.ovol===0)S.ovol=.8;S.omute=!S.omute;applyOut();updLvol();saveSoon()});
+updLvol();
 $('#lcd').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();lcdNext()}});
 window.addEventListener('resize',()=>{bumpLA();cvDirty=true;drawLcd()});
 try{matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{readCols();drawLcd()})}catch(e){}

@@ -524,6 +524,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Solo cambia index.html (app.js y styles.css intactos; sube la ?v= para refrescar la cache).
 - Para revertir: git revert del commit v2.87.
 
+## v2.88 (2026-10-31) — Claude
+- Barra de volumen de escucha dentro de la pantalla LCD (siempre visible): arrastrar sube y baja, tocar el altavoz silencia (y vuelve al mismo nivel), doble toque en la barra vuelve al 100 %. Tocar la barra no cambia la vista de la LCD.
+- Es un volumen de escucha, aparte del Master: va despues de la mezcla y solo suena en vivo, asi que el WAV exportado y la grabacion no lo llevan y el proyecto no lo guarda. Se recuerda en el dispositivo (ovol, omute). Curva cuadratica para que el control sea mas fino abajo.
+- Para revertir: git revert del commit v2.88.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.
