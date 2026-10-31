@@ -268,3 +268,8 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.33 (2026-10-31) — Claude
 - Secuenciador: columna de nombres con barra de color del canal, nombre y botones M/S debajo (antes ocultos). Filas algo mas altas.
 - Para revertir: git revert del commit v2.33.
+
+## v2.34 (2026-10-31) — Claude
+- Nombres y botones M/S del secuenciador legibles en las 10 caratulas y los 2 estilos (contraste medido >= 4,5:1, tambien con M/S activados).
+- Proyecto: Caratula y Estilo (Hardware/Ableton) juntos en la tarjeta Aspecto. El desplegable de abajo pasa a Pantalla - Audio - Ayuda.
+- Para revertir: git revert del commit v2.34.

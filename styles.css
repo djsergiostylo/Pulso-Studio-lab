@@ -633,3 +633,9 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #t-seq .rn{font-size:11.5px;font-weight:700;letter-spacing:.06em;padding:0;line-height:1.1;white-space:nowrap;overflow:hidden;max-width:100%}
 #t-seq .rn .led{inset:-2px -2px;border-radius:3px}
 #t-seq #grid .step{height:auto;min-height:30px;align-self:stretch}
+
+/* v2.34 nombres y M/S legibles en todas las caratulas */
+#t-seq .rn{color:color-mix(in srgb,var(--c) 10%,var(--fg))}
+#t-seq .rh .ms>button{background:color-mix(in srgb,var(--fg) 14%,var(--dev));color:var(--fg);border:1px solid color-mix(in srgb,var(--fg) 35%,var(--dev))}
+#t-seq .rh .ms>.m[aria-pressed="true"]{background:var(--fg);color:var(--dev);border-color:var(--fg)}
+#t-seq .rh .ms>.s[aria-pressed="true"]{background:var(--c);color:#111;border-color:var(--c)}

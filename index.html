@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">110</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.33">v2.33</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.34">v2.34</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -93,9 +93,10 @@
 
 <section id="t-file" class="tab" hidden>
       <div class="card" id="skinCard">
-        <h3>Carátula</h3>
-        <div class="skins"><div id="skins" role="group" aria-label="Carátula"></div></div>
-        <p class="note">Cambia los colores de todo el aparato. El estilo Hardware (con tornillos) está en ⚙ Aspecto · Estilo · Ayuda.</p>
+        <h3>Aspecto</h3>
+        <div class="skins"><span>Carátula (colores)</span><div id="skins" role="group" aria-label="Carátula"></div></div>
+        <div class="skins"><span>Estilo</span><div id="styles" role="group" aria-label="Estilo"><button class="sk" data-st="hw">Hardware</button><button class="sk" data-st="abl">Ableton</button></div></div>
+        <p class="note">Carátula cambia los colores de todo el aparato. Estilo: Hardware lleva tornillos y serigrafía, Ableton es más limpio.</p>
       </div>
       <div class="card" id="saveCard">
         <h3>Guardar en este móvil</h3>
@@ -118,10 +119,10 @@
         <button class="fn" id="prec">⏺ Grabar en tiempo real (.webm)</button>
         <p class="note">El WAV se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz) y 16 bits.</p>
       </div>
-    <details class="more2"><summary>⚙ Aspecto · Estilo · Ayuda</summary>
+    <details class="more2"><summary>⚙ Pantalla · Audio · Ayuda</summary>
   <footer class="pie">
 
-  <div class="skins"><span>Estilo</span><div id="styles" role="group" aria-label="Estilo"><button class="sk" data-st="hw">Hardware</button><button class="sk" data-st="abl">Ableton</button><button class="sk" id="stage" aria-pressed="false">Escenario</button><button class="sk" id="fs" aria-pressed="false">Pantalla completa</button><button class="sk" id="lightsB" aria-pressed="false">Luces extra</button><button class="sk" id="latB">Audio</button></div></div>
+  <div class="skins"><span>Pantalla</span><div role="group" aria-label="Pantalla y audio"><button class="sk" id="stage" aria-pressed="false">Escenario</button><button class="sk" id="fs" aria-pressed="false">Pantalla completa</button><button class="sk" id="lightsB" aria-pressed="false">Luces extra</button><button class="sk" id="latB">Audio</button></div></div>
   </footer>
 
   <p class="hint">Desliza el dedo por la pantalla para cambiar de patrón A–D. Toca la pantalla para ver la onda o el espectro. Toca un paso para encenderlo y mantenlo pulsado para cambiar su fuerza. Con ! ×2 ↔ ↗ le pones acento, redoble, nudge o slide (acid). PADS para tocar en directo, SONG para montar la canción. Con auriculares se nota el subgrave.</p>
