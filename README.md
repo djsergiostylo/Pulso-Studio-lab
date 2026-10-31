@@ -12,3 +12,26 @@ Abre `index.html` en Chrome. Para publicarlo: GitHub → Settings → Pages → 
 
 El historial de versiones está en [CHANGELOG.md](CHANGELOG.md).
 
+## Versionado (leer antes de subir una versión)
+
+La versión se escribe en **tres sitios de `index.html`** y en el **CHANGELOG**. Nunca se edita a mano: lo hace el script `tools/bump-version.py`.
+
+| Dónde | Qué es |
+|---|---|
+| `index.html` → `<span class="ver" aria-label="Versión vX.Y">vX.Y</span>` | Etiqueta que se ve en pantalla, encima de las letras BPM |
+| `index.html` → `app.js?v=X.Y` y `styles.css?v=X.Y` | Rompen la caché del navegador. Si no suben, el móvil sigue con el código viejo |
+| `CHANGELOG.md` → `## vX.Y (fecha) — autor` | Entrada de la versión nueva (la más reciente va justo antes de la sección "Manual") |
+
+**Pasos para cada versión nueva:**
+1. Haz el cambio de código (solo los archivos necesarios).
+2. `python tools/bump-version.py X.Y` — sube la etiqueta y los dos `?v=`.
+3. Añade la entrada `## vX.Y` en `CHANGELOG.md` con qué cambia y "Para revertir: git revert del commit vX.Y".
+4. `python tools/bump-version.py --check` — debe decir `OK: todo en vX.Y`. Si falla, las versiones no coinciden.
+5. `git add -A && git commit -m "vX.Y: resumen corto"`, `git tag vX.Y`, `git push <remoto> main --tags`.
+
+**Reglas:**
+- Una versión = un cambio = un commit = una etiqueta. Se revierte con `git revert`.
+- Nada de `push --force`. Si falta algo, nueva versión.
+- No cambies el HTML de la etiqueta `.ver` (la expresión regular del script busca `class="ver" aria-label="Versión v…">v…<`). Se puede mover de sitio, pero debe conservar ese texto.
+- `versions/` guarda copias completas de algunas versiones antiguas (v1.0–v2.5 y una de cada decena hasta v2.70). No se tocan ni se borran.
+- Cambios solo de documentación (README, MANUAL) no suben versión.
