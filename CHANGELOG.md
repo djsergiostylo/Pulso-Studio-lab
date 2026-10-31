@@ -411,3 +411,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Nueva pestana MACRO (primera del panel Sonido: Macro, Canal, Mix, FX, EQ). Contiene el SUBIDON, un deslizador grande que mueve el usuario y sube a la vez filtro de graves (hasta 1 kHz), reverb, delay (mezcla y feedback) y drive. Al soltar: Drop (vuelve de golpe y suena un golpe de kick + open hat) o Quedarse. Curva Suave/Normal/Explosivo, chips para elegir que sube y barras en vivo. Los 6 macros de siempre pasan de FX a MACRO; FX queda con la cadena de efectos. Ajustes del subidon guardados (campo sb). El subidon no entra en el historial salvo en modo Quedarse.
 - Pendiente de esta tanda: Redoble en directo y efectos de pulsar (repetidor, parar cinta, lanzar reverb/delay, bitcrush, filtro barrido). El chip Ruido de la maqueta no esta todavia.
 - Para revertir: git revert del commit v2.68.
+
+## v2.69 (2026-10-31) — Claude
+- Subidon: el filtro de graves llega mas alto al 100 %: 4,8 kHz (antes 1 kHz). Recorrido medido: 50 % = 309 Hz, 75 % = 1,2 kHz, 100 % = 4,8 kHz.
+- Para revertir: git revert del commit v2.69.

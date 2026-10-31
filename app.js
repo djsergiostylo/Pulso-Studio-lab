@@ -1093,14 +1093,14 @@ function djSet(v){if(Math.abs(v)<.04)v=0;setFxVal('ms','mcut',v<0?1+v*.75:1);set
 
 /* ---------- MACRO: subidón que desliza el usuario (v2.68) ---------- */
 S.sb=Object.assign({rel:'drop',cur:'norm',hit:true,on:{flt:1,rev:1,dly:1,drv:1}},S.sb);S.sb.on=Object.assign({flt:1,rev:1,dly:1,drv:1},S.sb.on);
-const SBK=[['flt','Filtro'],['rev','Reverb'],['dly','Delay'],['drv','Drive']],SBCUR={soft:.7,norm:1,exp:2.6};
+const SB_HP=1.4,SBK=[['flt','Filtro'],['rev','Reverb'],['dly','Delay'],['drv','Drive']],SBCUR={soft:.7,norm:1,exp:2.6};
 let sbBase=null,sbP=0,sbRaf=0,sbDown=false;const sbF=$('#sbF');
 const sbCap=()=>({mhp:S.mhp,mcut:S.mcut,rm:S.rev.mix,ro:S.rev.on,dm:S.dly.mix,df:S.dly.fb,dop:S.dly.on,dr:S.mdrive});
 function sbPos(p){sbF.style.setProperty('--p',(p*100).toFixed(1)+'%');sbF.setAttribute('aria-valuenow',Math.round(p*100));$('#sbO').textContent=Math.round(p*100)+'%'}
-function sbBars(){const v={flt:S.mhp,rev:S.rev.mix,dly:S.dly.mix,drv:S.mdrive},tx={flt:S.mhp>0?'HP '+fmtF(Math.round(msHp(S.mhp))):'OFF',rev:pct(S.rev.mix),dly:pct(S.dly.mix),drv:pct(S.mdrive)};
+function sbBars(){const v={flt:S.mhp/SB_HP,rev:S.rev.mix,dly:S.dly.mix,drv:S.mdrive},tx={flt:S.mhp>0?'HP '+fmtF(Math.round(msHp(S.mhp))):'OFF',rev:pct(S.rev.mix),dly:pct(S.dly.mix),drv:pct(S.mdrive)};
   SBK.forEach(([k])=>{const b=$('#sbb_'+k),o=$('#sbo_'+k);if(b)b.style.width=(clamp(v[k],0,1)*100).toFixed(0)+'%';if(o)o.textContent=tx[k]})}
 function sbApply(p){const c=Math.pow(clamp(p,0,1),SBCUR[S.sb.cur]||1),b=sbBase,on=S.sb.on,L=(a,m)=>a+(Math.max(a,m)-a)*c;
-  if(on.flt){S.mcut=1;S.mhp=L(b.mhp,1)}
+  if(on.flt){S.mcut=1;S.mhp=L(b.mhp,SB_HP)}
   if(on.rev){S.rev.mix=L(b.rm,.75);if(c>.02)S.rev.on=true}
   if(on.dly){S.dly.mix=L(b.dm,.6);S.dly.fb=L(b.df,.72);if(c>.02)S.dly.on=true}
   if(on.drv)S.mdrive=L(b.dr,.55);
