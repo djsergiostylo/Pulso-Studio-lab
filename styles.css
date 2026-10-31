@@ -899,3 +899,27 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .trans .seg>#bpmv small{padding-top:0;line-height:1}
 /* v2.82 Azar con el color de la pista elegida */
 .trans .seg>#rand{background:var(--c,var(--key));color:#06121a;font-weight:700}
+
+/* v2.83 Tocar: pads pequeños, sonido en Notas y piano roll */
+#pads.pads .pad{grid-column:auto;aspect-ratio:auto;height:68px;padding:7px 8px}
+#pads.pads.drum{grid-template-columns:repeat(5,1fr)}
+#pads.pads.keys{grid-template-columns:repeat(4,1fr)}
+#pads.pads.keys .pad{height:76px}
+.snd4{display:flex;gap:6px;margin:8px 0}
+.snd4[hidden]{display:none}
+.snd4 button{flex:1;min-height:38px;border:1px solid var(--keyedge);border-radius:9px;background:var(--key);color:var(--fg);font-family:var(--disp);font-size:10.5px;letter-spacing:.06em;border-bottom:3px solid var(--c)}
+.snd4 button[aria-pressed="true"]{background:var(--c);color:#06121a;border-color:var(--c);font-weight:700}
+.octr{margin:8px 0;align-items:center}.octr[hidden]{display:none}
+.octr button{flex:1;min-height:36px}.octr span{flex:1;text-align:center;font-family:var(--disp);font-size:10.5px;letter-spacing:.08em;color:var(--mute)}
+.rollpg{margin:0 0 8px}.rollpg[hidden]{display:none}
+.roll{display:grid;gap:2px;padding:8px;border:1px solid var(--keyedge);border-radius:10px;background:var(--key);touch-action:none;-webkit-user-select:none;user-select:none;--c:var(--on)}
+.roll .rn2,.roll .rh{font-family:var(--disp);font-size:9.45px;color:var(--mute);display:flex;align-items:center;justify-content:flex-end;padding-right:4px;min-width:0}
+.roll .rh{justify-content:center;padding:0;height:14px}.roll .rh.b{color:var(--fg)}
+.roll .rc{height:26px;border-radius:3px;background:color-mix(in srgb,var(--fg) 7%,transparent);min-width:0}
+.roll .rc.g{background:color-mix(in srgb,var(--fg) 13%,transparent)}
+.roll .rc.off{opacity:.25}
+.roll .rc.on{background:var(--c)}
+.roll .rc.ov{background:color-mix(in srgb,var(--c) 40%,transparent);box-shadow:inset 0 0 0 1px var(--c)}
+.roll .rc.ph:not(.on){background:color-mix(in srgb,var(--fg) 26%,transparent)}
+.roll .rh.ph{color:var(--c);font-weight:700}
+#rollSnd{display:grid;grid-template-columns:repeat(5,1fr)}

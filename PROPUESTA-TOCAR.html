@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Propuesta Tocar - Pulso Studio</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f4f5f7;color:#1b2430;max-width:420px;margin:0 auto;padding:16px;line-height:1.5}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:15px;margin:22px 0 6px}p,li{font-size:14px}ul{padding-left:18px}
+.ph{background:#0b1220;border:1px solid #22304b;border-radius:18px;padding:10px;color:#d5deeb;font-family:ui-monospace,monospace;font-size:11px;margin:0 0 6px}
+.row{display:flex;gap:6px;margin:6px 0}
+.seg,.chip{flex:1;text-align:center;padding:7px 2px;border:1px solid #22304b;border-radius:8px;letter-spacing:.06em;font-size:11px}
+.on{background:#34c6b4;color:#06121a;border-color:#34c6b4;font-weight:600}
+.gr{display:grid;gap:2px}
+.nt{font-size:11px;color:#8da0bf;display:flex;align-items:center;justify-content:flex-end;padding-right:4px}
+.c{height:17px;border-radius:2px;background:#131d33}.c.b{background:#18253f}
+.pad{border-radius:10px;border:1px solid #22304b;background:#131d33;display:flex;flex-direction:column;justify-content:space-between;padding:6px 7px;border-bottom-width:4px}
+.bar{height:26px;border-radius:8px;border:1px solid #22304b;display:flex;align-items:center;justify-content:center;font-size:11px;color:#8da0bf}
+.note{background:#fff3d6;border-radius:8px;padding:8px 10px;font-size:13px}
+</style></head><body>
+<h1>Pads pasa a "Tocar"</h1>
+<p>Maqueta para Claude Code. Detalle técnico y orden de trabajo en <code>PROPUESTA-TOCAR.md</code>. Versión actual: v2.82.</p>
+
+<h2>El problema</h2>
+<ul><li>En Pads &gt; Notas las 8 notas salen enormes, una por fila (regla <code>span 4</code> de la rejilla de Batería).</li>
+<li>El sonido que tocan depende de otra pantalla y no se ve cuál es.</li></ul>
+
+<h2>1. Piano roll de ACID (vista nueva en Crear)</h2>
+<div class="ph">
+<div class="row"><div class="seg">SECUENCIADOR</div><div class="seg">PADS</div><div class="seg on">PIANO ROLL</div></div>
+<div class="row"><div class="chip">SUB</div><div class="chip" style="background:#a6f03d;color:#06121a;border-color:#a6f03d;font-weight:600">ACID</div><div class="chip">STAB</div><div class="chip">LEAD</div></div>
+<div class="gr" id="roll" style="grid-template-columns:26px repeat(16,1fr)"></div>
+<div class="row" style="margin-top:8px"><div class="seg">OCT −</div><div class="seg">OCT +</div><div class="seg" style="background:#a6f03d;color:#06121a;border-color:#a6f03d;font-weight:600">AZAR</div><div class="seg">BORRAR</div></div>
+</div>
+
+<h2>2. Pads, modo Batería (10 pads pequeños)</h2>
+<div class="ph">
+<div class="row"><div class="seg">REC</div><div class="seg">CUANTIZAR</div><div class="seg on">BATERÍA</div><div class="seg">NOTAS</div></div>
+<div class="gr" id="dr" style="grid-template-columns:repeat(5,1fr);gap:6px"></div>
+<div class="bar" style="margin-top:8px">FILTRO DJ ◀ low pass · centro · high pass ▶</div>
+</div>
+
+<h2>3. Pads, modo Notas (eliges el sonido aquí)</h2>
+<div class="ph">
+<div class="row"><div class="seg">REC</div><div class="seg">CUANTIZAR</div><div class="seg">BATERÍA</div><div class="seg on">NOTAS</div></div>
+<div class="row"><div class="chip">SUB</div><div class="chip">ACID</div><div class="chip" style="background:#c58bff;color:#06121a;border-color:#c58bff;font-weight:600">STAB</div><div class="chip">LEAD</div></div>
+<div class="gr" id="nt" style="grid-template-columns:repeat(4,1fr);gap:6px"></div>
+<div class="row" style="margin-top:8px"><div class="seg">OCT −</div><div class="seg">OCT +</div><div class="seg">ACORDE</div><div class="seg">ARP</div></div>
+</div>
+
+<h2>Orden de trabajo</h2>
+<ul><li><b>v2.83:</b> pads pequeños (Notas 4x2, Batería 5x2).</li>
+<li><b>v2.84:</b> elegir sonido y octava dentro de Notas.</li>
+<li><b>v2.85:</b> piano roll como tercera vista de Crear.</li>
+<li>Después: Acorde y Arp.</li></ul>
+<div class="note"><b>Límite de datos:</b> una nota por paso y por pista (monofónica), sin acordes en el roll. No romper el guardado <code>pulsostudio1</code>.</div>
+
+<script>
+var N=['C5','B♭','A♭','G','F','E♭','D','C4'],steps={0:7,2:5,3:5,4:3,6:4,8:7,10:2,11:3,12:5,14:4},cur=6,h='';
+for(var y=0;y<8;y++){h+='<div class="nt">'+N[y]+'</div>';for(var x=0;x<16;x++){var on=steps[x]===y;h+='<div class="c'+(x%4<2?' b':'')+'" style="'+(on?'background:#a6f03d':(x===cur?'background:#22304b':''))+'"></div>'}}
+document.getElementById('roll').innerHTML=h;
+var D=[['KICK','#ff764d'],['SNRE','#ffd24d'],['CLAP','#b6e35a'],['HAT','#4de0c8'],['OPEN','#4db8ff'],['TOM','#a98bff'],['SUB','#ff6ad5'],['ACID','#a6f03d'],['STAB','#c58bff'],['LEAD','#ffb347']];
+document.getElementById('dr').innerHTML=D.map(function(d){return '<div class="pad" style="height:52px;border-bottom-color:'+d[1]+'"><span style="color:'+d[1]+'">'+d[0]+'</span></div>'}).join('');
+var K=['C','D','E♭','F','G','A♭','B♭','C+'];
+document.getElementById('nt').innerHTML=K.map(function(k,i){return '<div class="pad" style="height:54px;border-bottom-color:#c58bff'+(i===4?';background:#c58bff;color:#06121a':'')+'"><span>'+k+'</span></div>'}).join('');
+</script>
+</body></html>

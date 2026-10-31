@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">132</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.82">v2.82</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.83">v2.83</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -39,6 +39,7 @@
     <div class="seg subtabs" id="subs">
       <button data-t="seq" aria-pressed="true">Secuenciador</button>
       <button data-t="pads" aria-pressed="false">Pads</button>
+      <button data-t="roll" aria-pressed="false">Piano roll</button>
     </div>
     
 
@@ -60,11 +61,21 @@
     </section>
 
     <section id="t-pads" class="tab" hidden>
-      <div class="seg"><button id="padRec" aria-pressed="false">● REC</button><button id="padQ" aria-pressed="true">Cuantizar</button><button id="padMel" aria-pressed="false">🎹 Notas</button></div>
+      <div class="seg"><button id="padRec" aria-pressed="false">● REC</button><button id="padQ" aria-pressed="true">Cuantizar</button><button id="padDr" aria-pressed="true">Batería</button><button id="padMel" aria-pressed="false">🎹 Notas</button></div>
+      <div class="snd4" id="padSnd" role="group" aria-label="Sonido de las notas" hidden></div>
       <div class="pads" id="pads"></div>
+      <div class="seg octr" id="padOct" hidden><button id="padOm" aria-label="Bajar octava">OCT −</button><span id="padOv">OCT 0</span><button id="padOp" aria-label="Subir octava">OCT +</button></div>
       <div class="keys" id="pkeys" hidden></div>
       <div class="card"><div class="k"><label for="djf">Filtro DJ <output id="djo">OFF</output></label><input id="djf" type="range" min="-100" max="100" value="0"></div></div>
-      <p class="note">Toca los pads en directo. Con REC y ▶ Play lo que toques se graba en el patrón que suena. 🎹 Notas convierte los pads en un teclado para el canal melódico elegido. Filtro DJ: izquierda = low pass, derecha = high pass, doble toque lo centra.</p>
+      <p class="note">Toca los pads en directo. Con REC y ▶ Play lo que toques se graba en el patrón que suena. 🎹 Notas convierte los pads en un teclado: elige arriba el sonido (SUB, ACID, STAB o LEAD) y la octava. Filtro DJ: izquierda = low pass, derecha = high pass, doble toque lo centra.</p>
+    </section>
+
+    <section id="t-roll" class="tab" hidden>
+      <div class="snd4" id="rollSnd" role="group" aria-label="Sonido del piano roll"></div>
+      <div class="focus-pages rollpg" id="rollPg" role="group" aria-label="Página de pasos" hidden><button type="button" data-pg="0" aria-pressed="true">Pasos 1–16</button><button type="button" data-pg="1" aria-pressed="false">Pasos 17–32</button></div>
+      <div class="roll" id="roll"></div>
+      <div class="seg octr"><button id="rollOm" aria-label="Bajar octava">OCT −</button><span id="rollOv">OCT 0</span><button id="rollOp" aria-label="Subir octava">OCT +</button></div>
+      <p class="note">Toca una casilla para poner o quitar un golpe o una nota; arrastra para pintar. Cada sonido tiene su propia escala. En las baterías, 0 es el sonido original y las demás filas lo afinan más grave (−) o más agudo (+) en semitonos. Una nota por paso. Azar y Borrar de arriba actúan sobre el sonido elegido.</p>
     </section>
 
     <section id="t-song" class="tab" hidden>

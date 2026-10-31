@@ -468,3 +468,11 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.82 (2026-10-31) — Claude
 - El boton Azar toma el color de la pista elegida (Kick naranja, Acid verde, Stab violeta...), con letra oscura para que se lea.
 - Para revertir: git revert del commit v2.82.
+
+## v2.83 (2026-10-31) — Claude
+- Pads pasa a ser la pestana de tocar: Bateria (10 pads, 5x2) y Notas (8 pads, 4x2) con pads pequenos. Nuevo boton Bateria junto a Notas.
+- En Notas se elige el sonido dentro del propio modo (SUB, ACID, STAB, LEAD, con su color) y la octava (OCT - / +).
+- Nueva vista Piano roll en Crear: filas = notas de la escala, columnas = pasos; tocar o arrastrar pinta y borra, una nota por paso. Elegir sonido, octava, pagina 1-16 / 17-32 en ACID, cursor de reproduccion, deshacer con el boton general.
+- El Piano roll incluye los 10 sonidos (dos filas de botones), cada uno con su propia escala. En las baterias la fila 0 es el sonido original y las demas lo afinan en semitonos (mas grave o mas agudo). Dato nuevo p.dn (afinacion por paso de cada bateria) con migracion en fixP: los proyectos antiguos se cargan igual.
+- Sin cambios en el formato de guardado.
+- Para revertir: git revert del commit v2.83.
