@@ -1073,3 +1073,7 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .lcd .lvol button{background:none;border:0;color:inherit;font-size:13px;line-height:1;min-width:28px;height:26px;padding:0;text-shadow:none}
 .lcd .lvol input{flex:1;min-width:0;height:26px;margin:0;accent-color:var(--lcdfg);touch-action:none}
 .lcd .lvol output{flex:0 0 34px;text-align:right;font-size:9px;letter-spacing:.06em;opacity:.8;font-variant-numeric:tabular-nums}
+
+/* v2.89 version justo encima de las letras BPM */
+.lcd .big{position:relative}
+.lcd .big .ver{position:absolute;right:0;left:auto;top:auto;bottom:17px;font-size:8px;letter-spacing:.08em;line-height:1;white-space:nowrap;text-shadow:none}
