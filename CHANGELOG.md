@@ -273,3 +273,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Nombres y botones M/S del secuenciador legibles en las 10 caratulas y los 2 estilos (contraste medido >= 4,5:1, tambien con M/S activados).
 - Proyecto: Caratula y Estilo (Hardware/Ableton) juntos en la tarjeta Aspecto. El desplegable de abajo pasa a Pantalla - Audio - Ayuda.
 - Para revertir: git revert del commit v2.34.
+
+## v2.35 (2026-10-31) — Claude
+- Boton Audio: debajo del nombre muestra que hace cada modo (menos/medio/mas bufer, retraso, cortes). Se aplica al recargar.
+- Para revertir: git revert del commit v2.35.

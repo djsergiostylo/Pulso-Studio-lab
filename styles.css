@@ -639,3 +639,6 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #t-seq .rh .ms>button{background:color-mix(in srgb,var(--fg) 14%,var(--dev));color:var(--fg);border:1px solid color-mix(in srgb,var(--fg) 35%,var(--dev))}
 #t-seq .rh .ms>.m[aria-pressed="true"]{background:var(--fg);color:var(--dev);border-color:var(--fg)}
 #t-seq .rh .ms>.s[aria-pressed="true"]{background:var(--c);color:#111;border-color:var(--c)}
+/* v2.35 boton Audio con descripcion */
+#latB{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.15}
+#latB small{font-size:9px;font-weight:400;letter-spacing:.02em;opacity:.85;text-transform:none;white-space:normal}

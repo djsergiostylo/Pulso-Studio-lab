@@ -788,8 +788,9 @@ const setLights=()=>{document.documentElement.dataset.lights=S.lights?'1':'0';li
   if(!S.lights){pulse=0;if(glowEl)glowEl.style.opacity='0';fl.fill(0);rnLed.forEach(e=>{e.style.opacity=''});chipLed.forEach(e=>{if(e)e.style.opacity=''});try{padEl.forEach(e=>{if(e)e.style.opacity=''})}catch(err){}}updLcd()};
 /* latencia del audio: Rápido (pads inmediatos, más riesgo de cortes), Equilibrado, Estable (más margen, tarda más en sonar). Se aplica al recargar. */
 const LATN={interactive:'Rápido',balanced:'Equilibrado',playback:'Estable'},latB=$('#latB');
-const setLat=()=>{latB.textContent='Audio: '+LATN[S.lat]};setLat();
-latB.addEventListener('click',()=>{const o=['interactive','balanced','playback'];S.lat=o[(o.indexOf(S.lat)+1)%3];setLat();saveFlush&&saveSoon();flash('AUDIO '+LATN[S.lat].toUpperCase()+' · SE APLICA AL RECARGAR')});
+const LATD={interactive:'MENOS búfer · menos retraso · más riesgo de cortes',balanced:'búfer MEDIO · retraso y cortes equilibrados',playback:'MÁS búfer · más retraso · menos cortes'};
+const setLat=()=>{latB.innerHTML='Audio: '+LATN[S.lat]+'<small>'+LATD[S.lat]+'</small>'};setLat();
+latB.addEventListener('click',()=>{const o=['interactive','balanced','playback'];S.lat=o[(o.indexOf(S.lat)+1)%3];setLat();saveFlush&&saveSoon();flash('AUDIO '+LATN[S.lat].toUpperCase()+' · AL RECARGAR')});
 lightsB.addEventListener('click',()=>{S.lights=!S.lights;setLights();saveSoon();flash(S.lights?'LUCES EXTRA: SÍ':'LUCES EXTRA: NO (AHORRA BATERÍA)')});setLights();
 $('#stageX').addEventListener('click',()=>setStage(false));
 /* pantalla completa (si el navegador la ofrece; en iPhone: Compartir → Añadir a pantalla de inicio) */
