@@ -744,3 +744,12 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .fxnav .fcb+.fcb::before{display:none}
 .fxnav .fcg{flex:0 0 44px}.fxnav button.fcb .fcled{position:absolute;top:0;right:0;width:26px;height:22px;border-radius:0;background:none;box-shadow:none}
 .fxnav .fcg{background:color-mix(in srgb,var(--key) 70%,var(--dev));border:1px solid color-mix(in srgb,var(--fg) 20%,transparent)}
+
+/* v2.49 Escenario y Pantalla completa siempre a mano, junto a A B C D */
+.prv{display:flex;gap:4px;margin-left:auto}
+.prv+.modeb{margin-left:0}
+.prb{width:34px;min-height:26px;display:grid;place-items:center;padding:0;border-radius:8px;border:1px solid var(--keyedge);background:var(--key);color:var(--fg);touch-action:manipulation}
+.prb[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
+.prb[hidden]{display:none}:root[data-tab="file"] .prow{display:flex}
+:root[data-tab="file"] .pchips,:root[data-tab="file"] .modeb{display:none}
+:root[data-tab="file"] .prv{margin-left:auto}

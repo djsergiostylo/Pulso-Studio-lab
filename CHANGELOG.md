@@ -329,3 +329,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.48 (2026-10-31) — Claude
 - Cache: GitHub Pages guarda app.js y styles.css 10 minutos (max-age=600), por eso el navegador lateral y el movil iban por detras. index.html enlaza ahora app.js?v=2.48 y styles.css?v=2.48: cada version nueva cambia el numero y el navegador baja los archivos nuevos al instante. Al subir version hay que cambiarlo tambien.
 - Para revertir: git revert del commit v2.48.
+
+## v2.49 (2026-10-31) — Claude
+- Modo escenario y Pantalla completa pasan a la fila de los patrones A B C D (iconos junto a Modo), visibles en Crear, Cancion y Proyecto, tambien dentro del modo escenario. Salen del desplegable del pie, que se llama ahora 'Pantalla y audio'.
+- Para revertir: git revert del commit v2.49.
