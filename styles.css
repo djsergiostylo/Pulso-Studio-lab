@@ -897,3 +897,5 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .trans .seg>#bpmv{flex-direction:column;justify-content:center;align-items:center;gap:1px}
 .trans .seg>#bpmv span{line-height:1}
 .trans .seg>#bpmv small{padding-top:0;line-height:1}
+/* v2.82 Azar con el color de la pista elegida */
+.trans .seg>#rand{background:var(--c,var(--key));color:#06121a;font-weight:700}

@@ -464,3 +464,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.81 (2026-10-31) — Claude
 - Azar ahora muta: cambia solo unos pocos pasos (cerca del 20 %, minimo 2) de la pista elegida, y mantiene el resto. Si la pista esta vacia, genera un patron nuevo entero como antes. Se puede deshacer con ↶.
 - Para revertir: git revert del commit v2.81.
+
+## v2.82 (2026-10-31) — Claude
+- El boton Azar toma el color de la pista elegida (Kick naranja, Acid verde, Stab violeta...), con letra oscura para que se lea.
+- Para revertir: git revert del commit v2.82.
