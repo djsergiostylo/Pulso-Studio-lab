@@ -309,3 +309,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.43 (2026-10-31) — Claude
 - FX compacto: cabeceras de grupo como franja de color, tarjetas con barra y fondo propios, efectos cerrados = una linea, parametros siempre visibles al abrir (sin 'Parametros avanzados'), grafica y deslizadores mas bajos. Contraste >= 4,5:1 en las 10 caratulas.
 - Para revertir: git revert del commit v2.43.
+
+## v2.44 (2026-10-31) — Claude
+- FX con aspecto de modulo: cabecera con degradado del color del efecto, icono en insignia, interruptor con LED, pantalla con marco de color, deslizadores con relleno de color, valores en etiqueta. Misma estructura y funciones que v2.43; contraste >= 4,5:1 en las 10 caratulas.
+- Para revertir: git revert del commit v2.44.

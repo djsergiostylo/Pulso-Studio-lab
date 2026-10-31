@@ -656,7 +656,7 @@ const fxOrder=()=>{const ids=['ms','rev','dly','cho','flt','cr','sc','cmp'],all=
 function fxCard(d){const o=fxObj(d.id),on=d.id==='ms'||o.on;
   const segs=(d.seg||[]).map(([key,opts])=>`<div class="seg fxs" data-fx="${d.id}" data-key="${key}">${opts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${String(o[key])===String(v)}">${l}</button>`).join('')}</div>`).join('');
   const tog=d.tog?`<button class="tg" data-fx="${d.id}" data-act="tog" data-key="${d.tog[0]}" aria-pressed="${!!o[d.tog[0]]}">${d.tog[1]}</button>`:'';
-  const kn2=d.k.map(([key,l,f])=>`<div class="k"><label for="k_${d.id}_${key}">${l} <output id="o_${d.id}_${key}">${f(o[key])}</output></label><input id="k_${d.id}_${key}" data-fx="${d.id}" data-key="${key}" type="range" min="0" max="1000" value="${Math.round(o[key]*1000)}"></div>`).join('');
+  const kn2=d.k.map(([key,l,f])=>`<div class="k"><label for="k_${d.id}_${key}">${l} <output id="o_${d.id}_${key}">${f(o[key])}</output></label><input id="k_${d.id}_${key}" data-fx="${d.id}" data-key="${key}" type="range" min="0" max="1000" value="${Math.round(o[key]*1000)}" style="--p:${Math.round(o[key]*100)}%"></div>`).join('');
   return`<div class="fxc${on?' on':''}${fxOpen===d.id?'':' sh'}" id="fx_${d.id}" style="--c:${d.c}"><div class="fxh"><span class="fxi" aria-hidden="true">${d.ic}</span><h3>${d.n}</h3>${tog}${d.id==='ms'?'':`<button class="tg" data-fx="${d.id}" data-act="on" aria-pressed="${on}">${on?'On':'Off'}</button>`}</div>`+
     `<canvas class="fxg" id="g_${d.id}" aria-hidden="true"></canvas><details class="fxmore" open><summary>Parámetros avanzados</summary><div class="fxparams">${segs}<div class="knobs">${kn2}</div>${d.note?`<p class="note">${d.note}</p>`:''}</div></details></div>`}
 function renderFxNav(){$('#fxNav').innerHTML=FXDEF.map(d=>{const on=d.id==='ms'||fxObj(d.id).on;return`<button data-go="${d.id}" class="${on?'on':''}" style="--c:${d.c}"><i></i>${d.ic} ${d.n.split(' ')[0]}</button>`}).join('')}
@@ -714,7 +714,7 @@ $('#fxList').addEventListener('click',e=>{const b=e.target.closest('button');if(
   else if(box.classList.contains('fxs')){const key=box.dataset.key,v=b.dataset.v;o[key]=typeof FXD[id][key]==='number'?+v:v}else return;
   applyMaster();rerenderCard(id);save()});
 function setFxVal(id,key,v){const o=fxObj(id);o[key]=v;const f=FXI[id].k.find(x=>x[0]===key),txt=f[2](v);
-  [['k_','o_'],['b_','ob_']].forEach(([ki,oi])=>{const inp=$('#'+ki+id+'_'+key),out=$('#'+oi+id+'_'+key);if(inp&&+inp.value!==Math.round(v*1000))inp.value=Math.round(v*1000);if(out)out.textContent=txt});
+  [['k_','o_'],['b_','ob_']].forEach(([ki,oi])=>{const inp=$('#'+ki+id+'_'+key),out=$('#'+oi+id+'_'+key);if(inp&&+inp.value!==Math.round(v*1000))inp.value=Math.round(v*1000);if(inp)inp.style.setProperty('--p',Math.round(v*100)+'%');if(out)out.textContent=txt});
   applyMaster();if(key==='mvol')updMixUI();else updDock();drawFxG(id);saveSoon()}
 $('#fxList').addEventListener('input',e=>{const el=e.target;if(!el.dataset.key||!el.dataset.fx)return;setFxVal(el.dataset.fx,el.dataset.key,el.value/1000)});
 const MSB=[['mvol','Vol'],['mcut','LP'],['mhp','HP']];
