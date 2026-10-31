@@ -337,3 +337,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.50 (2026-10-31) — Claude
 - Deshacer y rehacer mas grandes (iconos de 20 px en botones de 34 px, antes 14,7 px y 26 px); la fila de transporte se reparte mejor (3:1 con el tempo) sin cortar PLAY ni BORRAR.
 - Para revertir: git revert del commit v2.50.
+
+## v2.51 (2026-10-31) — Claude
+- Transporte: PLAY grande (icono triangulo, color de acento) que pasa a STOP rojo con icono cuadrado al sonar; Azar, Borrar, Deshacer y Rehacer mas proporcionados y mas altos (40 px). El boton de sonar al pulsar (altavoz) baja a la fila de A B C D, junto a Escenario y Pantalla completa. Contraste >= 5:1.
+- Para revertir: git revert del commit v2.51.

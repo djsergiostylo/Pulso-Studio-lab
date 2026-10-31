@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.50"></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.51"></head><body>
 <title>Pulso Studio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
 
@@ -10,16 +10,15 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">132</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.50">v2.50</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.51">v2.51</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
-          <button id="play" aria-pressed="false">▶ Play</button>
+          <button id="play" aria-pressed="false" aria-label="Reproducir"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span>Play</span></button>
           <button id="rand">Azar</button>
           <button id="clear">Borrar</button>
           <button id="undo" class="ur" aria-label="Deshacer (Ctrl+Z)" disabled>↶</button>
-          <button id="redo" class="ur" aria-label="Rehacer (Ctrl+Mayús+Z)" disabled>↷</button>
-          <button id="aud" aria-pressed="true" aria-label="Sonar al pulsar">🔊</button>
+          <button id="redo" class="ur" aria-label="Rehacer (Ctrl+Mayús+Z)" disabled>↷</button>
         </div>
         <div class="seg">
           <button class="hd" data-k="bpm" data-d="-1" aria-label="Bajar tempo">−</button>
@@ -27,7 +26,7 @@
           <button class="hd" data-k="bpm" data-d="1" aria-label="Subir tempo">+</button>
         </div>
       </div>
-      <div class="prow"><div class="pchips" id="pchips" role="group" aria-label="Patrón"></div><div class="prv" role="group" aria-label="Vista"><button class="prb" id="stage" aria-pressed="false" aria-label="Modo escenario" title="Modo escenario"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="2" fill="none"/></svg></button><button class="prb" id="fs" aria-pressed="false" aria-label="Pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" fill="none"/></svg></button></div><button class="modeb" id="modeB" aria-expanded="false">Modo: Paso ▾</button></div>
+      <div class="prow"><div class="pchips" id="pchips" role="group" aria-label="Patrón"></div><div class="prv" role="group" aria-label="Vista"><button class="prb" id="aud" aria-pressed="true" aria-label="Sonar al pulsar" title="Sonar al pulsar">🔊</button><button class="prb" id="stage" aria-pressed="false" aria-label="Modo escenario" title="Modo escenario"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="2" fill="none"/></svg></button><button class="prb" id="fs" aria-pressed="false" aria-label="Pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" fill="none"/></svg></button></div><button class="modeb" id="modeB" aria-expanded="false">Modo: Paso ▾</button></div>
     </div>
 
     <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones principales">
@@ -234,6 +233,6 @@
   
 </main>
 
-<script src="./app.js?v=2.50"></script>
+<script src="./app.js?v=2.51"></script>
 
 </body></html>

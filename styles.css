@@ -761,3 +761,17 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .trans .seg>button.ur{flex:0 0 34px;font-size:20px}
 .trans .seg .hd{flex:0 0 22px}
 .trans .seg>button:not(.ur):not(.hd):not(.val){letter-spacing:0;padding:0 2px}
+
+/* v2.51 Transporte: PLAY grande y visible, Azar/Borrar/Deshacer/Rehacer proporcionados, sonido junto a Escenario */
+.trans{grid-template-columns:3.1fr 1fr;gap:5px}
+.trans .seg>button,.trans .seg>.val,.trans .seg .hd{min-height:40px;height:40px}
+.trans .seg>#play{flex:0 0 36%;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;letter-spacing:.08em;font-weight:700;background:var(--on);color:var(--onfg);box-shadow:none;border-left:0}
+.trans .seg>#play[aria-pressed="true"]{background:#c0392b;color:#fff}
+.trans .seg>#play svg{flex:none}
+.trans .seg>#rand,.trans .seg>#clear{flex:1 1 0;font-size:10.5px;letter-spacing:.02em;padding:0 2px}
+.trans .seg>button.ur{flex:0 0 36px;font-size:21px}
+.prb#aud{font-size:14px;line-height:1}
+#aud.prb[aria-pressed="true"]{background:var(--key);color:var(--fg);border-color:var(--keyedge)}
+#aud.prb[aria-pressed="false"]{background:var(--on);color:var(--onfg);border-color:var(--on)}.trans .seg>#play{flex:0 0 32%;gap:5px;letter-spacing:.05em}
+.trans .seg>#rand,.trans .seg>#clear{font-size:10px;letter-spacing:0}
+.trans .seg>#clear{flex-grow:1.2}

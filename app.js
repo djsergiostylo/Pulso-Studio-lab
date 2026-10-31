@@ -414,12 +414,13 @@ function ph(){const same=S.play&&S.pp===S.pat;rows.forEach((r,ch)=>{const i0=sam
 let lastPP=-1,fm=0,ft='';
 function flash(t){ft=t;fm=performance.now()+1600;updLcd();setTimeout(updLcd,1650)}
 const lsEl=$('#lsteps');lsEl.innerHTML=Array.from({length:16},(_,i)=>`<i${i%4===0?' class="b"':''}></i>`).join('');const lsC=[...lsEl.children];let lsLast=-1;
+const PLPLAY='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span>Play</span>',PLSTOP='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg><span>Stop</span>';
 const l1El=$('#l1'),l2El=$('#l2'),lbEl=$('#lb'),bpEl=$('#bpmv span'),plEl=$('#play'),uc=['','',-1,null];
 function updLcd(){const pl=S.play?S.pp:S.pat,a=`<b>${S.play?'▶':'■'}</b>${CH[S.ch][1]} · ${S.song.on?'♪'+String((S.play?S.bar:0)+1).padStart(2,'0')+'/'+S.song.len+' · ':'PAT '}${pl>=0?'ABCD'[pl]:'–'}${S.chain&&!S.song.on?' · CADENA':''}`;if(a!==uc[0]){uc[0]=a;l1El.innerHTML=a}
   const sg=S.play&&S.lights?S.g%16:-1;if(sg!==lsLast){if(lsLast>=0)lsC[lsLast].classList.remove('on');if(sg>=0)lsC[sg].classList.add('on');lsLast=sg}
   const b=performance.now()<fm?ft:S.play?`PASO ${String(S.g%16+1).padStart(2,'0')}/16`:'LISTO';if(b!==uc[1]){uc[1]=b;l2El.textContent=b}
   if(uc[2]!==S.bpm){uc[2]=S.bpm;lbEl.textContent=S.bpm;bpEl.textContent=S.bpm}
-  if(uc[3]!==S.play){uc[3]=S.play;plEl.setAttribute('aria-pressed',S.play);plEl.textContent=S.play?'■ Stop':'▶ Play'}}
+  if(uc[3]!==S.play){uc[3]=S.play;plEl.setAttribute('aria-pressed',S.play);plEl.innerHTML=S.play?PLSTOP:PLPLAY;plEl.setAttribute('aria-label',S.play?'Parar':'Reproducir')}}
 
 const has=i=>i<SUBI?P[S.pat].d[i].some(Boolean):P[S.pat][NK[i]].some(x=>x>=0);
 let chipEl=null;
