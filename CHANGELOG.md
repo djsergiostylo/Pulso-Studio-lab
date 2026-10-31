@@ -517,3 +517,8 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Limitador en Mix: el vumetro ENTRADA llega hasta +12 dB (antes se quedaba en 0 dB y no se veia cuanto se pasaba), con una raya en 0 dB, el valor numerico del pico al lado de ENTRADA y la barra en rojo cuando la suma de los canales pasa de 0 dB antes del limitador.
 - Limitador rehecho como limitador de verdad: dos barras en Mix. TECHO (de -12 a 0 dBFS, por defecto -1): lo que pase de ahi se atenua, lo que no llega al techo pasa sin cambios. ENTRADA (de 0 a +12 dB, por defecto 0): sube la senal antes de limitar, solo si tu lo pides. Se quita la subida oculta de +2 dB que llevaba el limitador (antes el techo era -2 dBFS y luego subia +2 dB, siempre dentro del recortador final) y el recortador suave final empieza ahora en 0,92 en vez de 0,8. El vumetro ENTRADA muestra tambien la reduccion en dB (RED.). El aviso del pico del master se basa en esa reduccion (naranja mas de 3 dB, rojo mas de 6 dB) y en el recortador final. Los proyectos antiguos se migran con el mismo volumen (un +3,6 dB de antes pasa a Entrada +3,6 dB; un techo bajado pasa a Techo). FX > Master tiene los dos ajustes (Limitador: techo, Limitador: entrada). Nuevo dato lig; limv pasa a 3.
 - Para revertir: git revert del commit v2.86.
+
+## Manual (2026-10-31) — Claude
+- Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
+- Nuevo tools/capturas-manual.js: regenera las capturas del manual con Chrome sin pantalla (instrucciones al principio del archivo).
+
