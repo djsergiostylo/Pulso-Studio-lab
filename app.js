@@ -564,12 +564,12 @@ const DKM=[['dj','DJ'],['rev:mix','Reverb'],['dly:mix','Delay'],['ms:mdrive','Dr
 function buildDock(){
   $('#dkM').innerHTML='<button type="button" class="dkh" id="dkH"><span>Macros</span><i aria-hidden="true"></i></button>'+DKM.map(([k,l])=>{const dj=k==='dj';return`<div class="k"><label for="dm_${k.replace(':','_')}">${l} <output id="do_${k.replace(':','_')}"></output></label><input id="dm_${k.replace(':','_')}" data-m="${k}" type="range" min="${dj?-100:0}" max="${dj?100:1000}" value="0"></div>`}).join('');
   const dkFold=()=>{const f=S.mfold!==false;$('#dkM').classList.toggle('fold',f);$('#dkH').setAttribute('aria-expanded',!f)};dkFold();$('#dkH').addEventListener('click',()=>{S.mfold=S.mfold===false;dkFold();saveSoon()});
-  $('#dkM').addEventListener('input',e=>{const el=e.target,k=el.dataset.m;if(!k)return;if(k==='dj'){djSet(el.value/100);$('#do_dj').textContent=djOut(S.mhp>0?S.mhp/.8:S.mcut<1?(S.mcut-1)/.75:0)}else{const[id,key]=k.split(':');setFxVal(id,key,el.value/1000)}});
+  $('#dkM').addEventListener('input',e=>{const el=e.target,k=el.dataset.m;if(!k)return;if(k==='dj'){djSet(el.value/100);$('#do_dj').textContent=djOut(S.mhp>0?S.mhp/DJHP:S.mcut<1?(S.mcut-1)/.75:0)}else{const[id,key]=k.split(':');setFxVal(id,key,el.value/1000)}});
   dblTap($('#dkM'),'input[type=range]',el=>{const k=el.dataset.m;if(!k)return;if(k==='dj'){el.value=0;djSet(0);$('#do_dj').textContent=djOut(0)}else{const[id,key]=k.split(':');setFxVal(id,key,fxDef(id,key))}});
   dockOK=true;updDock()}
 function updDock(){if(!dockOK)return;
   DKM.forEach(([k])=>{const id=k.replace(':','_'),inp=$('#dm_'+id),out=$('#do_'+id);if(!inp||document.activeElement===inp&&k!=='dj'&&false)return;
-    if(k==='dj'){const v=S.mhp>0?S.mhp/.8:S.mcut<1?(S.mcut-1)/.75:0;if(document.activeElement!==inp)inp.value=Math.round(v*100);out.textContent=djOut(v)}
+    if(k==='dj'){const v=S.mhp>0?S.mhp/DJHP:S.mcut<1?(S.mcut-1)/.75:0;if(document.activeElement!==inp)inp.value=Math.round(v*100);out.textContent=djOut(v)}
     else{const[a,b]=k.split(':'),v=fxObj(a)[b];if(document.activeElement!==inp)inp.value=Math.round(v*1000);out.textContent=FXI[a].k.find(x=>x[0]===b)[2](v)}})}
 /* ---------- knobs: channel + fx ---------- */
 const K={};
@@ -1084,16 +1084,17 @@ $('#pads').addEventListener('contextmenu',e=>e.preventDefault());
 $('#padRec').addEventListener('click',()=>{padRec=!padRec;histHold=padRec;if(!padRec)histCommit();if(padRec&&!S.play)start();renderPads();flash(padRec?'REC: TOCA LOS PADS':'REC APAGADO')});
 $('#padQ').addEventListener('click',()=>{padQ=!padQ;renderPads();flash(padQ?'CUANTIZAR: SÍ':'CUANTIZAR: NO')});
 $('#padMel').addEventListener('click',()=>{padMel=!padMel;if(padMel&&!MEL(S.ch))setCh(ACI);renderPads()});
-/* DJ filter: one bipolar knob over master LP / HP */
-const djOut=v=>v===0?'OFF':v<0?'LP '+fmtF(Math.round(Math.min(20000,180*Math.pow(110,1+v*.75)))):'HP '+fmtF(Math.round(msHp(v*.8)));
-function djSet(v){if(Math.abs(v)<.04)v=0;setFxVal('ms','mcut',v<0?1+v*.75:1);setFxVal('ms','mhp',v>0?v*.8:0);$('#djo').textContent=djOut(v);return v}
-(()=>{const r=$('#djf');const v0=S.mhp>0?S.mhp/.8:S.mcut<1?(S.mcut-1)/.75:0;r.value=Math.round(v0*100);$('#djo').textContent=djOut(Math.round(v0*100)/100);
+/* DJ filter: one bipolar knob over master LP / HP. DJHP = tope del filtro de graves (1.4 -> 4,8 kHz; antes .8 -> 460 Hz) */
+const DJHP=1.4;
+const djOut=v=>v===0?'OFF':v<0?'LP '+fmtF(Math.round(Math.min(20000,180*Math.pow(110,1+v*.75)))):'HP '+fmtF(Math.round(msHp(v*DJHP)));
+function djSet(v){if(Math.abs(v)<.04)v=0;setFxVal('ms','mcut',v<0?1+v*.75:1);setFxVal('ms','mhp',v>0?v*DJHP:0);$('#djo').textContent=djOut(v);return v}
+(()=>{const r=$('#djf');const v0=S.mhp>0?S.mhp/DJHP:S.mcut<1?(S.mcut-1)/.75:0;r.value=Math.round(v0*100);$('#djo').textContent=djOut(Math.round(v0*100)/100);
   r.addEventListener('input',()=>{const v=djSet(r.value/100);if(v===0)r.value=0});let lt=0;
   r.addEventListener('pointerup',()=>{const n=Date.now();if(n-lt<300){r.value=0;djSet(0);lt=0}else lt=n})})();
 
 /* ---------- MACRO: subidón que desliza el usuario (v2.68) ---------- */
 S.sb=Object.assign({rel:'drop',cur:'norm',hit:true,on:{flt:1,rev:1,dly:1,drv:1}},S.sb);S.sb.on=Object.assign({flt:1,rev:1,dly:1,drv:1},S.sb.on);
-const SB_HP=1.4,SBK=[['flt','Filtro'],['rev','Reverb'],['dly','Delay'],['drv','Drive']],SBCUR={soft:.7,norm:1,exp:2.6};
+const SB_HP=DJHP,SBK=[['flt','Filtro'],['rev','Reverb'],['dly','Delay'],['drv','Drive']],SBCUR={soft:.7,norm:1,exp:2.6};
 let sbBase=null,sbP=0,sbRaf=0,sbDown=false;const sbF=$('#sbF');
 const sbCap=()=>({mhp:S.mhp,mcut:S.mcut,rm:S.rev.mix,ro:S.rev.on,dm:S.dly.mix,df:S.dly.fb,dop:S.dly.on,dr:S.mdrive});
 function sbPos(p){sbF.style.setProperty('--p',(p*100).toFixed(1)+'%');sbF.setAttribute('aria-valuenow',Math.round(p*100));$('#sbO').textContent=Math.round(p*100)+'%'}

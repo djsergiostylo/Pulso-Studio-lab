@@ -415,3 +415,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.69 (2026-10-31) — Claude
 - Subidon: el filtro de graves llega mas alto al 100 %: 4,8 kHz (antes 1 kHz). Recorrido medido: 50 % = 309 Hz, 75 % = 1,2 kHz, 100 % = 4,8 kHz.
 - Para revertir: git revert del commit v2.69.
+
+## v2.70 (2026-10-31) — Claude
+- Macro DJ: el lado de filtro de graves (HP) llega ahora a 4,8 kHz al 100 % (antes 460 Hz), igual que el subidon. Recorrido: 25 % = 79 Hz, 50 % = 309 Hz, 75 % = 1,2 kHz, 100 % = 4,8 kHz. Un valor de HP guardado antes suena igual pero cae en otra posicion del deslizador. El lado LP no cambia.
+- Para revertir: git revert del commit v2.70.
