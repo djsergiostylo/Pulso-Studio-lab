@@ -285,3 +285,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.37 (2026-10-31) — Claude
 - BPM: el numero y TAP quedan centrados en vertical dentro de su boton.
 - Para revertir: git revert del commit v2.37.
+
+## v2.38 (2026-10-31) — Claude
+- BPM por defecto 132 (proyectos nuevos o sin guardar; los ya guardados conservan su BPM).
+- Para revertir: git revert del commit v2.38.
