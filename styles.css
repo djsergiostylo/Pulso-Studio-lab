@@ -813,3 +813,8 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #grid .step.beat,#grid .step.beat:not(.on){border-left:1px solid var(--keyedge)}
 #grid .step.beat:not(.on){background:color-mix(in srgb,var(--fg) 11%,var(--key));border-color:var(--keyedge)}
 #grid .step.beat.on{border-left-color:var(--c)}
+/* v2.60 barra inferior mas fina */
+:root{--nav:46px}
+.tabs>button{gap:1px}
+.tabs>button i{font-size:16px}
+.tabs>button span{line-height:1}

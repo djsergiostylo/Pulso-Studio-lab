@@ -374,3 +374,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.59 (2026-10-31) — Claude
 - Historial: mientras haya un dedo apoyado (arrastrar un deslizador, incluso pausando sin soltar) no se cierra ningun paso; el gesto entero es un solo paso de deshacer. Un gesto nuevo cierra antes el anterior, asi que dos movimientos separados siguen siendo dos pasos.
 - Para revertir: git revert del commit v2.59.
+
+## v2.60 (2026-10-31) — Claude
+- Barra inferior mas fina: 47 px en vez de 60 px (icono de 16 px, textos iguales). El resto de la pantalla (dock Sonido, hojas) se ajusta solo porque usan la misma medida (--nav).
+- Para revertir: git revert del commit v2.60.
