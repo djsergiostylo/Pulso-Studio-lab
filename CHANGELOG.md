@@ -440,3 +440,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.75 (2026-10-31) — Claude
 - Pausa real: el botón Play pasa a Pausa mientras suena; al pausar se queda en ese paso y Play sigue desde ahí. Nuevo botón Stop (cuadrado) que para del todo y vuelve al inicio.
 - Para revertir: git revert del commit v2.75.
+
+## v2.76 (2026-10-31) — Claude
+- En pausa la posición sigue iluminada (rejilla, luces y compás en Canción); solo se apaga con Stop.
+- Para revertir: git revert del commit v2.76.

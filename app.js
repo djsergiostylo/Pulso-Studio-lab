@@ -408,8 +408,8 @@ function updGrid(){const p=P[S.pat],any=C.some(x=>x.solo);document.documentEleme
       cX[ch][k].textContent=(ac?'!':'')+(rt>1?'⋮':'')+(nd?(nd>0?'›':'‹').repeat(Math.abs(nd)):'')+(on&&ch===ACI&&p.asl[i]?'↗':'')})});
   grid.dataset.em=S.em;ph()}
 const phL=new Array(NCH).fill(-1);
-function pause(){const g=S.g||0;stop();pcur=g;paused=true;upd()}
-function ph(){const same=S.play&&S.pp===S.pat;rows.forEach((r,ch)=>{const i0=same?S.g%C[ch].len:-1,idx=i0>=pgOff&&i0<pgOff+16?i0-pgOff:-1;if(idx===phL[ch])return;
+function pause(){const g=S.g||0;stop();pcur=g;paused=true;upd();ph();if(S.tab==='song')paintSongPH()}
+function ph(){const same=(S.play||paused)&&S.pp===S.pat;rows.forEach((r,ch)=>{const i0=same?S.g%C[ch].len:-1,idx=i0>=pgOff&&i0<pgOff+16?i0-pgOff:-1;if(idx===phL[ch])return;
     if(phL[ch]>=0)r[phL[ch]].classList.remove('ph');if(idx>=0)r[idx].classList.add('ph');phL[ch]=idx});
   if(S.play&&S.chain&&S.pp!==lastPP){lastPP=S.pp;renderPbar()}updLcd()}
 let lastPP=-1,fm=0,ft='';
@@ -419,7 +419,7 @@ const PLPAUSE='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true
 const PLPLAY='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span>Play</span>',PLSTOP='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg><span>Stop</span>';
 const l1El=$('#l1'),l2El=$('#l2'),lbEl=$('#lb'),bpEl=$('#bpmv span'),plEl=$('#play'),stEl=$('#stopb'),uc=['','',-1,null];
 function updLcd(){const pl=S.play?S.pp:S.pat,a=`<b>${S.play?'▶':paused?'❚❚':'■'}</b>${CH[S.ch][1]} · ${S.song.on?'♪'+String((S.play?S.bar:0)+1).padStart(2,'0')+'/'+S.song.len+' · ':'PAT '}${pl>=0?'ABCD'[pl]:'–'}${S.chain&&!S.song.on?' · CADENA':''}`;if(a!==uc[0]){uc[0]=a;l1El.innerHTML=a}
-  const sg=S.play&&S.lights?S.g%16:-1;if(sg!==lsLast){if(lsLast>=0)lsC[lsLast].classList.remove('on');if(sg>=0)lsC[sg].classList.add('on');lsLast=sg}
+  const sg=(S.play||paused)&&S.lights?S.g%16:-1;if(sg!==lsLast){if(lsLast>=0)lsC[lsLast].classList.remove('on');if(sg>=0)lsC[sg].classList.add('on');lsLast=sg}
   const b=performance.now()<fm?ft:S.play?`PASO ${String(S.g%16+1).padStart(2,'0')}/16`:paused?'PAUSA':'LISTO';if(b!==uc[1]){uc[1]=b;l2El.textContent=b}
   if(uc[2]!==S.bpm){uc[2]=S.bpm;lbEl.textContent=S.bpm;bpEl.textContent=S.bpm}
   const pst=S.play?1:paused?2:0;if(uc[3]!==pst){uc[3]=pst;plEl.setAttribute('aria-pressed',S.play);plEl.innerHTML=S.play?PLPAUSE:PLPLAY;plEl.setAttribute('aria-label',S.play?'Pausa':paused?'Seguir':'Reproducir');stEl.disabled=!pst}}
@@ -1151,7 +1151,7 @@ function renderSong(){const g=S.song,n=g.len;
     `<div class="lrow"><label>BPM original<input type="number" inputmode="numeric" min="40" max="240" data-lb="${id}" value="${L.bpm}"></label><label>Bucle<div class="seg" data-ll="${id}">${[1,2,4,8].map(x=>`<button data-n="${x}" aria-pressed="${L.loop===x}">${x}</button>`).join('')}</div></label></div>`+
     `<div class="k"><label for="lv_${id}">Volumen <output id="lvo_${id}">${Math.round(L.vol*100)}</output></label><input id="lv_${id}" type="range" min="0" max="100" value="${Math.round(L.vol*100)}" data-lv="${id}"></div></div></details>`}).join('');
   LID.forEach(drawLane);renderSongOps(n);paintSongPH()}
-function paintSongPH(){$$('#songGrid .sc').forEach(c=>c.classList.toggle('ph',S.play&&S.song.on&&+c.dataset.b===S.bar))}
+function paintSongPH(){$$('#songGrid .sc').forEach(c=>c.classList.toggle('ph',(S.play||paused)&&S.song.on&&+c.dataset.b===S.bar))}
 function songEdit(mode){const src=+$('#songSrc').value,dst=+$('#songDst').value,n=S.song.len;if(!Number.isInteger(src)||src<0||src>=n)return;if(mode!=='repeat'&&src===dst){flash('ELIGE OTRO COMPÁS');return}rememberSong();const p=S.song.bars[src],ls=LID.map(id=>S.lanes[id].on[src]),end=mode==='repeat'?n:dst+1,start=mode==='repeat'?src+1:dst;if(mode==='repeat'&&start>=end){songUndoState=null;$('#songUndo').disabled=true;flash('NO HAY COMPASES DESPUÉS');return}for(let i=start;i<end;i++){S.song.bars[i]=p;LID.forEach((id,k)=>{S.lanes[id].on[i]=ls[k]})}if(mode==='move'){S.song.bars[src]=-1;LID.forEach(id=>{S.lanes[id].on[src]=0})}renderSong();$('#songSrc').value=src;$('#songDst').value=dst;save();flash(mode==='move'?'COMPÁS MOVIDO':mode==='repeat'?'REPETIDO AL FINAL':'COMPÁS COPIADO')}
 $('#songCopy').addEventListener('click',()=>songEdit('copy'));
 $('#songMove').addEventListener('click',()=>songEdit('move'));
