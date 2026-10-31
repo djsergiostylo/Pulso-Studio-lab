@@ -825,3 +825,7 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .device{padding-bottom:0;min-height:calc(100dvh - var(--nav) - env(safe-area-inset-bottom,0px) - 16px)}
 #t-song,#t-file,#t-look{padding-bottom:12px}
+/* v2.62 flecha del panel Sonido mas grande */
+#sndTog .chev{font-size:0;width:18px;height:18px;position:relative;flex:none}
+#sndTog .chev::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;border-left:3px solid currentColor;border-top:3px solid currentColor;transform:translate(-50%,-30%) rotate(45deg);border-radius:1px}
+#sndTog{gap:8px}

@@ -382,3 +382,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.61 (2026-10-31) — Claude
 - El panel Sonido queda pegado a la barra inferior tambien al llegar al final del scroll (antes quedaba una ranura de ~11 px por el relleno del contenedor). Altura de la barra 47 px exactos (--nav). Hueco medido: 0-1 px arriba, en medio y al final, con el panel plegado y desplegado.
 - Para revertir: git revert del commit v2.61.
+
+## v2.62 (2026-10-31) — Claude
+- Flecha del boton Sonido mas grande: chevron dibujado de 18 px con trazo de 3 px (antes un triangulo de texto de 10 px). Apunta arriba con el panel plegado y gira 180 grados al abrirlo.
+- Para revertir: git revert del commit v2.62.
