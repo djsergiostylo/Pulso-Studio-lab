@@ -456,3 +456,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.79 (2026-10-31) — Claude
 - La palabra TAP pasa justo debajo del número de BPM.
 - Para revertir: git revert del commit v2.79.
+
+## v2.80 (2026-10-31) — Claude
+- Letra de Play mas pequena (13 a 11 px; 10 px en pantallas de 380 px o menos). El icono no cambia.
+- Para revertir: git revert del commit v2.80.
