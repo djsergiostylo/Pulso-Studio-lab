@@ -789,3 +789,7 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #t-look .skins{margin:6px 0}
 #t-look #skins{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:100%}
 #t-look .skins:has(#skins){flex-direction:column;align-items:stretch}
+/* v2.54 descripcion de Luces extra */
+#lightsB{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.15;text-align:center}
+#lightsB small{font-size:9px;font-weight:400;letter-spacing:.02em;text-transform:none;white-space:normal;opacity:1;color:color-mix(in srgb,var(--fg) 85%,transparent)}
+#latB small{opacity:1;color:color-mix(in srgb,var(--fg) 85%,transparent)}

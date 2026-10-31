@@ -349,3 +349,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.53 (2026-10-31) — Claude
 - Nueva pestana Aspecto (abajo a la derecha, junto a Crear, Cancion y Proyecto) con Caratula (10 colores en rejilla), Estilo (Hardware/Ableton) y Luces extra / Audio. Salen de Proyecto, que conserva guardar, compartir, exportar y la ayuda.
 - Para revertir: git revert del commit v2.53.
+
+## v2.54 (2026-10-31) — Claude
+- Luces extra: descripcion corta bajo el boton (que hace, gasta bateria, mejor apagado si el audio suena entrecortado). Texto de las descripciones sin opacidad para mejor contraste.
+- Para revertir: git revert del commit v2.54.
