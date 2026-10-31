@@ -345,3 +345,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.52 (2026-10-31) — Claude
 - Transporte: Borrar mas pequeno y separado de las flechas; Deshacer y Rehacer mas anchos (13% del bloque cada uno, flecha de 24 px).
 - Para revertir: git revert del commit v2.52.
+
+## v2.53 (2026-10-31) — Claude
+- Nueva pestana Aspecto (abajo a la derecha, junto a Crear, Cancion y Proyecto) con Caratula (10 colores en rejilla), Estilo (Hardware/Ableton) y Luces extra / Audio. Salen de Proyecto, que conserva guardar, compartir, exportar y la ayuda.
+- Para revertir: git revert del commit v2.53.

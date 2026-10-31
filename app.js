@@ -498,7 +498,7 @@ $('#paste').addEventListener('click',()=>{if(!CB)return;snap();if(CB.t==='pat')P
   flash('PEGADO EN '+(CB.t==='pat'?'PAT '+'ABCD'[S.pat]:CH[S.ch][1])+' · ↶');upd();save()});
 
 /* ---------- tabs ---------- */
-const TG={crear:['seq','pads'],song:['song'],file:['file']},TL={seq:'Secuenciador',pads:'Pads'},lastT={crear:'seq'};
+const TG={crear:['seq','pads'],song:['song'],file:['file'],look:['look']},TL={seq:'Secuenciador',pads:'Pads'},lastT={crear:'seq'};
 /* el sonido (Canal, Mix, FX, EQ) vive en un panel fijo bajo el secuenciador y los pads */
 const SND=['canal','mix','fx','eq'];
 const sT=()=>(S.tab==='seq'||S.tab==='pads')&&S.dockOpen?S.snd:null;
@@ -510,7 +510,7 @@ function syncDock(){bumpLA();const vis=S.tab==='seq'||S.tab==='pads',dk=$('#soun
 function showTab(t){const snd=SND.includes(t);if(snd){S.snd=t;S.dockOpen=true;t=S.tab==='pads'?'pads':'seq';saveSoon()}S.tab=t;document.documentElement.dataset.tab=t;$('#modeB').hidden=t!=='seq';if(t!=='seq')setSheet(false);if(!snd)window.scrollTo(0,0);const g=Object.keys(TG).find(k=>TG[k].includes(t));if(lastT[g])lastT[g]=t;
   $$('#tabs button').forEach(b=>{const active=b.dataset.g===g;b.setAttribute('aria-selected',active);b.tabIndex=active?0:-1;b.setAttribute('aria-controls','t-'+(active?t:TG[b.dataset.g][0]));if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
   const sb=$('#subs');sb.hidden=TG[g].length<2;sb.setAttribute('role','tablist');sb.setAttribute('aria-label',g==='mezcla'?'Herramientas de mezcla':'Herramientas de creación');sb.innerHTML=TG[g].map(n=>`<button type="button" role="tab" id="subtab-${n}" data-t="${n}" aria-controls="t-${n}" aria-selected="${n===t}" tabindex="${n===t?0:-1}">${TL[n]}</button>`).join('');
-  ['seq','pads','song','file'].forEach(n=>{const p=$('#t-'+n);p.hidden=n!==t;p.setAttribute('role','tabpanel');if(n===t)p.setAttribute('aria-labelledby',TG[g].length>1?'subtab-'+t:'tab-'+g)});syncDock();if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='file')renderSlots();upd()}
+  ['seq','pads','song','file','look'].forEach(n=>{const p=$('#t-'+n);p.hidden=n!==t;p.setAttribute('role','tabpanel');if(n===t)p.setAttribute('aria-labelledby',TG[g].length>1?'subtab-'+t:'tab-'+g)});syncDock();if(t==='pads')renderPads();if(t==='song')renderSong();if(t==='file')renderSlots();upd()}
 $('#sndTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.snd=b.dataset.t;S.dockOpen=true;syncDock();saveSoon()});
 $('#sndTog').addEventListener('click',()=>{S.dockOpen=!S.dockOpen;syncDock();saveSoon()});
 /* asa: arrastra para cambiar la altura del panel Sonido (doble toque = altura normal) */

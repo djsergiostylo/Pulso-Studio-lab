@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.52"></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.53"></head><body>
 <title>Pulso Studio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
 
@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">132</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.52">v2.52</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.53">v2.53</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -33,6 +33,7 @@
       <button type="button" role="tab" id="tab-crear" data-g="crear" aria-selected="true" aria-controls="t-seq" tabindex="0"><i>▦</i><span>Crear</span></button>
       <button type="button" role="tab" id="tab-song" data-g="song" aria-selected="false" aria-controls="t-song" tabindex="-1"><i>♫</i><span>Canción</span></button>
       <button type="button" role="tab" id="tab-file" data-g="file" aria-selected="false" aria-controls="t-file" aria-label="Proyecto: guardar, importar y exportar" tabindex="-1"><i>💾</i><span>Proyecto</span></button>
+      <button type="button" role="tab" id="tab-look" data-g="look" aria-selected="false" aria-controls="t-look" aria-label="Aspecto: carátula, estilo y pantalla" tabindex="-1"><i>🎨</i><span>Aspecto</span></button>
     </nav>
     <div class="seg subtabs" id="subs">
       <button data-t="seq" aria-pressed="true">Secuenciador</button>
@@ -91,12 +92,6 @@
     </section>
 
 <section id="t-file" class="tab" hidden>
-      <div class="card" id="skinCard">
-        <h3>Aspecto</h3>
-        <div class="skins"><span>Carátula (colores)</span><div id="skins" role="group" aria-label="Carátula"></div></div>
-        <div class="skins"><span>Estilo</span><div id="styles" role="group" aria-label="Estilo"><button class="sk" data-st="hw">Hardware</button><button class="sk" data-st="abl">Ableton</button></div></div>
-        <p class="note">Carátula cambia los colores de todo el aparato. Estilo: Hardware lleva tornillos y serigrafía, Ableton es más limpio.</p>
-      </div>
       <div class="card" id="saveCard">
         <h3>Guardar en este móvil</h3>
         <div class="saverow"><input id="pname" type="text" maxlength="40" placeholder="Nombre del proyecto" autocomplete="off"><button class="fn" id="psave">💾 Guardar</button></div>
@@ -118,14 +113,22 @@
         <button class="fn" id="prec">⏺ Grabar en tiempo real (.webm)</button>
         <p class="note">El WAV se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz) y 16 bits.</p>
       </div>
-    <details class="more2"><summary>⚙ Pantalla · Audio · Ayuda</summary>
-  <footer class="pie">
-
-  <div class="skins"><span>Pantalla y audio</span><div role="group" aria-label="Pantalla y audio"><button class="sk" id="lightsB" aria-pressed="false">Luces extra</button><button class="sk" id="latB">Audio</button></div></div>
-  </footer>
-
+    <details class="more2"><summary>⚙ Ayuda</summary>
   <p class="hint">Desliza el dedo por la pantalla para cambiar de patrón A–D. Toca la pantalla para ver la onda o el espectro. Toca un paso para encenderlo y mantenlo pulsado para cambiar su fuerza. Con ! ×2 ↔ ↗ le pones acento, redoble, nudge o slide (acid). PADS para tocar en directo, SONG para montar la canción. Con auriculares se nota el subgrave.</p>
   </details>
+    </section>
+
+<section id="t-look" class="tab" hidden>
+      <div class="card" id="skinCard">
+        <h3>Aspecto</h3>
+        <div class="skins"><span>Carátula (colores)</span><div id="skins" role="group" aria-label="Carátula"></div></div>
+        <div class="skins"><span>Estilo</span><div id="styles" role="group" aria-label="Estilo"><button class="sk" data-st="hw">Hardware</button><button class="sk" data-st="abl">Ableton</button></div></div>
+        <p class="note">Carátula cambia los colores de todo el aparato. Estilo: Hardware lleva tornillos y serigrafía, Ableton es más limpio.</p>
+      </div>
+      <div class="card" id="viewCard">
+        <h3>Pantalla y audio</h3>
+  <div class="skins"><span>Luces y sonido</span><div role="group" aria-label="Luces y audio"><button class="sk" id="lightsB" aria-pressed="false">Luces extra</button><button class="sk" id="latB">Audio</button></div></div>
+      </div>
     </section>
 
 <div class="sheet" id="sheet" hidden>
@@ -233,6 +236,6 @@
   
 </main>
 
-<script src="./app.js?v=2.52"></script>
+<script src="./app.js?v=2.53"></script>
 
 </body></html>
