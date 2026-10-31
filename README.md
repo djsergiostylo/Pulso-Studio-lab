@@ -33,5 +33,5 @@ La versión se escribe en **tres sitios de `index.html`** y en el **CHANGELOG**.
 - Una versión = un cambio = un commit = una etiqueta. Se revierte con `git revert`.
 - Nada de `push --force`. Si falta algo, nueva versión.
 - No cambies el HTML de la etiqueta `.ver` (la expresión regular del script busca `class="ver" aria-label="Versión v…">v…<`). Se puede mover de sitio, pero debe conservar ese texto.
-- `versions/` guarda copias completas de algunas versiones antiguas (v1.0–v2.5 y una de cada decena hasta v2.70). No se tocan ni se borran.
+- `versions/` guarda copias completas de las versiones antiguas v1.0 a v2.5. No se tocan ni se borran. Desde la v2.6 cada versión se recupera con su etiqueta de git (`git checkout vX.Y`).
 - Cambios solo de documentación (README, MANUAL) no suben versión.
