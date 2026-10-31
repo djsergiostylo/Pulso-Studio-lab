@@ -793,3 +793,18 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #lightsB{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.15;text-align:center}
 #lightsB small{font-size:9px;font-weight:400;letter-spacing:.02em;text-transform:none;white-space:normal;opacity:1;color:color-mix(in srgb,var(--fg) 85%,transparent)}
 #latB small{opacity:1;color:color-mix(in srgb,var(--fg) 85%,transparent)}
+
+/* v2.55 Pantalla y audio: dos fichas iguales con icono, estado y descripcion */
+#viewCard .vtiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#viewCard .vt{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:6px;min-height:118px;padding:10px;text-align:left;border-radius:12px;line-height:1.25;text-transform:none}
+#viewCard .vt::before{display:none}
+#viewCard .vt .tt{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+#viewCard .vt .tt svg{flex:none}
+#viewCard .vt .st{align-self:flex-start;font-style:normal;font-family:var(--disp);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid color-mix(in srgb,var(--fg) 35%,transparent);background:color-mix(in srgb,var(--fg) 8%,transparent)}
+#viewCard .vt small{display:block;font-size:10.5px;font-weight:400;letter-spacing:0;text-transform:none;white-space:normal;color:color-mix(in srgb,var(--fg) 85%,transparent);opacity:1;text-align:left}
+#lightsB .st::before{content:"Apagado"}
+#lightsB[aria-pressed="true"] .st::before{content:"Encendido"}
+#lightsB[aria-pressed="true"]{border-color:var(--on);box-shadow:0 0 0 1px var(--on) inset}
+#lightsB[aria-pressed="true"] .st{background:var(--on);color:var(--onfg);border-color:var(--on)}
+#latB{border-color:color-mix(in srgb,var(--on) 60%,var(--keyedge))}
+#latB .st{background:color-mix(in srgb,var(--on) 22%,transparent);border-color:var(--on)}#lightsB[aria-pressed="true"]{background:color-mix(in srgb,var(--on) 14%,var(--key));color:var(--fg)}

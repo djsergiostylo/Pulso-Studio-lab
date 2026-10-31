@@ -353,3 +353,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.54 (2026-10-31) — Claude
 - Luces extra: descripcion corta bajo el boton (que hace, gasta bateria, mejor apagado si el audio suena entrecortado). Texto de las descripciones sin opacidad para mejor contraste.
 - Para revertir: git revert del commit v2.54.
+
+## v2.55 (2026-10-31) — Claude
+- Aspecto: la tarjeta Pantalla y audio pasa a dos fichas iguales (Luces extra y Audio) con icono, estado en pastilla (Apagado/Encendido, Rapido/Equilibrado/Estable) y descripcion. Contraste >= 4,5:1 en las 10 caratulas, tambien con Luces extra encendido.
+- Para revertir: git revert del commit v2.55.

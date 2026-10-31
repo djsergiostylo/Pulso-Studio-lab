@@ -797,7 +797,7 @@ const setLights=()=>{document.documentElement.dataset.lights=S.lights?'1':'0';li
 /* latencia del audio: Rápido (pads inmediatos, más riesgo de cortes), Equilibrado, Estable (más margen, tarda más en sonar). Se aplica al recargar. */
 const LATN={interactive:'Rápido',balanced:'Equilibrado',playback:'Estable'},latB=$('#latB');
 const LATD={interactive:'MENOS búfer · menos retraso · más riesgo de cortes',balanced:'búfer MEDIO · retraso y cortes equilibrados',playback:'MÁS búfer · más retraso · menos cortes'};
-const setLat=()=>{latB.innerHTML='Audio: '+LATN[S.lat]+'<small>'+LATD[S.lat]+'</small>'};setLat();
+const setLat=()=>{latB.innerHTML='<span class="tt"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="8" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="16" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/></svg>Audio</span><em class="st">'+LATN[S.lat]+'</em><small>'+LATD[S.lat]+'</small>'};setLat();
 latB.addEventListener('click',()=>{const o=['interactive','balanced','playback'];S.lat=o[(o.indexOf(S.lat)+1)%3];setLat();saveFlush&&saveSoon();flash('AUDIO '+LATN[S.lat].toUpperCase()+' · AL RECARGAR')});
 lightsB.addEventListener('click',()=>{S.lights=!S.lights;setLights();saveSoon();flash(S.lights?'LUCES EXTRA: SÍ':'LUCES EXTRA: NO (AHORRA BATERÍA)')});setLights();
 $('#stageX').addEventListener('click',()=>setStage(false));
