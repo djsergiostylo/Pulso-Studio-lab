@@ -1093,18 +1093,18 @@ function djSet(v){if(Math.abs(v)<.04)v=0;setFxVal('ms','mcut',v<0?1+v*.75:1);set
   r.addEventListener('pointerup',()=>{const n=Date.now();if(n-lt<300){r.value=0;djSet(0);lt=0}else lt=n})})();
 
 /* ---------- MACRO: subidón que desliza el usuario (v2.68) ---------- */
-S.sb=Object.assign({rel:'drop',cur:'norm',hit:true,on:{flt:1,rev:1,dly:1,drv:1}},S.sb);S.sb.on=Object.assign({flt:1,rev:1,dly:1,drv:1},S.sb.on);
+S.sb=Object.assign({rel:'drop',cur:'norm',hit:true,on:{flt:1,rev:1,dly:1,drv:1}},S.sb);S.sb.on=Object.assign({flt:1,rev:1,dly:1,drv:1},S.sb.on);const SBD={fl:.667,q:.384,rp:1,dr:.55,sp:.75};S.sb.p=Object.assign({},SBD,S.sb.p);const sbMax=()=>1+.6*S.sb.p.fl;
 const SB_HP=DJHP,SBK=[['flt','Filtro'],['rev','Reverb'],['dly','Delay'],['drv','Drive']],SBCUR={soft:.7,norm:1,exp:2.6};
 let sbBase=null,sbP=0,sbRaf=0,sbDown=false;const sbF=$('#sbF');
 const sbCap=()=>({mhp:S.mhp,mcut:S.mcut,rm:S.rev.mix,ro:S.rev.on,dm:S.dly.mix,df:S.dly.fb,dop:S.dly.on,dr:S.mdrive});
 function sbPos(p){sbF.style.setProperty('--p',(p*100).toFixed(1)+'%');sbF.setAttribute('aria-valuenow',Math.round(p*100));$('#sbO').textContent=Math.round(p*100)+'%'}
-function sbBars(){const v={flt:S.mhp/SB_HP,rev:S.rev.mix,dly:S.dly.mix,drv:S.mdrive},tx={flt:S.mhp>0?'HP '+fmtF(Math.round(msHp(S.mhp))):'OFF',rev:pct(S.rev.mix),dly:pct(S.dly.mix),drv:pct(S.mdrive)};
+function sbBars(){const v={flt:S.mhp/sbMax(),rev:S.rev.mix,dly:S.dly.mix,drv:S.mdrive},tx={flt:S.mhp>0?'HP '+fmtF(Math.round(msHp(S.mhp))):'OFF',rev:pct(S.rev.mix),dly:pct(S.dly.mix),drv:pct(S.mdrive)};
   SBK.forEach(([k])=>{const b=$('#sbb_'+k),o=$('#sbo_'+k);if(b)b.style.width=(clamp(v[k],0,1)*100).toFixed(0)+'%';if(o)o.textContent=tx[k]})}
 function sbApply(p){const c=Math.pow(clamp(p,0,1),SBCUR[S.sb.cur]||1),b=sbBase,on=S.sb.on,L=(a,m)=>a+(Math.max(a,m)-a)*c;
-  if(on.flt){S.mcut=1;const g=.6*c+.4*(1-Math.pow(1-c,2));S.mhp=b.mhp+(Math.max(b.mhp,SB_HP)-b.mhp)*g;if(ctx&&M.mhp)M.mhp.Q.setTargetAtTime(.7+2.8*g,ctx.currentTime,.02)}
-  if(on.rev){S.rev.mix=L(b.rm,.75);if(c>.02)S.rev.on=true}
-  if(on.dly){S.dly.mix=L(b.dm,.6);S.dly.fb=L(b.df,.72);if(c>.02)S.dly.on=true}
-  if(on.drv)S.mdrive=L(b.dr,.55);
+  if(on.flt){S.mcut=1;const g=.6*c+.4*(1-Math.pow(1-c,2)),pp=S.sb.p,wd=.4+.6*pp.rp,w=clamp(1-Math.abs(g-pp.rp)/wd,0,1);S.mhp=b.mhp+(Math.max(b.mhp,sbMax())-b.mhp)*g;if(ctx&&M.mhp)M.mhp.Q.setTargetAtTime(.7+7.3*pp.q*w,ctx.currentTime,.02)}
+  if(on.rev){S.rev.mix=L(b.rm,S.sb.p.sp);if(c>.02)S.rev.on=true}
+  if(on.dly){S.dly.mix=L(b.dm,.8*S.sb.p.sp);S.dly.fb=L(b.df,.96*S.sb.p.sp);if(c>.02)S.dly.on=true}
+  if(on.drv)S.mdrive=L(b.dr,S.sb.p.dr);
   applyMaster();sbBars()}
 function sbRestore(){const b=sbBase;if(!b)return;S.mhp=b.mhp;S.mcut=b.mcut;S.rev.mix=b.rm;S.rev.on=b.ro;S.dly.mix=b.dm;S.dly.fb=b.df;S.dly.on=b.dop;S.mdrive=b.dr;if(ctx&&M.mhp)M.mhp.Q.setTargetAtTime(.7,ctx.currentTime,.03);applyMaster()}
 function sbSched(p){sbP=p;sbPos(p);if(!sbRaf)sbRaf=requestAnimationFrame(()=>{sbRaf=0;if(sbBase)sbApply(sbP)})}
@@ -1123,6 +1123,13 @@ function updMacro(){$$('#sbRel button').forEach(b=>b.setAttribute('aria-pressed'
 $('#sbRel').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.sb.rel=b.dataset.v;updMacro();saveSoon()});
 $('#sbCur').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.sb.cur=b.dataset.v;updMacro();saveSoon()});
 $('#sbTg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k;if(k==='hit')S.sb.hit=!S.sb.hit;else S.sb.on[k]=S.sb.on[k]?0:1;updMacro();saveSoon()});
+const SBP=[['fl','Filtro tope',v=>'HP '+fmtF(Math.round(msHp(1+.6*v)))],['q','Resonancia',v=>'Q '+(.7+7.3*v).toFixed(1)],['rp','Pico resonancia',v=>v>=.98?'final':v<=.02?'inicio':Math.round(v*100)+'%'],['dr','Drive',v=>pct(v)],['sp','Espacio',v=>pct(v)]];
+$('#sbP').innerHTML=SBP.map(([k,l])=>`<div class="k"><label for="sbp_${k}">${l} <output id="sbq_${k}"></output></label><input id="sbp_${k}" data-p="${k}" type="range" min="0" max="1000" value="${Math.round(S.sb.p[k]*1000)}"></div>`).join('')+'<button type="button" id="sbReset" class="sbrs">Valores de fábrica</button>';
+function sbpUi(){SBP.forEach(([k,l,f])=>{const o=$('#sbq_'+k),i=$('#sbp_'+k);if(o)o.textContent=f(S.sb.p[k]);if(i&&document.activeElement!==i)i.value=Math.round(S.sb.p[k]*1000)})}
+$('#sbP').addEventListener('input',e=>{const el=e.target,k=el.dataset.p;if(!k)return;S.sb.p[k]=el.value/1000;sbpUi();saveSoon()});
+dblTap($('#sbP'),'input[type=range]',el=>{const k=el.dataset.p;S.sb.p[k]=SBD[k];sbpUi();saveSoon()});
+$('#sbReset').addEventListener('click',()=>{S.sb.p=Object.assign({},SBD);sbpUi();saveSoon();flash('SUBIDÓN: VALORES DE FÁBRICA')});
+sbpUi();
 updMacro();sbPos(0);
 /* ---------- SONG (arrangement + audio lanes) ---------- */
 const PCOL=['#2ee6d6','#ff764d','#c58bff','#a6f03d'],LCOL={a1:'#4db8ff',a2:'#ffd24d',a3:'#ff6ad5',a4:'#4de0c8'};

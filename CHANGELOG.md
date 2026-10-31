@@ -427,3 +427,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.72 (2026-10-31) — Claude
 - Subidon: resonancia en el filtro de graves, creciente con el recorrido (Q de 0,7 a 3,5, pico de unos +11 dB en la frecuencia de corte al 100 %). Al soltar vuelve a 0,7. Solo actua si el chip Filtro esta activo.
 - Para revertir: git revert del commit v2.72.
+
+## v2.73 (2026-10-31) — Claude
+- Subidon editable: 5 deslizadores muy compactos en dos columnas (Filtro tope 1-10 kHz, Resonancia Q 0,7-8, Pico de resonancia = en que punto del recorrido es maxima, Drive maximo, Espacio = reverb + delay maximos) y boton Valores de fabrica. Doble toque en un deslizador lo devuelve a su valor. Con los valores de fabrica el subidon suena igual que en v2.72. Se guardan con el proyecto (S.sb.p).
+- Para revertir: git revert del commit v2.73.

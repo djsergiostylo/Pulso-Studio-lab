@@ -868,3 +868,14 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .sbt button{padding:6px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent);background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;min-height:32px}
 .sbt button[aria-pressed="true"]{border-color:#f0a040;background:color-mix(in srgb,#f0a040 28%,var(--key))}
 #sndTabs button{font-size:9px;letter-spacing:0;padding:0 2px;min-width:0}
+
+/* v2.73 ajustes del subidon: 5 deslizadores muy compactos en dos columnas */
+.sbp{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;margin-top:8px;padding-top:6px;border-top:1px solid color-mix(in srgb,var(--fg) 20%,transparent)}
+.sbp .k{gap:0;min-width:0}
+.sbp .k label{font-size:8.5px;letter-spacing:.03em;white-space:nowrap;line-height:1.2}
+.sbp .k label output{font-size:10px;background:none;padding:0}
+.sbp input[type=range]{height:18px}
+.sbp input[type=range]::-webkit-slider-runnable-track{height:5px}
+.sbp input[type=range]::-webkit-slider-thumb{width:16px;height:16px;margin-top:-5.5px;border-width:2px;background:#f0a040}
+.sbp input[type=range]::-moz-range-thumb{width:12px;height:12px;background:#f0a040}
+.sbrs{align-self:center;justify-self:end;margin-top:4px;min-height:24px;padding:0 8px;border-radius:7px;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent);background:var(--key);color:var(--fg);font-family:var(--disp);font-size:8.5px;letter-spacing:.04em;text-transform:uppercase}
