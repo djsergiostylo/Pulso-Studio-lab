@@ -313,3 +313,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.44 (2026-10-31) — Claude
 - FX con aspecto de modulo: cabecera con degradado del color del efecto, icono en insignia, interruptor con LED, pantalla con marco de color, deslizadores con relleno de color, valores en etiqueta. Misma estructura y funciones que v2.43; contraste >= 4,5:1 en las 10 caratulas.
 - Para revertir: git revert del commit v2.44.
+
+## v2.45 (2026-10-31) — Claude
+- FX: los Macros se pliegan en una sola linea (34 px en vez de 130 px). Toca 'Macros' para desplegar; el estado se guarda (campo mfold, plegado por defecto).
+- Para revertir: git revert del commit v2.45.

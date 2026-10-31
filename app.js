@@ -50,7 +50,7 @@ let P=[mk(),mk(),mk(),mk()];
   [[0,0],[3,0],[8,0],[11,7]].forEach(([i,o])=>{e.s[i]=o})})();
 
 /* storage: per viewer only */
-const SAVE=['scv','lat','lights','snd','dockOpen','dockH','awave','lwave','song','lanes','hum','mres','mhp','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
+const SAVE=['scv','lat','lights','snd','dockOpen','dockH','mfold','awave','lwave','song','lanes','hum','mres','mhp','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
 function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
 /* guardar es costoso (JSON + localStorage): se agrupa en una sola escritura 400 ms después del último cambio y se fuerza al salir de la página */
 const saveNow=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}};
@@ -555,7 +555,8 @@ function updMixUI(){updDock();['k_ms_mvol','b_ms_mvol'].forEach(id=>{const mv=$(
 let dockOK=false;
 const DKM=[['dj','DJ'],['rev:mix','Reverb'],['dly:mix','Delay'],['ms:mdrive','Drive'],['sc:amt','Sidechain'],['ms:mvol','Master']];
 function buildDock(){
-  $('#dkM').innerHTML=DKM.map(([k,l])=>{const dj=k==='dj';return`<div class="k"><label for="dm_${k.replace(':','_')}">${l} <output id="do_${k.replace(':','_')}"></output></label><input id="dm_${k.replace(':','_')}" data-m="${k}" type="range" min="${dj?-100:0}" max="${dj?100:1000}" value="0"></div>`}).join('');
+  $('#dkM').innerHTML='<button type="button" class="dkh" id="dkH"><span>Macros</span><i aria-hidden="true"></i></button>'+DKM.map(([k,l])=>{const dj=k==='dj';return`<div class="k"><label for="dm_${k.replace(':','_')}">${l} <output id="do_${k.replace(':','_')}"></output></label><input id="dm_${k.replace(':','_')}" data-m="${k}" type="range" min="${dj?-100:0}" max="${dj?100:1000}" value="0"></div>`}).join('');
+  const dkFold=()=>{const f=S.mfold!==false;$('#dkM').classList.toggle('fold',f);$('#dkH').setAttribute('aria-expanded',!f)};dkFold();$('#dkH').addEventListener('click',()=>{S.mfold=S.mfold===false;dkFold();saveSoon()});
   $('#dkM').addEventListener('input',e=>{const el=e.target,k=el.dataset.m;if(!k)return;if(k==='dj'){djSet(el.value/100);$('#do_dj').textContent=djOut(S.mhp>0?S.mhp/.8:S.mcut<1?(S.mcut-1)/.75:0)}else{const[id,key]=k.split(':');setFxVal(id,key,el.value/1000)}});
   (()=>{let last=0,lastEl=null;$('#dkM').addEventListener('pointerup',e=>{const el=e.target;if(el.type!=='range')return;const n=Date.now();
     if(lastEl===el&&n-last<300){const k=el.dataset.m;if(k==='dj'){el.value=0;djSet(0)}else{const[id,key]=k.split(':');setFxVal(id,key,fxDef(id,key))}last=0}else{last=n;lastEl=el}})})();

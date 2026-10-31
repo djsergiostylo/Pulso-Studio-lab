@@ -711,3 +711,11 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .fxc .k label output{background:color-mix(in srgb,var(--c) 14%,transparent);border-radius:5px;padding:0 5px}.fxc:not(.on) .fxh h3{opacity:1}
 .fxc:not(.on) .fxh h3,.fxc:not(.on) .fxh .tg{color:var(--fg)}
 .fxc:not(.on){background:color-mix(in srgb,var(--key) 55%,var(--dev))}
+
+/* v2.45 Macros plegables: una sola linea cuando estan cerrados */
+.dkm::before{display:none}
+.dkm .dkh{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-height:30px;margin:-4px 0 0;padding:0 2px;background:none;border:0;color:var(--pttl);font-family:var(--disp);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;text-align:left;border-left:3px solid var(--bc,var(--on));padding-left:6px;touch-action:manipulation}
+.dkm .dkh i{margin-left:auto;width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);transition:transform .15s}
+.dkm.fold .dkh i{transform:rotate(-45deg)}
+.dkm.fold{padding-top:3px;padding-bottom:3px}
+.dkm.fold .k{display:none}
