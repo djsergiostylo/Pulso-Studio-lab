@@ -444,3 +444,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.76 (2026-10-31) — Claude
 - En pausa la posición sigue iluminada (rejilla, luces y compás en Canción); solo se apaga con Stop.
 - Para revertir: git revert del commit v2.76.
+
+## v2.77 (2026-10-31) — Claude
+- El botón Stop pasa a la izquierda de Play.
+- Para revertir: git revert del commit v2.77.
