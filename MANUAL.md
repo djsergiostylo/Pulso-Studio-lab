@@ -6,6 +6,40 @@ Este manual explica cada pantalla con capturas. Las capturas usan la carátula *
 
 > **Versión:** en la pantallita de la app, arriba a la derecha, pone la versión que tienes cargada (por ejemplo `v2.86`).
 
+<!--galeria-->
+## Todas las vistas de un vistazo
+
+**Crear**
+
+<table>
+<tr>
+<td align="center" width="33%"><a href="#2-el-secuenciador"><img src="manual/img/01-crear.jpg" width="150" alt="Secuenciador"><br>Secuenciador</a></td>
+<td align="center" width="33%"><a href="#modos-de-paso"><img src="manual/img/04-modos.jpg" width="150" alt="Modos de paso"><br>Modos de paso</a></td>
+<td align="center" width="33%"><a href="#4-pads"><img src="manual/img/05-pads.jpg" width="150" alt="Pads · Batería"><br>Pads · Batería</a></td>
+</tr>
+<tr>
+<td align="center" width="33%"><a href="#modo-notas"><img src="manual/img/05b-pads-notas.jpg" width="150" alt="Pads · Notas"><br>Pads · Notas</a></td>
+<td align="center" width="33%"><a href="#5-piano-roll"><img src="manual/img/05c-piano-roll.jpg" width="150" alt="Piano roll · Melódico"><br>Piano roll · Melódico</a></td>
+<td align="center" width="33%"><a href="#5-piano-roll"><img src="manual/img/05d-piano-roll-bateria.jpg" width="150" alt="Piano roll · Batería"><br>Piano roll · Batería</a></td>
+</tr>
+</table>
+
+**Panel Sonido**
+
+<table>
+<tr>
+<td align="center" width="33%"><a href="#81-macro"><img src="manual/img/09-macro.jpg" width="150" alt="Macro (Subidón)"><br>Macro (Subidón)</a></td>
+<td align="center" width="33%"><a href="#82-canal"><img src="manual/img/11-canal.jpg" width="150" alt="Canal"><br>Canal</a></td>
+<td align="center" width="33%"><a href="#83-mix"><img src="manual/img/12-mix.jpg" width="150" alt="Mix"><br>Mix</a></td>
+</tr>
+<tr>
+<td align="center" width="33%"><a href="#83-mix"><img src="manual/img/12b-mix-master.jpg" width="150" alt="Mix · Master desplegado"><br>Mix · Master desplegado</a></td>
+<td align="center" width="33%"><a href="#84-fx"><img src="manual/img/13-fx.jpg" width="150" alt="FX"><br>FX</a></td>
+<td align="center" width="33%"><a href="#85-eq"><img src="manual/img/14-eq.jpg" width="150" alt="EQ"><br>EQ</a></td>
+</tr>
+</table>
+<!--/galeria-->
+
 ## 1. Primeros pasos
 
 Abre la web en el navegador del móvil. Verás la pantalla de **Crear**: arriba la pantallita con el tempo, debajo los botones de transporte, la fila de patrones y la rejilla de pasos.

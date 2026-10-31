@@ -37,6 +37,15 @@ nav.toc ol{margin:0;padding-left:20px;columns:1}
 nav.toc a{text-decoration:none;display:inline-block;min-height:30px;padding:3px 0}
 .top{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));width:46px;height:46px;border-radius:50%;border:0;background:var(--ac);color:var(--onac);font-size:20px;display:none;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .top.on{display:block}
+.galeria{margin:26px 0 0}
+.galeria h2{margin-top:30px}
+.galeria h3{margin:20px 0 8px;font-size:15px}
+.gal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(min-width:560px){.gal{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.gal a{display:block;padding:6px;border-radius:12px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--fg);text-align:center}
+.gal a:active,.gal a:focus-visible{border-color:var(--ac);outline:none}
+.gal img{display:block;width:100%;height:auto;border-radius:8px;background:var(--bg)}
+.gal span{display:block;margin-top:6px;font-size:13px;line-height:1.3;color:var(--mute)}
 #err{color:#ff8a80}
 </style>
 </head>
@@ -70,7 +79,16 @@ function md(src){const L=src.replace(/\r/g,'').split('\n'),out=[],toc=[];let lis
  const t='<nav class="toc" aria-label="Índice"><h2>Índice</h2><ol>'+toc.map(([id,t])=>`<li><a href="#${id}">${inl(t.replace(/^\d+\.\s*/,''))}</a></li>`).join('')+'</ol></nav>';
  return html.replace('</h1>','</h1>'+t)}
 const doc=document.getElementById('doc');
-fetch('MANUAL.md?v='+Date.now()).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{doc.innerHTML=md(t);const h=location.hash&&document.getElementById(decodeURIComponent(location.hash.slice(1)));if(h)h.scrollIntoView()}).catch(()=>{doc.innerHTML='<p id="err">No se pudo cargar el manual. Comprueba la conexión y recarga la página.</p>'});
+/* galeria de vistas: bloque <!--galeria--> del manual (en GitHub es una tabla; aqui se muestra como cuadricula) */
+function galeria(t){const m=t.match(/<!--galeria-->([\s\S]*?)<!--\/galeria-->/);if(!m)return{t,g:''};const b=m[1],tit=(b.match(/^##\s+(.*)$/m)||[0,'Vistas'])[1];
+ const grupos=b.split(/^\*\*(.+?)\*\*\s*$/m);let g='<section class="galeria"><h2 id="vistas">'+inl(tit)+'</h2>';
+ for(let i=1;i<grupos.length;i+=2){const items=[...grupos[i+1].matchAll(/<a href="(#[^"]+)"><img src="([^"]+)"[^>]*>(?:<br>)?([^<]*)<\/a>/g)];
+  g+='<h3>'+inl(grupos[i])+'</h3><div class="gal">'+items.map(([,h,s,l])=>`<a href="${esc(h)}"><img src="${esc(s)}" alt="${esc(l)}" loading="lazy"><span>${inl(l)}</span></a>`).join('')+'</div>'}
+ return{t:t.replace(m[0],''),g:g+'</section>'}}
+/* los enlaces de GitHub quitan los puntos (81-macro); aqui los titulos llevan guiones (8-1-macro) */
+function arreglaEnlaces(){const mapa={};document.querySelectorAll('#doc h2,#doc h3').forEach(h=>{mapa[h.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\./g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')]=h.id});
+ document.querySelectorAll('.gal a').forEach(a=>{const id=a.getAttribute('href').slice(1);if(!document.getElementById(id)&&mapa[id])a.setAttribute('href','#'+mapa[id])})}
+fetch('MANUAL.md?v='+Date.now()).then(r=>{if(!r.ok)throw 0;return r.text()}).then(t=>{const G=galeria(t);t=G.t;doc.innerHTML=md(t).replace('</nav>','</nav>'+G.g);arreglaEnlaces();const h=location.hash&&document.getElementById(decodeURIComponent(location.hash.slice(1)));if(h)h.scrollIntoView()}).catch(()=>{doc.innerHTML='<p id="err">No se pudo cargar el manual. Comprueba la conexión y recarga la página.</p>'});
 const tb=document.getElementById('top');addEventListener('scroll',()=>tb.classList.toggle('on',scrollY>600),{passive:true});tb.addEventListener('click',()=>scrollTo({top:0}));
 })();
 </script>
