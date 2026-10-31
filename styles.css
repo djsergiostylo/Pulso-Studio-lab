@@ -829,3 +829,9 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 #sndTog .chev{font-size:0;width:18px;height:18px;position:relative;flex:none}
 #sndTog .chev::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;border-left:3px solid currentColor;border-top:3px solid currentColor;transform:translate(-50%,-30%) rotate(45deg);border-radius:1px}
 #sndTog{gap:8px}
+/* v2.63 pestana activa mas vistosa: fondo de color, barra superior completa y texto en negrita */
+.tabs>button[aria-selected="true"]{background:color-mix(in srgb,var(--on) 24%,transparent);color:var(--fg);font-weight:700}
+.tabs>button[aria-selected="true"]::before{left:0;right:0;height:4px;border-radius:0 0 4px 4px}
+.tabs>button[aria-selected="true"] i{transform:scale(1.12);filter:drop-shadow(0 0 4px color-mix(in srgb,var(--on) 70%,transparent))}
+.tabs>button i{transition:transform .12s}:root[data-skin="orange"] .tabs>button[aria-selected="true"]{background:color-mix(in srgb,#fff 38%,var(--dev))}
+:root[data-skin="orange"] .tabs>button:not([aria-selected="true"]){color:var(--fg)}

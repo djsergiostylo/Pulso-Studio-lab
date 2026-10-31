@@ -386,3 +386,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.62 (2026-10-31) — Claude
 - Flecha del boton Sonido mas grande: chevron dibujado de 18 px con trazo de 3 px (antes un triangulo de texto de 10 px). Apunta arriba con el panel plegado y gira 180 grados al abrirlo.
 - Para revertir: git revert del commit v2.62.
+
+## v2.63 (2026-10-31) — Claude
+- Pestana activa de la barra inferior mas vistosa: fondo de color de la caratula, barra superior de ancho completo (4 px), icono mas grande con brillo y texto en negrita. Contraste >= 5,4:1 en las 10 caratulas (Naranja usa un fondo mas claro).
+- Para revertir: git revert del commit v2.63.
