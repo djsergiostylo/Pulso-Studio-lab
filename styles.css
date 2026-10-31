@@ -753,3 +753,11 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .prb[hidden]{display:none}:root[data-tab="file"] .prow{display:flex}
 :root[data-tab="file"] .pchips,:root[data-tab="file"] .modeb{display:none}
 :root[data-tab="file"] .prv{margin-left:auto}
+
+/* v2.50 Deshacer y rehacer mas grandes */
+.trans .seg>button.ur{flex:0 0 38px;font-size:21px;line-height:1;padding:0;font-weight:700}
+.trans .seg>button.ur:disabled{opacity:.55}
+.trans{grid-template-columns:3fr 1fr;gap:5px}
+.trans .seg>button.ur{flex:0 0 34px;font-size:20px}
+.trans .seg .hd{flex:0 0 22px}
+.trans .seg>button:not(.ur):not(.hd):not(.val){letter-spacing:0;padding:0 2px}

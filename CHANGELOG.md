@@ -333,3 +333,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.49 (2026-10-31) — Claude
 - Modo escenario y Pantalla completa pasan a la fila de los patrones A B C D (iconos junto a Modo), visibles en Crear, Cancion y Proyecto, tambien dentro del modo escenario. Salen del desplegable del pie, que se llama ahora 'Pantalla y audio'.
 - Para revertir: git revert del commit v2.49.
+
+## v2.50 (2026-10-31) — Claude
+- Deshacer y rehacer mas grandes (iconos de 20 px en botones de 34 px, antes 14,7 px y 26 px); la fila de transporte se reparte mejor (3:1 con el tempo) sin cortar PLAY ni BORRAR.
+- Para revertir: git revert del commit v2.50.
