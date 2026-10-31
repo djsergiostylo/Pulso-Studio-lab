@@ -647,3 +647,6 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .trans .seg .val{align-items:center;align-content:center}
 .trans .seg .val span{display:block;line-height:1}
 .trans .seg .val small{display:block;line-height:1;padding-top:4px}
+
+/* v2.40 Gris MPC: rail de los deslizadores visible */
+:root[data-skin="mpc"]{--track:#9aa0a8}

@@ -293,3 +293,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.39 (2026-10-31) — Claude
 - La pantallita tambien muestra 132 desde el primer momento (en v2.38 se veia 110 un instante).
 - Para revertir: git revert del commit v2.39.
+
+## v2.40 (2026-10-31) — Claude
+- Gris MPC: el rail de los deslizadores (Canal, Mix, FX) era casi invisible sobre el panel gris (1,2:1); ahora se ve (3,4:1).
+- Para revertir: git revert del commit v2.40.
