@@ -402,3 +402,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.66 (2026-10-31) — Claude
 - Titulo SECUENCIADOR: vuelve exactamente a como estaba (9,5 px, barra de color a la izquierda, sin subrayado ni margenes nuevos) y solo se centra el texto.
 - Para revertir: git revert del commit v2.66.
+
+## v2.67 (2026-10-31) — Claude
+- FX: los rotulos ENVIOS y MASTER pasan a texto vertical en una tira fina de 16 px, sin caja ni borde de boton (antes parecian botones y no hacian nada). Los modulos ganan ancho. Contraste >= 4,8:1 en las 10 caratulas.
+- Para revertir: git revert del commit v2.67.

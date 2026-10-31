@@ -844,3 +844,6 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 
 /* v2.66 titulo Secuenciador: EXACTAMENTE como estaba (mismo tamano, barra a la izquierda, sin subrayado); solo el texto centrado */
 .mtx::before{display:block;width:auto;margin:0 0 2px;padding:0 6px;border-left:3px solid var(--bc,var(--on));border-bottom:0;font-size:9.5px;letter-spacing:.16em;line-height:1;text-align:center}
+/* v2.67 rotulos de grupo de FX en vertical, sin aspecto de boton */
+.fxnav .fcg{flex:0 0 16px;writing-mode:vertical-rl;transform:rotate(180deg);background:none;border:0;border-right:2px solid color-mix(in srgb,var(--fg) 35%,transparent);border-radius:0;padding:0 3px 0 0;font-size:8.5px;letter-spacing:.03em;line-height:1;color:var(--fg);text-align:center;white-space:nowrap}
+.fxnav .fch{gap:5px}
