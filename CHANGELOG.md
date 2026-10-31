@@ -518,6 +518,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Limitador rehecho como limitador de verdad: dos barras en Mix. TECHO (de -12 a 0 dBFS, por defecto -1): lo que pase de ahi se atenua, lo que no llega al techo pasa sin cambios. ENTRADA (de 0 a +12 dB, por defecto 0): sube la senal antes de limitar, solo si tu lo pides. Se quita la subida oculta de +2 dB que llevaba el limitador (antes el techo era -2 dBFS y luego subia +2 dB, siempre dentro del recortador final) y el recortador suave final empieza ahora en 0,92 en vez de 0,8. El vumetro ENTRADA muestra tambien la reduccion en dB (RED.). El aviso del pico del master se basa en esa reduccion (naranja mas de 3 dB, rojo mas de 6 dB) y en el recortador final. Los proyectos antiguos se migran con el mismo volumen (un +3,6 dB de antes pasa a Entrada +3,6 dB; un techo bajado pasa a Techo). FX > Master tiene los dos ajustes (Limitador: techo, Limitador: entrada). Nuevo dato lig; limv pasa a 3.
 - Para revertir: git revert del commit v2.86.
 
+## v2.87 (2026-10-31) — Claude
+- Previsualizacion al compartir el enlace (Open Graph y Twitter Card): nuevo preview.png (1200x630) en la raiz, descripcion y titulo del documento "Pulso Studio · Tu groovebox en el móvil". El unico <title> pasa al <head> (antes estaba suelto en el <body>).
+- Texto del pie: "PS-9 · groovebox" -> "Pulso Lab · groovebox". Las copias antiguas de versions/ no se tocan.
+- Solo cambia index.html (app.js y styles.css intactos; sube la ?v= para refrescar la cache).
+- Para revertir: git revert del commit v2.87.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.
