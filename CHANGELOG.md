@@ -281,3 +281,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.36 (2026-10-31) — Claude
 - Audio ya no se corta al mover el panel Sonido (modo Escenario/pantalla completa): el secuenciador programa 0,6 s por adelantado mientras se arrastra, se abre/cierra el panel o cambia la ventana; el arrastre se limita a 1 vez por fotograma y guarda al soltar.
 - Para revertir: git revert del commit v2.36.
+
+## v2.37 (2026-10-31) — Claude
+- BPM: el numero y TAP quedan centrados en vertical dentro de su boton.
+- Para revertir: git revert del commit v2.37.

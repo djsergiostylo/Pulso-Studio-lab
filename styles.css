@@ -642,3 +642,8 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 /* v2.35 boton Audio con descripcion */
 #latB{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.15}
 #latB small{font-size:9px;font-weight:400;letter-spacing:.02em;opacity:.85;text-transform:none;white-space:normal}
+
+/* v2.37 BPM centrado en su boton */
+.trans .seg .val{align-items:center;align-content:center}
+.trans .seg .val span{display:block;line-height:1}
+.trans .seg .val small{display:block;line-height:1;padding-top:4px}
