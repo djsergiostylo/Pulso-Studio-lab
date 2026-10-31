@@ -924,3 +924,135 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .roll .rh.ph{color:var(--c);font-weight:700}
 #rollSnd{display:grid;grid-template-columns:repeat(5,1fr)}
 #eqc+#eqP{margin-top:6px}
+/* v2.85 fuerza de las notas nuevas en el piano roll */
+.rollvel{display:flex;align-items:center;gap:10px;margin:0 0 8px;--c:var(--on)}
+.rollvel label{font-family:var(--disp);font-size:9.45px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);flex:0 0 auto;max-width:34%}
+.rollvel input{flex:1;min-width:0;accent-color:var(--c)}
+.rollvel output{flex:0 0 auto;min-width:92px;text-align:right;font-family:var(--disp);font-size:10.5px;letter-spacing:.06em;color:var(--c)}
+.roll .rc.on.v1{opacity:.5}.roll .rc.on.v2{opacity:.78}.roll .rc.on.v3{opacity:1}
+.rollvel{flex-wrap:wrap}
+.rollvel .fn{flex:1 1 100%;min-height:34px;font-size:9.45px;letter-spacing:.06em}
+/* v2.85 piano roll: menos margen lateral para ganar ancho en el movil */
+.roll{padding:6px 4px;gap:2px 1.5px}
+.roll .rn2{padding-right:2px;font-size:9px;overflow:hidden}
+/* v2.85 piano roll: espacios verticales ajustados */
+#t-roll{gap:6px}
+#t-roll .snd4,#t-roll .octr,#t-roll .rollvel,#t-roll .rollpg{margin:0}
+#t-roll .snd4 button{min-height:34px}
+.rollvel{flex-wrap:nowrap;gap:8px}
+.rollvel .fn{flex:0 0 auto;min-height:32px;padding:0 10px;font-size:9.45px}
+.rollvel label{max-width:none}
+.rollvel output{min-width:84px}
+.octr button{min-height:32px}
+.roll .rc{height:24px}
+#t-roll .note{margin:0}
+/* v2.85 espacio util: sin titulos repetidos sobre la rejilla y los pads (ya lo dice la subpestana) y panel Sonido mas bajo */
+.mtx::before,.pads::before{display:none}
+.sdgrip{height:14px}
+.sdh{padding:4px 8px}
+/* v2.85 el panel Sonido siempre pegado a la barra inferior, aunque la pantalla tenga poco contenido */
+.device{min-height:calc(100dvh - 8px - var(--nav,47px))}
+.sdock{margin-top:auto}
+/* v2.85 pads mas grandes: la pantalla Pads tenia mucho hueco libre */
+#pads.pads .pad{height:86px}
+#pads.pads.keys .pad{height:96px}
+/* v2.85 mezcla: el medidor de nivel va a la derecha del fader, junto a la escala de dB */
+.mc .fw .dbs{position:relative;left:auto;top:auto;bottom:auto;width:22px;flex:0 0 22px;margin:9px 0 9px 1px}
+/* v2.85 mezcla: pico del master con boton para reiniciarlo */
+.pn.pkl{background:none;box-shadow:none;border:0;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-size:8.4px;letter-spacing:.1em;color:var(--mute);pointer-events:none}
+.seg.ms.pks .pkv{flex:1;display:flex;align-items:center;justify-content:center;min-width:0;font-family:var(--disp);font-size:9.45px;font-variant-numeric:tabular-nums;color:var(--fg)}
+.seg.ms.pks .pkv.hot{color:#e5484d;font-weight:700}
+.seg.ms.pks button{flex:0 0 22px}
+.seg.ms.pks .pkv.warn{color:#f5a524;font-weight:700}
+.mixlim{display:block;padding:6px 10px 8px}
+.mixlim .k{margin:0}
+/* v2.85 limitador: escala de dB con el punto central marcado y vumetro de entrada */
+.mixlim .limin{position:relative;height:10px;margin:4px 9px 6px;border-radius:3px;background:rgba(0,0,0,.28);overflow:visible}
+.mixlim .limin i{position:absolute;inset:0;border-radius:3px;background:var(--led,#3ee6d0);transform:scaleX(0);transform-origin:left;will-change:transform}
+.mixlim .limin i.over{background:#e5a50a}
+.mixlim .limin b{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--fg);border-radius:1px}
+.mixlim .limin span{position:absolute;left:4px;top:-1px;font-family:var(--disp);font-size:7.35px;letter-spacing:.1em;line-height:12px;color:var(--mute);pointer-events:none}
+.mixlim .limtk{position:relative;height:22px;margin-top:-2px}
+.mixlim .limtk i{position:absolute;top:0;width:1px;height:5px;margin-left:-.5px;background:var(--mute)}
+.mixlim .limtk i.m{height:5px;opacity:.6}
+.mixlim .limtk i:not(.m):not(.c){height:7px;opacity:.9}
+.mixlim .limtk i.c{height:10px;width:2px;margin-left:-1px;background:var(--c,var(--on))}
+.mixlim .limtk span{position:absolute;top:10px;transform:translateX(-50%);font-family:var(--disp);font-size:8.4px;color:var(--mute);white-space:nowrap}
+.mixlim .limtk span.c{color:var(--fg);font-weight:700}
+/* v2.85 mezcla: master tumbado bajo el limitador y escala horizontal */
+.mcm{display:grid;grid-template-columns:auto 1fr auto auto;gap:4px 8px;align-items:center;border:1px solid var(--keyedge);border-top:2px solid var(--fg);border-radius:10px;padding:8px;background:var(--pnl);--c:var(--fg)}
+.mcm .nm2{min-height:34px;padding:0 10px;font-size:9.45px}
+.mcm .fwh{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mcm .fad{position:relative;height:24px;width:auto;margin:0}
+.mcm .cap{top:3px;bottom:3px;left:0;right:auto;width:18px;height:auto;background:var(--c)}
+.mcm .meter{position:relative;left:auto;right:auto;top:auto;bottom:auto;height:5px;margin:0 9px}
+.mcm .meter i{transform:scaleX(0);transform-origin:left}
+.mcm .dbh{position:relative;height:11px}
+.mcm .dbh span{position:absolute;top:0;transform:translateX(-50%);font-size:8.4px;line-height:11px;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mcm .dbh span.z{color:var(--fg)}
+.mcm .fv{font-family:var(--disp);font-size:10.5px;min-width:54px;text-align:center}
+.mcm .pkh{display:grid;grid-template-columns:auto 22px;grid-template-rows:auto auto;gap:0 4px;align-items:center;justify-items:center;min-width:64px}
+.mcm .pkh small{grid-column:1/-1;font-family:var(--disp);font-size:8.4px;letter-spacing:.1em;color:var(--mute)}
+.mcm .pkv{font-family:var(--disp);font-size:10.5px;font-variant-numeric:tabular-nums;color:var(--fg)}
+.mcm .pkv.warn{color:#f5a524;font-weight:700}.mcm .pkv.hot{color:#e5484d;font-weight:700}
+.mcm .pkh button{min-height:26px;min-width:22px;padding:0;border:1px solid var(--keyedge);border-radius:6px;background:var(--key);color:var(--fg)}
+.mcm .cap::after{left:8px;right:auto;top:4px;bottom:4px;width:2px;height:auto}
+/* v2.85 master estilo consola: panel propio, medidor de LEDs, fader con tapa metalica y pantalla LCD */
+.mcm{grid-template-columns:auto 1fr auto;gap:6px 10px;padding:10px 10px 9px;border:1px solid color-mix(in srgb,var(--fg) 35%,var(--keyedge));border-top:3px solid var(--fg);border-radius:12px;background:linear-gradient(180deg,color-mix(in srgb,var(--fg) 11%,var(--dev)),var(--dev) 70%);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 18%,transparent),0 6px 16px rgba(0,0,0,.35)}
+.mcm .mname{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:58px;padding:0 10px;border-radius:8px;border:1px solid color-mix(in srgb,var(--fg) 45%,var(--keyedge));background:linear-gradient(180deg,color-mix(in srgb,var(--fg) 20%,var(--key)),var(--key));color:var(--fg)}
+.mcm .mname b{font-family:var(--disp);font-size:10.5px;font-weight:700;letter-spacing:.2em}
+.mcm .mname i{width:12px;height:12px;border-radius:50%;background:#1f3b2b;box-shadow:inset 0 1px 2px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.12)}
+.mcm .mname i.warn{background:#f5a524;box-shadow:0 0 8px #f5a524,0 0 0 1px rgba(255,255,255,.2)}
+.mcm .mname i.hot{background:#ff3b3b;box-shadow:0 0 10px #ff3b3b,0 0 0 1px rgba(255,255,255,.25)}
+.mcm .fad{height:30px;border-radius:6px;background:linear-gradient(180deg,#04070d,#101829);box-shadow:inset 0 2px 4px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.08)}
+.mcm .fad::before{content:"";position:absolute;left:9px;right:9px;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:#000;box-shadow:0 1px 0 rgba(255,255,255,.1)}
+.mcm .cap{top:2px;bottom:2px;width:18px;border-radius:4px;background:linear-gradient(90deg,#aab4c4,#f5f8fc 45%,#9aa6b8);box-shadow:0 2px 4px rgba(0,0,0,.6),inset 0 0 0 1px rgba(0,0,0,.25)}
+.mcm .cap::after{background:#2a3347}
+.mcm .meter{height:12px;margin:2px 9px 0;border-radius:3px;overflow:hidden;background:linear-gradient(90deg,#2fd27a 0,#2fd27a 62%,#f2c230 62%,#f2c230 85%,#ec4a4a 85%,#ec4a4a 100%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.5)}
+.mcm .meter i{background:#080d17;opacity:.93;transform:scaleX(1);transform-origin:right}
+.mcm .meter::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 4px,rgba(8,13,23,.9) 4px 5px);pointer-events:none}
+.mcm .dbh{height:12px;margin-top:1px}
+.mcm .dbh span{font-size:8.4px}
+.mcm .lcdm{display:grid;gap:4px;min-width:96px;padding:6px 8px;border-radius:6px;background:var(--lcd,#050b12);border:1px solid color-mix(in srgb,var(--lcdfg,#3ee6d0) 25%,#000);box-shadow:inset 0 1px 3px rgba(0,0,0,.8),0 1px 0 rgba(255,255,255,.1)}
+.mcm .lcdm .lr{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:4px}
+.mcm .lcdm .lr:first-child{grid-template-columns:34px 1fr}
+.mcm .lcdm small{font-family:var(--disp);font-size:7.5px;letter-spacing:.12em;color:var(--lcdfg,#3ee6d0);opacity:.85}
+.mcm .lcdm .fv,.mcm .lcdm .pkv{font-family:var(--disp);font-size:13px;min-width:0;text-align:right;color:var(--lcdfg,#3ee6d0);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.mcm .lcdm .pkv.warn{color:#f5a524}.mcm .lcdm .pkv.hot{color:#ff4d4d}
+.mcm .lcdm button{min-height:22px;min-width:22px;padding:0;border:1px solid color-mix(in srgb,var(--lcdfg,#3ee6d0) 45%,transparent);border-radius:5px;background:transparent;color:var(--lcdfg,#3ee6d0)}
+.mcm .mname{cursor:default;-webkit-user-select:none;user-select:none}
+/* v2.85 mezcla: ajustes del master que se despliegan al tocar la placa MASTER */
+.mcm button.mname{cursor:pointer;font:inherit}
+.mcm .mname .mchev{font-size:9px;line-height:1;opacity:.7;transition:transform .15s}
+.mcm .mname[aria-expanded="true"] .mchev{transform:rotate(180deg)}
+.mcm .mname[aria-expanded="true"]{border-color:var(--fg)}
+.mstfx{padding:8px 10px 10px;border:1px solid color-mix(in srgb,var(--fg) 30%,var(--keyedge));border-radius:10px;background:var(--pnl)}
+.mstfx[hidden]{display:none}
+.mstfx .knobs{gap:4px 14px}
+/* v2.85 limitador: cabecera plegable con el nombre centrado y aspecto de consola con el tono de la caratula */
+.mixlim{--lc:var(--on);--c:var(--on);border:1px solid color-mix(in srgb,var(--lc) 40%,var(--keyedge));border-top:3px solid var(--lc);border-left:1px solid color-mix(in srgb,var(--lc) 40%,var(--keyedge));border-radius:12px;background:linear-gradient(180deg,color-mix(in srgb,var(--lc) 10%,var(--dev)),var(--dev) 75%);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 16%,transparent),0 6px 16px rgba(0,0,0,.3)}
+.mixlim .limh{display:flex;align-items:center;justify-content:center;position:relative;width:100%;margin:0;padding:0;border:0;background:none;cursor:pointer;font-family:var(--disp);font-size:8.4px;letter-spacing:.1em;text-transform:uppercase;line-height:normal;color:var(--fg)}
+.mixlim .limh>span{text-align:center}
+.mixlim .limh output{position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:10.5px;text-transform:none;color:var(--fg)}
+.mixlim .limh .lchev{position:absolute;left:0;top:50%;transform:translateY(-50%);font-style:normal;font-size:9px;letter-spacing:0;transition:transform .15s}
+.mixlim .limh[aria-expanded="false"] .lchev{transform:translateY(-50%) rotate(-90deg)}
+.mixlim .limin i{background:color-mix(in srgb,var(--lc) 85%,#fff)}
+.mixlim .limin i.over{background:#f5a524}
+.mixlim .limtk i.c{background:var(--lc)}
+.mixlim #limBody[hidden]{display:none}
+/* v2.85 master: flecha igual que la del desplegable Sonido (hacia abajo cerrado, hacia arriba abierto) */
+.mcm button.mname{display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;gap:6px 4px;align-content:center;justify-content:center;align-items:center}
+.mcm .mname .mchev{grid-row:1;grid-column:1;font-size:0;width:18px;height:18px;position:relative;flex:none;opacity:1;transform:rotate(180deg);transition:transform .15s}
+.mcm .mname .mchev::before{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;border-left:3px solid currentColor;border-top:3px solid currentColor;transform:translate(-50%,-30%) rotate(45deg);border-radius:1px}
+.mcm .mname[aria-expanded="true"] .mchev{transform:rotate(0)}
+.mcm .mname b{grid-row:1;grid-column:2}
+.mcm .mname i{grid-row:2;grid-column:1/-1;justify-self:center}
+/* v2.85 master: los LEDs apagados se ven con su color (verde, amarillo, rojo) en todas las caratulas */
+.mcm .meter{height:14px}
+.mcm .meter i{background:var(--dev);opacity:.45}
+.mcm .meter::after{background:repeating-linear-gradient(90deg,transparent 0 4px,var(--dev) 4px 5px)}
+/* v2.85 master: vumetro con carcasa oscura fija (sin velo blanco en caratulas claras) y fader con el color de pista de cada caratula */
+.mcm .meter i{background:#080d17;opacity:.5}
+.mcm .meter::after{background:repeating-linear-gradient(90deg,transparent 0 4px,#080d17 4px 5px)}
+.mcm .fad{background:var(--track);box-shadow:inset 0 2px 4px rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.14)}
+.mcm .fad::before{background:rgba(0,0,0,.4);box-shadow:0 1px 0 rgba(255,255,255,.12)}

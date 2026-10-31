@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.84"></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.85"></head><body>
 <title>Pulso Studio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
 
@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">132</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.84">v2.84</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.85">v2.85</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -73,9 +73,10 @@
     <section id="t-roll" class="tab" hidden>
       <div class="snd4" id="rollSnd" role="group" aria-label="Sonido del piano roll"></div>
       <div class="focus-pages rollpg" id="rollPg" role="group" aria-label="Página de pasos" hidden><button type="button" data-pg="0" aria-pressed="true">Pasos 1–16</button><button type="button" data-pg="1" aria-pressed="false">Pasos 17–32</button></div>
+      <div class="rollvel" id="rollVelBox"><label for="rollVel" title="Fuerza de las notas nuevas">Fuerza</label><input id="rollVel" type="range" min="1" max="3" step="1" value="2" aria-describedby="rollVo"><output id="rollVo">NORMAL · 75%</output><button type="button" id="rollVelAll" class="fn" title="Aplicar esta fuerza a todas las notas de este sonido">A todas</button></div>
       <div class="roll" id="roll"></div>
       <div class="seg octr"><button id="rollOm" aria-label="Bajar octava">OCT −</button><span id="rollOv">OCT 0</span><button id="rollOp" aria-label="Subir octava">OCT +</button></div>
-      <p class="note">Toca una casilla para poner o quitar un golpe o una nota; arrastra para pintar. Cada sonido tiene su propia escala. En las baterías, 0 es el sonido original y las demás filas lo afinan más grave (−) o más agudo (+) en semitonos. Una nota por paso. Azar y Borrar de arriba actúan sobre el sonido elegido.</p>
+      <p class="note">Toca una casilla para poner o quitar; arrastra para pintar. En las baterías, 0 es el sonido original y las demás filas lo afinan en semitonos. Azar y Borrar actúan sobre el sonido elegido.</p>
     </section>
 
     <section id="t-song" class="tab" hidden>
@@ -222,8 +223,11 @@
     </section>
     
       <section id="t-mix" class="tab" hidden>
+      <div class="msbar mixlim" id="mixLim" aria-label="Limitador del master"></div>
+      <div class="mcm" id="mixMst" aria-label="Master"></div>
+      <div class="mstfx" id="mixMstFx" hidden aria-label="Ajustes del master"></div>
       <div class="mix" id="mix"></div>
-      <p class="note">Arrastra el fader y el pan; al lado tienes la escala en dB. Doble toque los reinicia. Toca el nombre para abrir el canal.</p>
+      <p class="note">Arrastra el fader y el pan; al lado tienes la escala en dB. Doble toque los reinicia. Toca el nombre para abrir el canal. Si el pico del MST se pone naranja o rojo, baja el Limitador.</p>
     </section>
 
     
@@ -267,6 +271,6 @@
   
 </main>
 
-<script src="./app.js?v=2.84"></script>
+<script src="./app.js?v=2.85"></script>
 
 </body></html>
