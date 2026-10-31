@@ -672,3 +672,22 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 :root[data-skin="plata"] .lane .lh b,:root[data-skin="mpc"] .lane .lh b{color:var(--fg)}
 :root[data-skin="plata"] #soundDock .nm,:root[data-skin="papel"] #soundDock .nm,:root[data-skin="light"] #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 30%,var(--fg))}
 @media (prefers-color-scheme:light){:root:not([data-skin]) #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 30%,var(--fg))}}
+/* v2.43 FX compacto: tarjetas delimitadas, parametros siempre visibles, cerradas = una linea */
+#fxList{display:flex;flex-direction:column;gap:6px}
+.fxgt{margin:10px 0 0;padding:5px 8px;border-left:0;border-radius:6px;background:color-mix(in srgb,var(--gc) 22%,transparent);color:var(--fg);font-size:9.45px;letter-spacing:.14em;display:flex;align-items:center;gap:6px}
+.fxgt::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--gc)}
+.fxc{padding:6px 8px;gap:6px;border-radius:10px;border-left-width:5px;background:color-mix(in srgb,var(--c) 7%,var(--key))}
+.fxc:not(.on){background:color-mix(in srgb,var(--fg) 4%,transparent);border-left-color:color-mix(in srgb,var(--fg) 30%,transparent)}
+.fxc:not(.on) .fxh h3{opacity:.75}
+.fxh{min-height:30px;gap:6px}
+.fxh .tg{min-height:26px;padding:0 10px;font-size:9.45px}
+.fxg{height:46px}
+.fxmore{border-top:0;padding-top:0}
+.fxmore>summary{display:none}
+.fxparams{gap:6px;padding-bottom:0}
+.fxc .seg>button{min-height:28px}
+.fxc .knobs{gap:4px 14px}
+.fxc .k label{font-size:9.45px}
+.fxc input[type=range]{height:22px}
+.fxc.sh{padding-top:3px;padding-bottom:3px}
+.fxnav button{min-height:28px}.fxc .k label{color:color-mix(in srgb,var(--fg) 82%,var(--dev))}

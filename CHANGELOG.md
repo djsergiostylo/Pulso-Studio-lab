@@ -305,3 +305,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.42 (2026-10-31) — Claude
 - Todas las caratulas: acentos de las oscuras (Neon, Oscuro, Violeta, Verde) y de Plata/Claro menos chillones, texto claro menos deslumbrante, rail de los deslizadores visible (--rail), nombres de canal y dB legibles en las claras. Contraste >= 4,5:1 medido en Crear, Canal, Mix, FX, EQ, Pads, Cancion y Proyecto en las 10 caratulas.
 - Para revertir: git revert del commit v2.42.
+
+## v2.43 (2026-10-31) — Claude
+- FX compacto: cabeceras de grupo como franja de color, tarjetas con barra y fondo propios, efectos cerrados = una linea, parametros siempre visibles al abrir (sin 'Parametros avanzados'), grafica y deslizadores mas bajos. Contraste >= 4,5:1 en las 10 caratulas.
+- Para revertir: git revert del commit v2.43.
