@@ -303,7 +303,7 @@ function duck(t){const any=C.some(x=>x.solo);if(!S.sc.on||C[0].mute||(any&&!C[0]
 function audition(vv){if(!S.aud||!ensure())return;const t=ctx.currentTime+.005;vv=vv||VEL[2];if(S.ch<SUBI)drum(S.ch,t,vv);else mel(S.ch,SC[S.scale][S.subSel],t,vv,vv>1,false)}
 
 /* ---------- sequencer ---------- */
-let nextT=0,cur=0,timer=null,queue=[];
+let nextT=0,cur=0,timer=null,queue=[],paused=false,pcur=0;
 /* margen de programacion: sube a .6 s mientras se mueve el panel o cambia la ventana (el layout bloquea el hilo y cortaba el audio) */
 let LA=.2,laT=0;const bumpLA=()=>{LA=.6;clearTimeout(laT);laT=setTimeout(()=>{LA=.2},700)};
 const nextPat=p=>{for(let k=1;k<=4;k++){const j=(p+k)%4;if(S.chainSet[j])return j}return p};
@@ -326,8 +326,8 @@ const LB={a1:null,a2:null,a3:null,a4:null},LN={a1:'',a2:'',a3:'',a4:''},liveSrc=
 function lanesAt(bar,t,x){x=x||ctx;LID.forEach(id=>{const L=S.lanes[id],b=LB[id];if(!b||!L.on[bar])return;const bo=60/L.bpm*4,off=(bar%L.loop)*bo;if(off>=b.duration)return;
   const s=x.createBufferSource();s.buffer=b;s.playbackRate.value=S.bpm/L.bpm;s.connect(M.lg[id]);s.start(t,off);s.stop(t+60/S.bpm*4+.005);if(x===LIVE){liveSrc.add(s);s.onended=()=>liveSrc.delete(s)}})}
 function audioWatch(){const c=ctx,t0=c.currentTime,w0=performance.now();setTimeout(()=>{if(ctx!==c||!S.play)return;const dt=(c.currentTime-t0)*1000,dw=performance.now()-w0;if(c.state!=='running'||dt<dw*.5){flash('SIN AUDIO: REVISA SALIDA DE SONIDO');setTimeout(()=>flash(c.state+' · '+c.sampleRate+' Hz'),1700)}},1500)}
-function start(){if(!ensure())return;audioWatch();cur=0;lastF=0;lastAF=0;queue=[];S.pp=S.pat;nextT=ctx.currentTime+.06;S.play=true;if(wk)wk.postMessage(25);else timer=setInterval(tick,25);tick();kick();upd()}
-function stop(){if(wk)wk.postMessage(0);clearInterval(timer);timer=null;S.play=false;queue=[];liveSrc.forEach(s=>{try{s.stop()}catch(e){}});liveSrc.clear();if(ctx&&acV)choke(acV,ctx.currentTime);if(ctx&&subV)choke(subV,ctx.currentTime);if(ctx&&ctx._pend){ctx._pend=0;setTimeout(()=>{if(!S.play){swapCr();swapLim()}},120)}upd();if(S.tab==='song')paintSongPH()}
+function start(){if(!ensure())return;audioWatch();cur=paused?pcur:0;paused=false;lastF=0;lastAF=0;queue=[];S.pp=S.pat;nextT=ctx.currentTime+.06;S.play=true;if(wk)wk.postMessage(25);else timer=setInterval(tick,25);tick();kick();upd()}
+function stop(){paused=false;if(wk)wk.postMessage(0);clearInterval(timer);timer=null;S.play=false;queue=[];liveSrc.forEach(s=>{try{s.stop()}catch(e){}});liveSrc.clear();if(ctx&&acV)choke(acV,ctx.currentTime);if(ctx&&subV)choke(subV,ctx.currentTime);if(ctx&&ctx._pend){ctx._pend=0;setTimeout(()=>{if(!S.play){swapCr();swapLim()}},120)}upd();if(S.tab==='song')paintSongPH()}
 let wk=null;try{wk=new Worker(URL.createObjectURL(new Blob(['let t=0;onmessage=e=>{clearInterval(t);if(e.data>0)t=setInterval(()=>postMessage(0),e.data)}'],{type:'text/javascript'})));wk.onmessage=()=>{if(S.play&&ctx)tick()}}catch(e){wk=null}
 
 /* ---------- ui loop + meters ---------- */
@@ -408,19 +408,21 @@ function updGrid(){const p=P[S.pat],any=C.some(x=>x.solo);document.documentEleme
       cX[ch][k].textContent=(ac?'!':'')+(rt>1?'⋮':'')+(nd?(nd>0?'›':'‹').repeat(Math.abs(nd)):'')+(on&&ch===ACI&&p.asl[i]?'↗':'')})});
   grid.dataset.em=S.em;ph()}
 const phL=new Array(NCH).fill(-1);
+function pause(){const g=S.g||0;stop();pcur=g;paused=true;upd()}
 function ph(){const same=S.play&&S.pp===S.pat;rows.forEach((r,ch)=>{const i0=same?S.g%C[ch].len:-1,idx=i0>=pgOff&&i0<pgOff+16?i0-pgOff:-1;if(idx===phL[ch])return;
     if(phL[ch]>=0)r[phL[ch]].classList.remove('ph');if(idx>=0)r[idx].classList.add('ph');phL[ch]=idx});
   if(S.play&&S.chain&&S.pp!==lastPP){lastPP=S.pp;renderPbar()}updLcd()}
 let lastPP=-1,fm=0,ft='';
 function flash(t){ft=t;fm=performance.now()+1600;updLcd();setTimeout(updLcd,1650)}
 const lsEl=$('#lsteps');lsEl.innerHTML=Array.from({length:16},(_,i)=>`<i${i%4===0?' class="b"':''}></i>`).join('');const lsC=[...lsEl.children];let lsLast=-1;
+const PLPAUSE='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg><span>Pausa</span>';
 const PLPLAY='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span>Play</span>',PLSTOP='<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor"/></svg><span>Stop</span>';
-const l1El=$('#l1'),l2El=$('#l2'),lbEl=$('#lb'),bpEl=$('#bpmv span'),plEl=$('#play'),uc=['','',-1,null];
-function updLcd(){const pl=S.play?S.pp:S.pat,a=`<b>${S.play?'▶':'■'}</b>${CH[S.ch][1]} · ${S.song.on?'♪'+String((S.play?S.bar:0)+1).padStart(2,'0')+'/'+S.song.len+' · ':'PAT '}${pl>=0?'ABCD'[pl]:'–'}${S.chain&&!S.song.on?' · CADENA':''}`;if(a!==uc[0]){uc[0]=a;l1El.innerHTML=a}
+const l1El=$('#l1'),l2El=$('#l2'),lbEl=$('#lb'),bpEl=$('#bpmv span'),plEl=$('#play'),stEl=$('#stopb'),uc=['','',-1,null];
+function updLcd(){const pl=S.play?S.pp:S.pat,a=`<b>${S.play?'▶':paused?'❚❚':'■'}</b>${CH[S.ch][1]} · ${S.song.on?'♪'+String((S.play?S.bar:0)+1).padStart(2,'0')+'/'+S.song.len+' · ':'PAT '}${pl>=0?'ABCD'[pl]:'–'}${S.chain&&!S.song.on?' · CADENA':''}`;if(a!==uc[0]){uc[0]=a;l1El.innerHTML=a}
   const sg=S.play&&S.lights?S.g%16:-1;if(sg!==lsLast){if(lsLast>=0)lsC[lsLast].classList.remove('on');if(sg>=0)lsC[sg].classList.add('on');lsLast=sg}
-  const b=performance.now()<fm?ft:S.play?`PASO ${String(S.g%16+1).padStart(2,'0')}/16`:'LISTO';if(b!==uc[1]){uc[1]=b;l2El.textContent=b}
+  const b=performance.now()<fm?ft:S.play?`PASO ${String(S.g%16+1).padStart(2,'0')}/16`:paused?'PAUSA':'LISTO';if(b!==uc[1]){uc[1]=b;l2El.textContent=b}
   if(uc[2]!==S.bpm){uc[2]=S.bpm;lbEl.textContent=S.bpm;bpEl.textContent=S.bpm}
-  if(uc[3]!==S.play){uc[3]=S.play;plEl.setAttribute('aria-pressed',S.play);plEl.innerHTML=S.play?PLSTOP:PLPLAY;plEl.setAttribute('aria-label',S.play?'Parar':'Reproducir')}}
+  const pst=S.play?1:paused?2:0;if(uc[3]!==pst){uc[3]=pst;plEl.setAttribute('aria-pressed',S.play);plEl.innerHTML=S.play?PLPAUSE:PLPLAY;plEl.setAttribute('aria-label',S.play?'Pausa':paused?'Seguir':'Reproducir');stEl.disabled=!pst}}
 
 const has=i=>i<SUBI?P[S.pat].d[i].some(Boolean):P[S.pat][NK[i]].some(x=>x>=0);
 let chipEl=null;
@@ -461,7 +463,8 @@ $('#prbv').addEventListener('click',()=>{C[S.ch].prob=1;updSteppers();saveSoon()
 let taps=[];$('#bpmv').addEventListener('click',()=>{const n=performance.now();if(taps.length&&n-taps[taps.length-1]>2000)taps=[];taps.push(n);if(taps.length>5)taps.shift();
   if(taps.length>1){S.bpm=clamp(Math.round(60000/((taps[taps.length-1]-taps[0])/(taps.length-1))),60,200);applyDelay();updLcd();saveSoon()}});
 
-$('#play').addEventListener('click',()=>{S.play?stop():start()});
+$('#play').addEventListener('click',()=>{S.play?pause():start()});
+$('#stopb').addEventListener('click',()=>{if(S.play||paused){stop();flash('STOP')}});
 const updAud=()=>{const b=$('#aud');b.setAttribute('aria-pressed',S.aud);b.textContent=S.aud?'🔊':'🔇';b.setAttribute('aria-label',S.aud?'Sonar al pulsar: sí':'Sonar al pulsar: no')};
 $('#aud').addEventListener('click',()=>{S.aud=!S.aud;updAud();flash(S.aud?'SONAR AL PULSAR: SÍ':'SONAR AL PULSAR: NO');save()});updAud();
 $('#clear').addEventListener('click',()=>{snap();flash('BORRADO · ↶');const p=P[S.pat];if(S.ch<SUBI)p.d[S.ch].fill(0);else p[NK[S.ch]].fill(-1);if(S.ch===ACI)p.asl.fill(0);p.ac[S.ch].fill(0);p.rt[S.ch].fill(1);p.nd[S.ch].fill(0);upd();save()});
@@ -1024,7 +1027,7 @@ $('#prec').addEventListener('click',()=>{if(recOn||!(DL||EXT)||!ensure())return;
   rec.onstop=async()=>{try{M.vol.disconnect(dest)}catch(err){}recOn=false;b.removeAttribute('data-rec');b.textContent='⏺ Grabar en tiempo real (.webm)';
     const type=rec.mimeType||(chunks[0]&&chunks[0].type)||'audio/webm',blob=new Blob(chunks,{type});
     if(!blob.size){flash('GRABACIÓN VACÍA');return}await saveFile(fname()+'.'+(type.includes('mp4')?'mp4':'webm'),blob)};
-  recOn=true;b.setAttribute('data-rec','');if(S.play)stop();rec.start();start();
+  recOn=true;b.setAttribute('data-rec','');stop();rec.start();start();
   const iv=setInterval(()=>{b.textContent='⏺ Grabando… '+Math.max(0,Math.ceil((ms+1200-(performance.now()-t0))/1000))+' s'},250);
   setTimeout(()=>{stop();setTimeout(()=>{clearInterval(iv);try{rec.stop()}catch(err){}},1200)},ms)});
 

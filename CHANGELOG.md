@@ -436,3 +436,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Manual completo: MANUAL.md (fuente unica, se ve en GitHub) con 15 capturas reales en manual/img/ (390x844, carátula Neon) y pagina manual.html que lo carga y lo muestra con indice y colores de la carátula elegida. Nuevo boton Abrir el manual en la pestana Aspecto. README enlaza el manual.
 - Las capturas se generaron con Chrome sin pantalla y un script; al cambiar la interfaz hay que rehacerlas.
 - Para revertir: git revert del commit v2.74.
+
+## v2.75 (2026-10-31) — Claude
+- Pausa real: el botón Play pasa a Pausa mientras suena; al pausar se queda en ese paso y Play sigue desde ahí. Nuevo botón Stop (cuadrado) que para del todo y vuelve al inicio.
+- Para revertir: git revert del commit v2.75.
