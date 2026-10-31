@@ -460,3 +460,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.80 (2026-10-31) — Claude
 - Letra de Play mas pequena (13 a 11 px; 10 px en pantallas de 380 px o menos). El icono no cambia.
 - Para revertir: git revert del commit v2.80.
+
+## v2.81 (2026-10-31) — Claude
+- Azar ahora muta: cambia solo unos pocos pasos (cerca del 20 %, minimo 2) de la pista elegida, y mantiene el resto. Si la pista esta vacia, genera un patron nuevo entero como antes. Se puede deshacer con ↶.
+- Para revertir: git revert del commit v2.81.

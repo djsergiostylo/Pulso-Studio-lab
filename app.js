@@ -468,7 +468,14 @@ $('#stopb').addEventListener('click',()=>{if(S.play||paused){stop();flash('STOP'
 const updAud=()=>{const b=$('#aud');b.setAttribute('aria-pressed',S.aud);b.textContent=S.aud?'🔊':'🔇';b.setAttribute('aria-label',S.aud?'Sonar al pulsar: sí':'Sonar al pulsar: no')};
 $('#aud').addEventListener('click',()=>{S.aud=!S.aud;updAud();flash(S.aud?'SONAR AL PULSAR: SÍ':'SONAR AL PULSAR: NO');save()});updAud();
 $('#clear').addEventListener('click',()=>{snap();flash('BORRADO · ↶');const p=P[S.pat];if(S.ch<SUBI)p.d[S.ch].fill(0);else p[NK[S.ch]].fill(-1);if(S.ch===ACI)p.asl.fill(0);p.ac[S.ch].fill(0);p.rt[S.ch].fill(1);p.nd[S.ch].fill(0);upd();save()});
+function mutate(p,sc,RN){const ch=S.ch,mel=ch>=SUBI,n=mel?p[NK[ch]]:p.d[ch],v=mel?p[VK[ch]]:null,pool=ch===ACI?sc.length:5,idx=[];
+  while(idx.length<Math.max(2,Math.round(RN*.2)))idx.push(Math.floor(Math.random()*RN));
+  idx.forEach(i=>{const on=velAt(p,ch,i)>0,pick=()=>sc[Math.floor(Math.random()*pool)];
+    if(mel&&on&&Math.random()<.5)n[i]=pick();
+    else if(on){if(mel)n[i]=-1;else n[i]=0;p.ac[ch][i]=0;p.rt[ch][i]=1;p.nd[ch][i]=0;if(ch===ACI)p.asl[i]=0}
+    else{if(mel){n[i]=pick();v[i]=1+Math.floor(Math.random()*3)}else n[i]=1+Math.floor(Math.random()*3)}})}
 $('#rand').addEventListener('click',()=>{snap();const p=P[S.pat],sc=SC[S.scale],RN=Math.max(16,C[S.ch].len);
+  if(Array.from({length:RN},(_,i)=>velAt(p,S.ch,i)).some(x=>x>0)){mutate(p,sc,RN);flash('MUTADO · ↶');upd();save();return}
   if(S.ch<SUBI){const dens=[.3,.2,.12,.55,.12,.1][S.ch];for(let i=0;i<RN;i++)p.d[S.ch][i]=(Math.random()<dens||(S.ch===0&&i%4===0&&Math.random()<.7))?1+Math.floor(Math.random()*3):0}
   else{const ch=S.ch,dn=ch===ACI?.65:ch===STI?.18:.45,n=p[NK[ch]],v=p[VK[ch]];for(let i=0;i<RN;i++){n[i]=Math.random()<dn?sc[Math.floor(Math.random()*(ch===ACI?sc.length:5))]:-1;v[i]=1+Math.floor(Math.random()*3);if(ch===ACI)p.asl[i]=n[i]>=0&&Math.random()<.2?1:0}if(ch===ACI&&n[0]<0)n[0]=0}
   const ch=S.ch,on=i=>velAt(p,ch,i)>0;p.ac[ch].fill(0);p.rt[ch].fill(1);p.nd[ch].fill(0);
