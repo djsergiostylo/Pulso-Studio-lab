@@ -264,3 +264,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Qué medí: en el patrón por defecto, alineando bien el análisis con los golpes de bombo, el SUB queda 2,6–3,6 dB por debajo del kick justo después del golpe y la banda 30–70 Hz de la mezcla es igual a la del kick solo (63,6 frente a 63,8 dB), es decir **ahí no se tapan**. Mi primera medición estaba desalineada 0,15 s (la exportación recorta el margen inicial) y daba un resultado falso. Por eso no toco filtros ni el tono del ACID; si te pasa en tu proyecto, depende de tus notas, niveles o kit: mándame el código (Proyecto → Código) para medirlo con tu caso.
 - Comprobado en directo que el sidechain funciona: la ganancia del SUB cae a 0,03 en cada golpe del kick y vuelve en ~0,5 s con liberación alta.
 - Para revertir: git revert del commit v2.32.
+
+## v2.33 (2026-10-31) — Claude
+- Secuenciador: columna de nombres con barra de color del canal, nombre y botones M/S debajo (antes ocultos). Filas algo mas altas.
+- Para revertir: git revert del commit v2.33.
