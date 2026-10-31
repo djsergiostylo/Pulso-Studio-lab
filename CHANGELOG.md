@@ -297,3 +297,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.40 (2026-10-31) — Claude
 - Gris MPC: el rail de los deslizadores (Canal, Mix, FX) era casi invisible sobre el panel gris (1,2:1); ahora se ve (3,4:1).
 - Para revertir: git revert del commit v2.40.
+
+## v2.41 (2026-10-31) — Claude
+- Caratula Naranja: chasis mandarina con degradado suave, paneles y teclas en crema; el naranja queda como marco y acento. Textos y botones comprobados >= 4,5:1 en Crear, Canal, Mix, FX, EQ, Pads, Cancion y Proyecto.
+- Para revertir: git revert del commit v2.41.

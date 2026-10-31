@@ -650,3 +650,10 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 
 /* v2.40 Gris MPC: rail de los deslizadores visible */
 :root[data-skin="mpc"]{--track:#9aa0a8}
+
+/* v2.41 Naranja mas elegante: chasis mandarina, paneles crema, barra inferior oscura */
+:root[data-skin="orange"]{--dev:#e8692c;--edge:#b9481a;--pnl:#f3dcc0;--pttl:#4a2308;--key:#fbf3e6;--keyedge:#c9a37c;--track:#b98c66;--mute:#3a1503;--fg:#2a1306}
+:root[data-skin="orange"] .device{background-image:linear-gradient(180deg,#f07a3a 0%,#e8692c 45%,#d9591f 100%)}:root[data-skin="orange"] #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 45%,#2a1306)}
+:root[data-skin="orange"] #sndCh,:root[data-skin="orange"] #soundDock b{color:#a3320a}
+:root[data-skin="orange"] .fxgt,:root[data-skin="orange"] .fxc summary,:root[data-skin="orange"] .fxc label{color:#2a1306}
+:root[data-skin="orange"] #t-seq .rh .ms>button{background:var(--key);border-color:#a8683a}
