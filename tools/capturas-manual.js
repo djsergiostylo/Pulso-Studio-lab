@@ -2,7 +2,7 @@
    Uso:  1) python -m http.server 5179   (desde la carpeta del proyecto)
          2) node tools/capturas-manual.js
    Necesita Chrome en la ruta de Windows habitual y Node 22 o superior (usa WebSocket y fetch propios).
-   Las capturas salen a 390x844 con carátula Neón, a doble resolución. */
+   Las capturas salen a 390x844 con carátula GRIS MPC, a doble resolución. */
 const { spawn } = require('child_process'), fs = require('fs'), path = require('path'), os = require('os');
 const CHROME = process.env.CHROME || 'C:/Program Files/Google/Chrome/Application/chrome.exe';
 const URL = process.env.APP || 'http://localhost:5179/index.html';
