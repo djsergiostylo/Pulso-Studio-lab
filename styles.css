@@ -775,3 +775,9 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #aud.prb[aria-pressed="false"]{background:var(--on);color:var(--onfg);border-color:var(--on)}.trans .seg>#play{flex:0 0 32%;gap:5px;letter-spacing:.05em}
 .trans .seg>#rand,.trans .seg>#clear{font-size:10px;letter-spacing:0}
 .trans .seg>#clear{flex-grow:1.2}
+
+/* v2.52 Borrar mas pequeno y separado; flechas mas anchas (12-13% del bloque cada una) */
+.trans .seg>#play{flex:0 0 30%}
+.trans .seg>#rand{flex:1 1 0}
+.trans .seg>#clear{flex:.8 1 0;margin-right:8px;border-right:1px solid var(--keyedge);font-size:9.5px}
+.trans .seg>button.ur{flex:0 0 13%;min-width:36px;font-size:24px}
