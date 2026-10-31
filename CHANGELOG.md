@@ -452,3 +452,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.78 (2026-10-31) — Claude
 - Fila de transporte sin letras desbordadas: Play 3 px mas estrecho, Stop y deshacer/rehacer mas finos, BPM con mas hueco y ajuste extra para pantallas de 380 px o menos. Medido a 401 y 360 px sin desbordes.
 - Para revertir: git revert del commit v2.78.
+
+## v2.79 (2026-10-31) — Claude
+- La palabra TAP pasa justo debajo del número de BPM.
+- Para revertir: git revert del commit v2.79.
