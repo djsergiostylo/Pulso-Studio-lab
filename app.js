@@ -815,7 +815,12 @@ document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement
 var UNDO=[],REDO=[],HMAX=100,histCur=null,histT=0,histHold=false;
 const histSer=()=>JSON.stringify({P,C,s:PROJ.map(k=>S[k])});
 function histCommit(){clearTimeout(histT);histT=0;if(!histCur)return false;const n=histSer();if(n===histCur)return false;UNDO.push(histCur);if(UNDO.length>HMAX)UNDO.shift();REDO.length=0;histCur=n;hBtn();return true}
-function histMark(){if(!histCur)return;const u=document.getElementById('undo');if(u)u.disabled=false;if(histHold)return;clearTimeout(histT);histT=setTimeout(histCommit,600)}
+var histPtr=new Set();
+function histMark(){if(!histCur)return;const u=document.getElementById('undo');if(u)u.disabled=false;if(histHold||histPtr.size)return;clearTimeout(histT);histT=setTimeout(histCommit,600)}
+/* mientras haya un dedo apoyado (arrastrando un deslizador, pausando sin soltar...) no se cierra ningún paso: todo el gesto es uno */
+document.addEventListener('pointerdown',e=>{if(histT)histCommit();histPtr.add(e.pointerId)},true);
+['pointerup','pointercancel'].forEach(ev=>document.addEventListener(ev,e=>{histPtr.delete(e.pointerId);if(!histPtr.size&&!histHold&&histCur){clearTimeout(histT);histT=setTimeout(histCommit,300)}},true));
+window.addEventListener('blur',()=>histPtr.clear());document.addEventListener('visibilitychange',()=>{if(document.hidden)histPtr.clear()});
 const H_FX=['cho','flt','cr','cmp','rev','dly','sc'],H_MS=['hum','mres','mhp','mmid','mmf','mair','mwid','mdrive','mcut','mvol','lim','swing'],H_SG=['song','lanes','chain','chainSet'],H_SN=['awave','lwave','wave','layer','root','scale'],H_MIX=['vol','pan','mute','solo','rev','dly','sc'];
 function histWhat(a,b){const x=JSON.parse(a),y=JSON.parse(b),w=new Set(),ne=(m,n)=>JSON.stringify(m)!==JSON.stringify(n);
   if(ne(x.P,y.P))w.add('SECUENCIA');

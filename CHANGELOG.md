@@ -370,3 +370,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Deshacer/Rehacer globales: ahora guardan todo el proyecto (secuencia, canales, mezcla, FX, EQ de canal y master, master, cancion, tempo, escala), no solo los patrones. Los ajustes seguidos de un deslizador se agrupan en un paso (0,6 s de calma); grabar con los pads es un solo paso. El mensaje dice que se deshizo (SECUENCIA, FX, EQ, MEZCLA, CANAL, MASTER, CANCION, TEMPO, SONIDO). Al deshacer solo se vuelve a calcular lo necesario (reverb y voces solo si cambiaron).
 - No entran en el historial las preferencias de pantalla (caratula, estilo, luces, audio, EQ bypass) ni Play/Stop. Historial maximo 100 pasos.
 - Para revertir: git revert del commit v2.58.
+
+## v2.59 (2026-10-31) — Claude
+- Historial: mientras haya un dedo apoyado (arrastrar un deslizador, incluso pausando sin soltar) no se cierra ningun paso; el gesto entero es un solo paso de deshacer. Un gesto nuevo cierra antes el anterior, asi que dos movimientos separados siguen siendo dos pasos.
+- Para revertir: git revert del commit v2.59.
