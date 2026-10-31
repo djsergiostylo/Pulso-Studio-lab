@@ -317,3 +317,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.45 (2026-10-31) — Claude
 - FX: los Macros se pliegan en una sola linea (34 px en vez de 130 px). Toca 'Macros' para desplegar; el estado se guarda (campo mfold, plegado por defecto).
 - Para revertir: git revert del commit v2.45.
+
+## v2.46 (2026-10-31) — Claude
+- FX: la cadena de efectos es ahora una tira de modulos (Envios: Reverb, Delay · Master: Master, Chorus, Filtro, Crush, Sidechain, Compresor) con LED de encendido en cada uno. Se toca un modulo y solo se muestra ese efecto debajo; ya no hay que hacer scroll entre efectos. Toca el LED para encender o apagar sin cambiar de efecto.
+- Para revertir: git revert del commit v2.46.
