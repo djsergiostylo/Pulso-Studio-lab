@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.67"></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.68"></head><body>
 <title>Pulso Studio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
 
@@ -10,7 +10,7 @@
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
         <div class="big"><span id="lb">132</span><small>BPM</small></div>
-        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.67">v2.67</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ver" aria-label="Versión v2.68">v2.68</span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
       </div>
       <div class="trans">
         <div class="seg">
@@ -145,9 +145,21 @@
       <div class="sdgrip" id="sdGrip" role="separator" aria-orientation="horizontal" aria-label="Arrastra para cambiar la altura del panel Sonido" tabindex="0"><i></i></div>
       <div class="sdh">
         <button type="button" id="sndTog" aria-expanded="false" aria-controls="sndBody"><span class="chev">▴</span> Sonido · <b id="sndCh">KICK</b></button>
-        <div class="seg" id="sndTabs" role="group" aria-label="Qué editar"><button data-t="canal" aria-pressed="true">Canal</button><button data-t="mix" aria-pressed="false">Mix</button><button data-t="fx" aria-pressed="false">FX</button><button data-t="eq" aria-pressed="false">EQ</button></div>
+        <div class="seg" id="sndTabs" role="group" aria-label="Qué editar"><button data-t="macro" aria-pressed="false">Macro</button><button data-t="canal" aria-pressed="true">Canal</button><button data-t="mix" aria-pressed="false">Mix</button><button data-t="fx" aria-pressed="false">FX</button><button data-t="eq" aria-pressed="false">EQ</button></div>
       </div>
       <div class="sdb" id="sndBody" hidden>
+      <section id="t-macro" class="tab" hidden>
+      <div class="card sbcard" id="sbCard">
+        <div class="hd2"><h3>Subidón</h3><output id="sbO">0%</output></div>
+        <div class="sbf" id="sbF" role="slider" tabindex="0" aria-label="Subidón" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="sbfill"></div><div class="sbthumb" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 12h14M9 8l-4 4 4 4M15 8l4 4-4 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+        <div class="sbl"><span>Desliza →</span><span id="sbHint">al soltar: drop</span></div>
+        <div class="sbm" id="sbBars"></div>
+        <div class="seg" id="sbRel" role="group" aria-label="Al soltar"><button data-v="drop">Al soltar: Drop</button><button data-v="stay">Al soltar: Quedarse</button></div>
+        <div class="seg" id="sbCur" role="group" aria-label="Curva"><button data-v="soft">Suave</button><button data-v="norm">Normal</button><button data-v="exp">Explosivo</button></div>
+        <div class="sbt" id="sbTg" role="group" aria-label="Qué sube"></div>
+      </div>
+      <div class="dock" id="dock"><div class="dkm" id="dkM"></div></div>
+    </section>
       <section id="t-canal" class="tab" hidden>
       <div class="chips" id="chipsCan"></div>
       <div class="card">
@@ -200,7 +212,6 @@
     
       <section id="t-fx" class="tab" hidden>
       <div class="msbar" id="msBar" aria-label="Master rápido"></div>
-      <div class="dock" id="dock"><div class="dkm" id="dkM"></div></div>
       <div class="fxnav" id="fxNav" role="group" aria-label="Ir a efecto"></div>
       <div class="fxl" id="fxList"></div>
       <p class="note">Doble toque en un control lo devuelve a su valor inicial. Reverb y Delay son envíos (súbelos por canal en Canal); el resto actúa sobre toda la mezcla.</p>
@@ -239,6 +250,6 @@
   
 </main>
 
-<script src="./app.js?v=2.67"></script>
+<script src="./app.js?v=2.68"></script>
 
 </body></html>

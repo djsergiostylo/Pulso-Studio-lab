@@ -847,3 +847,24 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 /* v2.67 rotulos de grupo de FX en vertical, sin aspecto de boton */
 .fxnav .fcg{flex:0 0 16px;writing-mode:vertical-rl;transform:rotate(180deg);background:none;border:0;border-right:2px solid color-mix(in srgb,var(--fg) 35%,transparent);border-radius:0;padding:0 3px 0 0;font-size:8.5px;letter-spacing:.03em;line-height:1;color:var(--fg);text-align:center;white-space:nowrap}
 .fxnav .fch{gap:5px}
+/* v2.68 pestana MACRO: subidon deslizable */
+#t-macro{display:flex;flex-direction:column;gap:8px}
+#t-macro .sbcard{border-top:2px solid var(--bc,var(--on))}
+.sbf{--p:0%;position:relative;height:64px;border-radius:14px;background:var(--key);border:1px solid var(--keyedge);overflow:hidden;touch-action:none;cursor:ew-resize;user-select:none}
+.sbf .sbfill{position:absolute;left:0;top:0;bottom:0;width:calc(var(--p) * .86 + 22px);background:#f0a040;border-radius:0 0 0 0}
+.sbf .sbthumb{position:absolute;top:6px;bottom:6px;left:calc((100% - 44px) * var(--p) / 100%);width:44px;border-radius:10px;background:#ffe3b8;border:2px solid #2a1600;color:#2a1600;display:grid;place-items:center}
+.sbf.rel .sbfill{transition:width .18s ease-out}.sbf.rel .sbthumb{transition:left .18s ease-out}
+.sbf:focus-visible{outline:2px solid var(--on);outline-offset:2px}
+.sbl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--fg);margin:4px 0 2px}
+.sbm{display:grid;gap:5px;margin:6px 0}
+.sbm .m{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase}
+.sbm .m span{width:58px}
+.sbm .t{flex:1;height:7px;border-radius:4px;background:color-mix(in srgb,var(--fg) 22%,var(--dev));position:relative;overflow:hidden}
+.sbm .t b{position:absolute;left:0;top:0;bottom:0;width:0;background:#f0a040}
+.sbm em{font-style:normal;font-family:var(--mono);font-size:10.5px;width:54px;text-align:right}
+#t-macro .seg{margin-top:6px}
+#t-macro .seg>button[aria-pressed="true"]{background:var(--on);color:var(--onfg)}
+.sbt{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.sbt button{padding:6px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--fg) 30%,transparent);background:var(--key);color:var(--fg);font-family:var(--disp);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;min-height:32px}
+.sbt button[aria-pressed="true"]{border-color:#f0a040;background:color-mix(in srgb,#f0a040 28%,var(--key))}
+#sndTabs button{font-size:9px;letter-spacing:0;padding:0 2px;min-width:0}
