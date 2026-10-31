@@ -818,3 +818,10 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .tabs>button{gap:1px}
 .tabs>button i{font-size:16px}
 .tabs>button span{line-height:1}
+
+/* v2.61 el panel Sonido queda pegado a la barra inferior tambien al llegar al final del scroll */
+:root{--nav:47px}
+.tabs>button{min-height:calc(var(--nav) - 1px)!important}
+body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
+.device{padding-bottom:0;min-height:calc(100dvh - var(--nav) - env(safe-area-inset-bottom,0px) - 16px)}
+#t-song,#t-file,#t-look{padding-bottom:12px}

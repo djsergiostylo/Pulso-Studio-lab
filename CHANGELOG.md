@@ -378,3 +378,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.60 (2026-10-31) — Claude
 - Barra inferior mas fina: 47 px en vez de 60 px (icono de 16 px, textos iguales). El resto de la pantalla (dock Sonido, hojas) se ajusta solo porque usan la misma medida (--nav).
 - Para revertir: git revert del commit v2.60.
+
+## v2.61 (2026-10-31) — Claude
+- El panel Sonido queda pegado a la barra inferior tambien al llegar al final del scroll (antes quedaba una ranura de ~11 px por el relleno del contenedor). Altura de la barra 47 px exactos (--nav). Hueco medido: 0-1 px arriba, en medio y al final, con el panel plegado y desplegado.
+- Para revertir: git revert del commit v2.61.
