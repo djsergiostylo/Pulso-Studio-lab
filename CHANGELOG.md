@@ -357,3 +357,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.55 (2026-10-31) — Claude
 - Aspecto: la tarjeta Pantalla y audio pasa a dos fichas iguales (Luces extra y Audio) con icono, estado en pastilla (Apagado/Encendido, Rapido/Equilibrado/Estable) y descripcion. Contraste >= 4,5:1 en las 10 caratulas, tambien con Luces extra encendido.
 - Para revertir: git revert del commit v2.55.
+
+## v2.56 (2026-10-31) — Claude
+- Aspecto: caratulas ordenadas con Auto primero y luego de la mas oscura a la mas clara (Violeta, Neon, Verde, Oscuro, Gris MPC, Naranja, Plata 303, Papel, Claro). El orden se calcula por la luminosidad del color de fondo.
+- Para revertir: git revert del commit v2.56.

@@ -739,7 +739,9 @@ document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset
 /* ---------- skins ---------- */
 function skin(n){S.skin=n;if(n==='auto')document.documentElement.removeAttribute('data-skin');else document.documentElement.setAttribute('data-skin',n);
   $$('#skins button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===n));eqCol=null;fxCol=null;if(sT()==='fx')FXDEF.forEach(d=>drawFxG(d.id));readCols();drawLcd()}
-SKINS.forEach(s=>{const b=document.createElement('button');b.className='sk';b.dataset.k=s[0];b.textContent=s[1];b.style.setProperty('--cs',s[2]);b.style.setProperty('--ca',s[3]);b.addEventListener('click',()=>{skin(s[0]);save()});$('#skins').appendChild(b)});
+const skLum=h=>{const c=[1,3,5].map(i=>{const v=parseInt(h.slice(i,i+2),16)/255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+/* orden en Aspecto: Auto primero y luego de la carátula más oscura a la más clara */
+SKINS.slice().sort((a,b)=>(b[0]==='auto')-(a[0]==='auto')||skLum(a[2])-skLum(b[2])).forEach(s=>{const b=document.createElement('button');b.className='sk';b.dataset.k=s[0];b.textContent=s[1];b.style.setProperty('--cs',s[2]);b.style.setProperty('--ca',s[3]);b.addEventListener('click',()=>{skin(s[0]);save()});$('#skins').appendChild(b)});
 
 /* ---------- visuals, style, stage, undo, iOS ---------- */
 const cv=$('#scope'),cx=cv.getContext('2d'),tb=new Uint8Array(2048),fbin=new Uint8Array(1024),cols={fg:'#43e3f2',led:'#22d3ee',font:'monospace'};
