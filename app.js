@@ -1101,7 +1101,7 @@ function sbPos(p){sbF.style.setProperty('--p',(p*100).toFixed(1)+'%');sbF.setAtt
 function sbBars(){const v={flt:S.mhp/SB_HP,rev:S.rev.mix,dly:S.dly.mix,drv:S.mdrive},tx={flt:S.mhp>0?'HP '+fmtF(Math.round(msHp(S.mhp))):'OFF',rev:pct(S.rev.mix),dly:pct(S.dly.mix),drv:pct(S.mdrive)};
   SBK.forEach(([k])=>{const b=$('#sbb_'+k),o=$('#sbo_'+k);if(b)b.style.width=(clamp(v[k],0,1)*100).toFixed(0)+'%';if(o)o.textContent=tx[k]})}
 function sbApply(p){const c=Math.pow(clamp(p,0,1),SBCUR[S.sb.cur]||1),b=sbBase,on=S.sb.on,L=(a,m)=>a+(Math.max(a,m)-a)*c;
-  if(on.flt){S.mcut=1;S.mhp=L(b.mhp,SB_HP)}
+  if(on.flt){S.mcut=1;const g=.6*c+.4*(1-Math.pow(1-c,2));S.mhp=b.mhp+(Math.max(b.mhp,SB_HP)-b.mhp)*g}
   if(on.rev){S.rev.mix=L(b.rm,.75);if(c>.02)S.rev.on=true}
   if(on.dly){S.dly.mix=L(b.dm,.6);S.dly.fb=L(b.df,.72);if(c>.02)S.dly.on=true}
   if(on.drv)S.mdrive=L(b.dr,.55);
