@@ -835,3 +835,6 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .tabs>button[aria-selected="true"] i{transform:scale(1.12);filter:drop-shadow(0 0 4px color-mix(in srgb,var(--on) 70%,transparent))}
 .tabs>button i{transition:transform .12s}:root[data-skin="orange"] .tabs>button[aria-selected="true"]{background:color-mix(in srgb,#fff 38%,var(--dev))}
 :root[data-skin="orange"] .tabs>button:not([aria-selected="true"]){color:var(--fg)}
+
+/* v2.64 titulo Secuenciador centrado con subrayado de acento */
+.mtx::before{width:max-content;margin:0 auto 4px;padding:0 0 3px .16em;border-left:0;border-bottom:2px solid var(--bc,var(--on));text-align:center}.mtx::before{font-size:13.5px;letter-spacing:.18em;padding-left:.18em;padding-bottom:4px;margin-bottom:6px}

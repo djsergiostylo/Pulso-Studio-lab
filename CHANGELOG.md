@@ -390,3 +390,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.63 (2026-10-31) — Claude
 - Pestana activa de la barra inferior mas vistosa: fondo de color de la caratula, barra superior de ancho completo (4 px), icono mas grande con brillo y texto en negrita. Contraste >= 5,4:1 en las 10 caratulas (Naranja usa un fondo mas claro).
 - Para revertir: git revert del commit v2.63.
+
+## v2.64 (2026-10-31) — Claude
+- Titulo SECUENCIADOR centrado, con subrayado de acento y mas grande (13,5 px en vez de 9,5 px).
+- Para revertir: git revert del commit v2.64.
