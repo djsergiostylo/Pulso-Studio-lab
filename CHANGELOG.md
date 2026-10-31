@@ -289,3 +289,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.38 (2026-10-31) — Claude
 - BPM por defecto 132 (proyectos nuevos o sin guardar; los ya guardados conservan su BPM).
 - Para revertir: git revert del commit v2.38.
+
+## v2.39 (2026-10-31) — Claude
+- La pantallita tambien muestra 132 desde el primer momento (en v2.38 se veia 110 un instante).
+- Para revertir: git revert del commit v2.39.
