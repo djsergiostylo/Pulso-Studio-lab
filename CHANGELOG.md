@@ -423,3 +423,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.71 (2026-10-31) — Claude
 - Subidon: el filtro sube de forma mas progresiva en el tramo final. La velocidad del barrido (octavas por cada 10 % de recorrido) baja poco a poco de 1,0 a 0,5 en vez de ser constante. Frecuencias medidas: 10 % = 42 Hz, 30 % = 164 Hz, 50 % = 535 Hz, 70 % = 1,5 kHz, 90 % = 3,4 kHz, 100 % = 4,8 kHz. El macro DJ no cambia.
 - Para revertir: git revert del commit v2.71.
+
+## v2.72 (2026-10-31) — Claude
+- Subidon: resonancia en el filtro de graves, creciente con el recorrido (Q de 0,7 a 3,5, pico de unos +11 dB en la frecuencia de corte al 100 %). Al soltar vuelve a 0,7. Solo actua si el chip Filtro esta activo.
+- Para revertir: git revert del commit v2.72.

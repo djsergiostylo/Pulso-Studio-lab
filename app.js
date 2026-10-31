@@ -1101,12 +1101,12 @@ function sbPos(p){sbF.style.setProperty('--p',(p*100).toFixed(1)+'%');sbF.setAtt
 function sbBars(){const v={flt:S.mhp/SB_HP,rev:S.rev.mix,dly:S.dly.mix,drv:S.mdrive},tx={flt:S.mhp>0?'HP '+fmtF(Math.round(msHp(S.mhp))):'OFF',rev:pct(S.rev.mix),dly:pct(S.dly.mix),drv:pct(S.mdrive)};
   SBK.forEach(([k])=>{const b=$('#sbb_'+k),o=$('#sbo_'+k);if(b)b.style.width=(clamp(v[k],0,1)*100).toFixed(0)+'%';if(o)o.textContent=tx[k]})}
 function sbApply(p){const c=Math.pow(clamp(p,0,1),SBCUR[S.sb.cur]||1),b=sbBase,on=S.sb.on,L=(a,m)=>a+(Math.max(a,m)-a)*c;
-  if(on.flt){S.mcut=1;const g=.6*c+.4*(1-Math.pow(1-c,2));S.mhp=b.mhp+(Math.max(b.mhp,SB_HP)-b.mhp)*g}
+  if(on.flt){S.mcut=1;const g=.6*c+.4*(1-Math.pow(1-c,2));S.mhp=b.mhp+(Math.max(b.mhp,SB_HP)-b.mhp)*g;if(ctx&&M.mhp)M.mhp.Q.setTargetAtTime(.7+2.8*g,ctx.currentTime,.02)}
   if(on.rev){S.rev.mix=L(b.rm,.75);if(c>.02)S.rev.on=true}
   if(on.dly){S.dly.mix=L(b.dm,.6);S.dly.fb=L(b.df,.72);if(c>.02)S.dly.on=true}
   if(on.drv)S.mdrive=L(b.dr,.55);
   applyMaster();sbBars()}
-function sbRestore(){const b=sbBase;if(!b)return;S.mhp=b.mhp;S.mcut=b.mcut;S.rev.mix=b.rm;S.rev.on=b.ro;S.dly.mix=b.dm;S.dly.fb=b.df;S.dly.on=b.dop;S.mdrive=b.dr;applyMaster()}
+function sbRestore(){const b=sbBase;if(!b)return;S.mhp=b.mhp;S.mcut=b.mcut;S.rev.mix=b.rm;S.rev.on=b.ro;S.dly.mix=b.dm;S.dly.fb=b.df;S.dly.on=b.dop;S.mdrive=b.dr;if(ctx&&M.mhp)M.mhp.Q.setTargetAtTime(.7,ctx.currentTime,.03);applyMaster()}
 function sbSched(p){sbP=p;sbPos(p);if(!sbRaf)sbRaf=requestAnimationFrame(()=>{sbRaf=0;if(sbBase)sbApply(sbP)})}
 const sbFrom=e=>{const r=sbF.getBoundingClientRect();return clamp((e.clientX-r.left-22)/Math.max(1,r.width-44),0,1)};
 sbF.addEventListener('pointerdown',e=>{e.preventDefault();ensure();try{sbF.setPointerCapture(e.pointerId)}catch(x){}sbDown=true;sbF.classList.remove('rel');if(!sbBase)sbBase=sbCap();sbSched(sbFrom(e))});
