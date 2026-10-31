@@ -808,3 +808,8 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 #lightsB[aria-pressed="true"] .st{background:var(--on);color:var(--onfg);border-color:var(--on)}
 #latB{border-color:color-mix(in srgb,var(--on) 60%,var(--keyedge))}
 #latB .st{background:color-mix(in srgb,var(--on) 22%,transparent);border-color:var(--on)}#lightsB[aria-pressed="true"]{background:color-mix(in srgb,var(--on) 14%,var(--key));color:var(--fg)}
+
+/* v2.57 primer paso de cada tiempo: sin borde izquierdo grueso (parecia solaparse con la casilla anterior); solo un fondo algo mas claro */
+#grid .step.beat,#grid .step.beat:not(.on){border-left:1px solid var(--keyedge)}
+#grid .step.beat:not(.on){background:color-mix(in srgb,var(--fg) 11%,var(--key));border-color:var(--keyedge)}
+#grid .step.beat.on{border-left-color:var(--c)}

@@ -361,3 +361,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.56 (2026-10-31) — Claude
 - Aspecto: caratulas ordenadas con Auto primero y luego de la mas oscura a la mas clara (Violeta, Neon, Verde, Oscuro, Gris MPC, Naranja, Plata 303, Papel, Claro). El orden se calcula por la luminosidad del color de fondo.
 - Para revertir: git revert del commit v2.56.
+
+## v2.57 (2026-10-31) — Claude
+- Secuenciador: el primer paso de cada tiempo (1, 5, 9, 13) ya no lleva un borde izquierdo grueso que parecia solaparse con la casilla de al lado; se marca solo con un fondo algo mas claro.
+- Para revertir: git revert del commit v2.57.
