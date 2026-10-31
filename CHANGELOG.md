@@ -476,3 +476,16 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - El Piano roll incluye los 10 sonidos (dos filas de botones), cada uno con su propia escala. En las baterias la fila 0 es el sonido original y las demas lo afinan en semitonos (mas grave o mas agudo). Dato nuevo p.dn (afinacion por paso de cada bateria) con migracion en fixP: los proyectos antiguos se cargan igual.
 - Sin cambios en el formato de guardado.
 - Para revertir: git revert del commit v2.83.
+
+## v2.84 (2026-10-31) — Claude
+- Al elegir un sonido en cualquier sitio (piano roll, Ecualizador, Canal, Pads), el sonido elegido cambia de verdad: el nombre y el color de Azar y del panel Sonido se actualizan siempre. En el Ecualizador, elegir un canal tambien lo selecciona para Azar y Borrar (MST no cambia el canal). Al reves tambien: el Ecualizador sigue al sonido elegido en otros sitios (si no esta en MST). Todas las rutas de eleccion pasan ya por la misma funcion (setCh).
+- Tipos de banda del EQ ordenados de graves a agudos: corte grave, shelf grave, campana, notch, shelf agudo, corte agudo.
+- EQ: un canal sin bandas ya no usa filtros (queda desactivado solo). Al anadir o activar una banda, el bypass general se apaga solo y la EQ se activa.
+- Ajustes rapidos del EQ (Plano, Sin sub, Sin graves, +Graves, -Barro, Brillo) pegados justo debajo de la grafica.
+- Ajuste rapido Plano ya no borra las bandas: pone a 0 dB las de ganancia (campana, shelf) y desactiva (OFF) las de corte y notch. Los puntos siguen ahi.
+- Notch con Profundidad (de -0,5 a -24 dB): se ajusta con el deslizador o arrastrando el punto. -24 dB es el notch de siempre; menos profundidad suena como una campana estrecha con corte. Los notch ya guardados siguen sonando igual. Plano deja el notch activo con -0,5 dB.
+- Grafica del EQ: la linea del notch ya no baila al arrastrarlo (el dibujo no tomaba suficientes puntos en un corte tan estrecho; ahora anade puntos alrededor de su frecuencia). El sonido no cambia, solo el dibujo.
+- La grafica del EQ muestra el nombre del sonido que se esta ecualizando (KICK, SNRE... o MASTER), con su color, arriba a la derecha.
+- Grafica del EQ rotulada: ejes con unidad (+24 dB, 0 dB, -24 dB) y leyenda (linea = ajuste del EQ, area = sonido real).
+- Corregido: index.html llevaba app.js?v=2.75 y styles.css?v=2.75 desde la v2.75, asi que el movil podia cargar archivos viejos de la cache. Ahora ?v=2.84.
+- Para revertir: git revert del commit v2.84.

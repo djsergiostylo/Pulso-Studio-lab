@@ -923,3 +923,4 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .roll .rc.ph:not(.on){background:color-mix(in srgb,var(--fg) 26%,transparent)}
 .roll .rh.ph{color:var(--c);font-weight:700}
 #rollSnd{display:grid;grid-template-columns:repeat(5,1fr)}
+#eqc+#eqP{margin-top:6px}
