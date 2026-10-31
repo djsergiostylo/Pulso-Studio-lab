@@ -394,3 +394,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 ## v2.64 (2026-10-31) — Claude
 - Titulo SECUENCIADOR centrado, con subrayado de acento y mas grande (13,5 px en vez de 9,5 px).
 - Para revertir: git revert del commit v2.64.
+
+## v2.65 (2026-10-31) — Claude
+- Titulo SECUENCIADOR: vuelve a su tamano original (9,5 px), solo centrado y con subrayado. La v2.64 lo habia agrandado por error.
+- Para revertir: git revert del commit v2.65.

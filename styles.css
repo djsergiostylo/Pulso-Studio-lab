@@ -838,3 +838,6 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 
 /* v2.64 titulo Secuenciador centrado con subrayado de acento */
 .mtx::before{width:max-content;margin:0 auto 4px;padding:0 0 3px .16em;border-left:0;border-bottom:2px solid var(--bc,var(--on));text-align:center}.mtx::before{font-size:13.5px;letter-spacing:.18em;padding-left:.18em;padding-bottom:4px;margin-bottom:6px}
+
+/* v2.65 el titulo Secuenciador vuelve a su tamano original (9,5 px), solo centrado */
+.mtx::before{font-size:9.5px;letter-spacing:.16em;padding:0 0 3px .16em;margin:0 auto 4px}
