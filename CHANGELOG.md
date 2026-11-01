@@ -546,6 +546,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Los dos ajustes nuevos (ret, ghost) viajan en el .json dentro de sc; los proyectos antiguos reciben los valores por defecto al cargar.
 - Para revertir: git revert del commit v2.91.
 
+## v2.92 (2026-11-01) — Claude
+- Al exportar el WAV se calcula su volumen integrado (LUFS, norma ITU BS.1770 / EBU R128: ponderacion K, bloques de 400 ms y puertas -70 y -10 LU) y su pico de muestra. Se muestra bajo el boton, en Proyecto > Exportar audio. Se calcula sobre el audio ya renderizado: no cuesta nada en directo. Verificado con senos de referencia (0, -6 y -20 dB dan 0, -6 y -20 LUFS).
+- Pestana EQ: contador "Filtros del EQ: N en total" (cada banda suma 1; los cortes suman pendiente/12: 96 dB/oct = 8). Aviso "Medio" desde 60 y "ALTO" desde 120. Los umbrales son orientativos y no estan medidos en moviles. El EQ de fabrica suma 21.
+- No cambia el audio ni el formato de guardado.
+- Para revertir: git revert del commit v2.92.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.

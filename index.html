@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.91">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.92">
 <title>Pulso Studio · Tu groovebox en el móvil</title>
 <meta name="description" content="Secuenciador de 16 pasos y pads para crear ritmos desde el móvil. Por Pulso Lab.">
 <meta property="og:type" content="website">
@@ -25,7 +25,7 @@
     <div class="head">
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
-        <div class="big"><span id="lb">132</span><small>BPM</small><span class="ver" aria-label="Versión v2.91">v2.91</span></div>
+        <div class="big"><span id="lb">132</span><small>BPM</small><span class="ver" aria-label="Versión v2.92">v2.92</span></div>
         <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
         <div class="lvol" id="lvol"><button type="button" id="lmute" aria-label="Silenciar" aria-pressed="false">🔊</button><input id="lvr" type="range" min="0" max="100" step="1" value="100" aria-label="Volumen de escucha"><output id="lvo" for="lvr">100%</output></div>
       </div>
@@ -142,6 +142,7 @@
         <button class="fn" id="pwav">⬇ Exportar WAV (calidad máxima)</button>
         <button class="fn" id="prec">⏺ Grabar en tiempo real (.webm)</button>
         <p class="note">El WAV se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz) y 16 bits.</p>
+        <p class="note" id="wavStat" aria-live="polite" hidden></p>
       </div>
     <details class="more2"><summary>⚙ Ayuda</summary>
   <p class="hint">Desliza el dedo por la pantalla para cambiar de patrón A–D. Toca la pantalla para ver la onda o el espectro. Toca un paso para encenderlo y mantenlo pulsado para cambiar su fuerza. Con ! ×2 ↔ ↗ le pones acento, redoble, nudge o slide (acid). PADS para tocar en directo, SONG para montar la canción. Con auriculares se nota el subgrave.</p>
@@ -260,6 +261,7 @@
       <section id="t-eq" class="tab" hidden>
       <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
       <button id="eqStyle" class="fn" type="button" aria-pressed="false">EQ BYPASS · NO</button>
+      <p class="note" id="eqCost" aria-live="polite"></p>
       <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
       <div class="seg" id="eqP" role="group" aria-label="Ajustes rápidos">
         <button data-p="flat">Plano</button><button data-p="nosub">Sin sub</button><button data-p="nobass">Sin graves</button><button data-p="bass">+Graves</button><button data-p="mud">−Barro</button><button data-p="air">Brillo</button>
@@ -289,6 +291,6 @@
   
 </main>
 
-<script src="./app.js?v=2.91"></script>
+<script src="./app.js?v=2.92"></script>
 
 </body></html>

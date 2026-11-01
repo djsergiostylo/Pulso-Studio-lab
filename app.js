@@ -990,7 +990,11 @@ function renderEq(){paintEqState();const b=CH.map((c,i)=>[c[1],CHC[i],C[i]]).con
   $('#eqT').innerHTML=b.map(([l,c,o],i)=>`<button data-i="${i}" style="--c:${c}" class="${eqMod(o)?'mod':''}" aria-pressed="${eqTgt===i}">${l}</button>`).join('');
   renderBand();drawEq()}
 function ensureEqOn(){if(eqDefaultOn)return;eqDefaultOn=true;try{localStorage.setItem('pulsoEqDefaultOn','1')}catch(e){}paintEqStyle();applyAll();flash('EQ ACTIVA')}
-function paintEqState(){const el=$('#eqState');if(!el)return;const n=eqbOf(eqObj()).filter(b=>b.on).length;el.textContent=!eqDefaultOn?'BYPASS GENERAL ACTIVO: ninguna banda suena':n?`${n} ${n>1?'bandas activas':'banda activa'} en ${eqTgt<NCH?CH[eqTgt][1]:'MST'}`:`Sin bandas en ${eqTgt<NCH?CH[eqTgt][1]:'MST'}: EQ desactivada, no usa filtros`}
+/* coste del EQ: cada banda es 1 filtro; los cortes usan pendiente/12 filtros (96 dB/oct = 8). Umbrales orientativos, sin medir en móviles */
+const eqCost=o=>eqDefaultOn?eqbOf(o).filter(b=>b.on).reduce((a,b)=>a+(isCut(b.t)?Math.round(b.s/12):1),0):0;
+function paintEqCost(){const el=$('#eqCost');if(!el)return;const n=C.reduce((a,c)=>a+eqCost(c),0)+eqCost(S.meq),cur=eqCost(eqObj()),lv=n>=120?'hi':n>=60?'mid':'';
+  el.className='note'+(lv?' eqcost '+lv:'');el.textContent='Filtros del EQ: '+n+' en total ('+cur+' en '+(eqTgt<NCH?CH[eqTgt][1]:'MST')+')'+(lv==='hi'?' · ALTO: puede entrecortar el audio en móviles flojos. Baja la pendiente de los cortes (12 o 24 dB/oct).':lv==='mid'?' · Medio: vigila la CPU en móviles flojos.':'')}
+function paintEqState(){paintEqCost();const el=$('#eqState');if(!el)return;const n=eqbOf(eqObj()).filter(b=>b.on).length;el.textContent=!eqDefaultOn?'BYPASS GENERAL ACTIVO: ninguna banda suena':n?`${n} ${n>1?'bandas activas':'banda activa'} en ${eqTgt<NCH?CH[eqTgt][1]:'MST'}`:`Sin bandas en ${eqTgt<NCH?CH[eqTgt][1]:'MST'}: EQ desactivada, no usa filtros`}
 function eqApply(){paintEqState();if(eqTgt<NCH)applyCh(eqTgt);else applyMaster();const bt=$('#eqT [data-i="'+eqTgt+'"]');if(bt)bt.classList.toggle('mod',eqMod(eqObj()));drawEq();saveSoon()}
 function setBand(i,p){const b=eqbOf(eqObj())[i];if(!b)return;if(p.t!=null&&p.t!==b.t){if(p.t==='nt')b.g=-24;else if(b.t==='nt')b.g=0}if(p.f!=null)b.f=clamp(+p.f,FMIN,FMAX);if(p.g!=null)b.g=clamp(Math.round(p.g*2)/2,-EQR,EQR);if(p.q!=null)b.q=clamp(+p.q,.1,18);if(p.s!=null)b.s=p.s;if(b.t==='nt'&&p.g!=null)b.g=Math.min(b.g,-.5);if(p.on!=null){b.on=p.on;if(p.on)ensureEqOn()}if(p.t!=null){b.t=p.t;if(isCut(p.t)&&!b.s)b.s=24}
   eqApply();if(i===eqBand)renderBand()}
@@ -1110,6 +1114,22 @@ function zip1(name,data){const nm=new TextEncoder().encode(name),c=crc32(data),s
   D.setUint32(0,0x02014b50,true);D.setUint16(4,20,true);D.setUint16(6,20,true);D.setUint16(8,0x0800,true);D.setUint32(16,c,true);D.setUint32(20,sz,true);D.setUint32(24,sz,true);D.setUint16(28,nm.length,true);cd.set(nm,46);
   E.setUint32(0,0x06054b50,true);E.setUint16(8,1,true);E.setUint16(10,1,true);E.setUint32(12,cd.length,true);E.setUint32(16,lh.length+sz,true);
   return new Blob([lh,data,cd,ed],{type:'application/zip'})}
+/* volumen integrado (ITU BS.1770 / EBU R128: ponderación K, bloques de 400 ms, puertas -70 y -10 LU) y pico de muestra del WAV ya renderizado; no cuesta nada en directo */
+let wavStat=null;
+function wavStats(buf,skip){const sr=buf.sampleRate,sb=Math.round(sr*.1),nb=Math.floor((buf.length-skip)/sb);if(nb<4)return null;
+  const k1=Math.tan(Math.PI*1681.974450955533/sr),Q1=.7071752369554196,Vh=Math.pow(10,3.999843853973347/20),Vb=Math.pow(Vh,.4996667741545416),d1=1+k1/Q1+k1*k1,
+    sh=[(Vh+Vb*k1/Q1+k1*k1)/d1,2*(k1*k1-Vh)/d1,(Vh-Vb*k1/Q1+k1*k1)/d1,2*(k1*k1-1)/d1,(1-k1/Q1+k1*k1)/d1],
+    k2=Math.tan(Math.PI*38.13547087602444/sr),Q2=.5003270373238773,d2=1+k2/Q2+k2*k2,hp=[1,-2,1,2*(k2*k2-1)/d2,(1-k2/Q2+k2*k2)/d2],
+    e=new Float64Array(nb);let peak=0;
+  for(let c=0;c<Math.min(2,buf.numberOfChannels);c++){const x=buf.getChannelData(c);let z1=0,z2=0,w1=0,w2=0;
+    for(let i=0;i<nb*sb;i++){const v=x[skip+i],a=Math.abs(v);if(a>peak)peak=a;
+      const y=sh[0]*v+z1;z1=sh[1]*v-sh[3]*y+z2;z2=sh[2]*v-sh[4]*y;
+      const o=hp[0]*y+w1;w1=hp[1]*y-hp[3]*o+w2;w2=hp[2]*y-hp[4]*o;e[(i/sb)|0]+=o*o}}
+  const zs=[];for(let j=0;j+3<nb;j++)zs.push((e[j]+e[j+1]+e[j+2]+e[j+3])/(4*sb));
+  const L=z=>-.691+10*Math.log10(z+1e-20),g1=zs.filter(z=>L(z)>-70);let lufs=null;
+  if(g1.length){const m1=g1.reduce((a,b)=>a+b,0)/g1.length,g2=g1.filter(z=>L(z)>L(m1)-10);if(g2.length)lufs=L(g2.reduce((a,b)=>a+b,0)/g2.length)}
+  return{lufs,peak:peak>0?20*Math.log10(peak):-Infinity}}
+const fmtDb=v=>v==null||!isFinite(v)?'–':v.toFixed(1).replace('.',',').replace('-','−');
 async function renderWav(loops){const OC=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!OC)throw new Error('no offline');
   const sr=LIVE?LIVE.sampleRate:48000,spb=60/S.bpm/4,steps=(S.song.on?S.song.len:loops)*16,lead=.15,tail=1.5,off=new OC(2,Math.ceil((lead+steps*spb+tail)*sr),sr);await loadCr(off);
   await warmAll(sr);const sv={ctx,M,chs,noise,subV,ohV,lastF,acV,lastAF};
@@ -1119,10 +1139,11 @@ async function renderWav(loops){const OC=window.OfflineAudioContext||window.webk
   finally{({ctx,M,chs,noise,subV,ohV,lastF,acV,lastAF}=sv)}
   const buf=await new Promise((res,rej)=>{off.oncomplete=e=>res(e.renderedBuffer);const p=off.startRendering();if(p&&p.then)p.then(res,rej)});
   const n=buf.length,fade=Math.floor(.05*sr);for(let c=0;c<buf.numberOfChannels;c++){const d=buf.getChannelData(c);for(let i=0;i<fade;i++)d[n-1-i]*=i/fade}
+  try{wavStat=wavStats(buf,Math.floor(lead*sr))}catch(e){wavStat=null}
   return toWav(buf,Math.floor(lead*sr))}
 let wavOn=false;
 $('#pwav').addEventListener('click',async()=>{if(wavOn||!(DL||EXT))return;wavOn=true;const b=$('#pwav');b.textContent='⏳ Calculando…';flash('RENDER WAV');
-  try{ensure();if(S.play)stop();const w=await renderWav(recN),nm=fname();if(DL)await saveFile(nm+'.zip',zip1(nm+'.wav',w));else saveFile(nm+'.wav',new Blob([w],{type:'audio/wav'}))}catch(e){flash('WAV NO DISPONIBLE')}
+  try{ensure();if(S.play)stop();const w=await renderWav(recN),nm=fname();const ws=$('#wavStat');if(ws&&wavStat){ws.textContent='Último WAV: '+fmtDb(wavStat.lufs)+' LUFS · pico '+fmtDb(wavStat.peak)+' dBFS (de muestra). Referencia habitual en club: −8 a −10 LUFS.';ws.hidden=false}if(DL)await saveFile(nm+'.zip',zip1(nm+'.wav',w));else saveFile(nm+'.wav',new Blob([w],{type:'audio/wav'}))}catch(e){flash('WAV NO DISPONIBLE')}
   finally{wavOn=false;b.textContent='⬇ Exportar WAV (calidad máxima)'}});
 
 function reqWL(){try{if(navigator.wakeLock)navigator.wakeLock.request('screen').then(l=>{wl=l;try{l.addEventListener('release',()=>{wl=null})}catch(e){}}).catch(()=>{})}catch(e){}}

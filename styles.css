@@ -1077,3 +1077,7 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 /* v2.89 version justo encima de las letras BPM */
 .lcd .big{position:relative}
 .lcd .big .ver{position:absolute;right:0;left:auto;top:auto;bottom:17px;font-size:8px;letter-spacing:.08em;line-height:1;white-space:nowrap;text-shadow:none}
+
+/* v2.92: aviso de coste del EQ (borde, para no depender del color del texto) */
+.note.eqcost{border-left:3px solid #ffb347;padding-left:8px}
+.note.eqcost.hi{border-left-color:#ff5a5a;font-weight:700}
