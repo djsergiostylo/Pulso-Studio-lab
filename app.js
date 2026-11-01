@@ -28,10 +28,11 @@ const EQD={};EQB.forEach(b=>{EQD[b.g]=0;EQD[b.f]=b.df});
 const gv=(o,k,d)=>o[k]==null?d:o[k];
 const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.4,lo:0},EQD);
 
+const XFD={fast:.04,normal:.1,safe:.25};/* segundos de espera antes de desconectar un efecto apagado */
 const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.85,rel:.55,att:.1},
   cho:{on:false,mode:'cho',rate:.35,depth:.5,fb:.3,mix:.4},flt:{on:false,type:'lowpass',freq:.55,res:.3,div:3,depth:.5,shape:'sine'},cr:{on:false,bits:.45,down:.25,mix:.5},cmp:{on:false,thr:.6,ratio:.25,att:.15,rel:.3,mk:0}};
 const SONGD={on:false,len:16,bars:[0,0,1,1,0,0,1,1,2,2,3,3,2,2,3,3].concat(new Array(16).fill(-1))},LANED=()=>({bpm:120,loop:4,vol:.8,on:new Array(32).fill(0)});
-const S={scv:0,lat:'balanced',lights:false,snd:'canal',dockOpen:false,dockH:0,awave:'sawtooth',lwave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED(),a3:LANED(),a4:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:132,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
+const S={scv:0,lat:'balanced',xfade:'normal',lights:false,snd:'canal',dockOpen:false,dockH:0,awave:'sawtooth',lwave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED(),a3:LANED(),a4:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:132,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
   swing:0,mdrive:0,mcut:1,mvol:.8,ovol:1,omute:false,lim:.9167,lig:0,limv:3,rev:{on:true,size:.4,mix:.3},dly:{on:true,div:2,fb:.4,mix:.25},sc:{on:true,amt:.85,rel:.55},skin:'neon',style:'abl',lcdv:'info',stage:false,ui3:false,meq:Object.assign({},EQD)};
 const EQSTYLE=[[[21.6093,0,"hp",48,1.09],[13918.629,0,"bell",24,1.09]],[[71.646,0,"hp",24,1.09],[226.707,-9.5,"bell",24,1.09],[7584.727,-5.5,"bell",24,.1964],[17716.707,0,"lp",24,1.09]],[[529.551,0,"hp",24,1.09]],[[7584.727,0,"hp",24,1.09]],[[2359.98,0,"hp",24,1.09]],[[52.072,0,"hp",24,1.09]],[[145.476,0,"lp",24,1.09]],[],[],[]].map(a=>a.map(([f,g,t,s,q])=>({on:1,f,g,t,s,q})));
 const CHDEF=i=>Object.assign({},DEF,{eqb:EQSTYLE[i].map(b=>({...b}))},i===SUBI?{vol:.72,sc:1}:i===ACI?{vol:.55,sc:1,tn:.35,br:.6,gl:.5,dc:.35,dly:.15}:i===STI?{vol:.5,sc:1,tn:.5,br:.4,dc:.35,rev:.3,dly:.25}:i===LEI?{vol:.5,tn:.55,br:.35,gl:.2,dc:.4,rev:.2,dly:.25}:{});
@@ -51,7 +52,7 @@ let P=[mk(),mk(),mk(),mk()];
 
 /* storage: per viewer only */
 const migLim=so=>{if(!so||typeof so.lim!=='number'||so.limv===3)return;if(so.limv!==2)so.lim=.5+so.lim/2;const ld=(so.lim-.5)*24;so.lig=Math.max(0,ld)/12;so.lim=Math.max(0,Math.min(1,(12-.05+Math.min(0,ld))/12));so.limv=3};
-const SAVE=['ovol','omute','scv','lat','lights','snd','dockOpen','dockH','mfold','sb','awave','lwave','song','lanes','hum','mres','mhp','mhres','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','lig','limv','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
+const SAVE=['ovol','omute','scv','lat','xfade','lights','snd','dockOpen','dockH','mfold','sb','awave','lwave','song','lanes','hum','mres','mhp','mhres','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','lig','limv','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
 function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
 /* guardar es costoso (JSON + localStorage): se agrupa en una sola escritura 400 ms después del último cambio y se fuerza al salir de la página */
 const saveNow=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}};
@@ -63,7 +64,7 @@ try{const r=localStorage.getItem('pulsostudio1')||localStorage.getItem('pocketsu
   if(o.C&&o.C.length>=7)C=C.map((c,i)=>Object.assign({},c,o.C[i]||{}));
   if(o.S){migLim(o.S);SAVE.forEach(k=>{if(o.S[k]!==undefined)S[k]=o.S[k]})}}}catch(e){}
 if(!S.ui3){S.skin='neon';S.style='abl';S.ui3=true}
-P.forEach(fixP);fixSong();C.forEach(fixC);if(!['macro','canal','mix','fx','eq'].includes(S.snd))S.snd='canal';S.dockOpen=!!S.dockOpen;if(!['interactive','balanced','playback'].includes(S.lat))S.lat='balanced';S.lights=!!S.lights;document.documentElement.dataset.lights=S.lights?'1':'0';S.dockH=Number.isFinite(+S.dockH)&&S.dockH>0?clamp(Math.round(S.dockH),110,900):0;
+P.forEach(fixP);fixSong();C.forEach(fixC);if(!['macro','canal','mix','fx','eq'].includes(S.snd))S.snd='canal';S.dockOpen=!!S.dockOpen;if(!['interactive','balanced','playback'].includes(S.lat))S.lat='balanced';if(!XFD[S.xfade])S.xfade='normal';S.lights=!!S.lights;document.documentElement.dataset.lights=S.lights?'1':'0';S.dockH=Number.isFinite(+S.dockH)&&S.dockH>0?clamp(Math.round(S.dockH),110,900):0;
 S.meq=Object.assign({},EQD,S.meq);
 function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lo=i>=SUBI&&[12,-12,7,24].includes(Math.round(+c.lo))?Math.round(+c.lo):0;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.4,0,1)}
 function fixSong(){const g=S.song||{};S.song={on:!!g.on,len:[8,16,32].includes(g.len)?g.len:16,bars:ok16x32(g.bars)};
@@ -116,8 +117,10 @@ function build(){
 }
 function ensure(){if(!ctx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return false;try{ctx=new AC({latencyHint:S.lat,sampleRate:48000})}catch(e){try{ctx=new AC({latencyHint:S.lat})}catch(e2){ctx=new AC()}}iosFix();build();LIVE=ctx;applyOut();const c0=ctx;loadCr(c0).then(()=>{if(ctx===c0){if(S.play)c0._pend=1;else{swapCr();swapLim()}}});queueWarm()}if(ctx.state==='suspended')ctx.resume();return true}
 /* dark, decaying stereo IR: noise through a one-pole LPF that closes over time */
+/* semilla fija (mulberry32): la reverb suena igual en directo, al recargar y en el WAV */
+const seeded=s=>()=>{s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
 function setIR(){if(!ctx)return;const sr=ctx.sampleRate,len=Math.floor(sr*(.3+S.rev.size*2.2)),b=ctx.createBuffer(2,len,sr);
-  for(let c=0;c<2;c++){const d=b.getChannelData(c);let y=0;for(let i=0;i<len;i++){const r=i/len,a=.9-.78*r;y+=a*((Math.random()*2-1)-y);d[i]=y*Math.pow(1-r,2.4)/Math.sqrt(a)}}M.conv.buffer=b}
+  for(let c=0;c<2;c++){const d=b.getChannelData(c),rnd=seeded(c?90210:1337);let y=0;for(let i=0;i<len;i++){const r=i/len,a=.9-.78*r;y+=a*((rnd()*2-1)-y);d[i]=y*Math.pow(1-r,2.4)/Math.sqrt(a)}}M.conv.buffer=b}
 /* ---------- fx engine (master inserts + sends) ---------- */
 const FDIV=[['1/8',.5],['1/4',1],['1/2',2],['1 c',4],['2 c',8]];
 const CRW="registerProcessor('crush',class extends AudioWorkletProcessor{static get parameterDescriptors(){return[{name:'bits',defaultValue:8,minValue:1,maxValue:16},{name:'down',defaultValue:1,minValue:1,maxValue:64}]}constructor(){super();this.h=[0,0];this.c=[0,0]}process(I,O,P){const i=I[0],o=O[0];if(!i||!i.length)return true;const st=Math.pow(2,P.bits[0]-1),dn=P.down[0];for(let ch=0;ch<o.length;ch++){const x=i[ch]||i[0],y=o[ch];let c=this.c[ch]||0,h=this.h[ch]||0;for(let n=0;n<y.length;n++){if(c<=0){h=Math.round(x[n]*st)/st;c+=dn}c--;y[n]=h}this.c[ch]=c;this.h[ch]=h}return true}});registerProcessor('lal',class extends AudioWorkletProcessor{static get parameterDescriptors(){return[{name:'drive',defaultValue:1,minValue:0,maxValue:16},{name:'ceil',defaultValue:.79,minValue:.1,maxValue:1}]}constructor(){super();const L=Math.max(32,Math.round(sampleRate*.003));this.L=L;this.dl=new Float32Array(L);this.dr=new Float32Array(L);this.w=0;this.ab=new Float64Array(L).fill(1);this.ai=0;this.sum=L;this.g=1;this.rel=1-Math.exp(-1/(sampleRate*.08));this.C=L+2;this.qv=new Float32Array(this.C);this.qi=new Float64Array(this.C);this.qh=0;this.qn=0;this.n=0}process(I,O,P){const o=O[0],oL=o[0],oR=o[1]||o[0],i=I[0],has=!!(i&&i.length),iL=has?i[0]:null,iR=has?(i[1]||i[0]):null,drv=P.drive[0],c=P.ceil[0],L=this.L,C=this.C,qv=this.qv,qi=this.qi;for(let k=0;k<oL.length;k++){let a=has?iL[k]*drv:0,b=has?iR[k]*drv:0;if(!(a-a===0))a=0;if(!(b-b===0))b=0;const pk=Math.max(Math.abs(a),Math.abs(b)),req=pk>c?c/pk:1,n=this.n++;while(this.qn&&qv[(this.qh+this.qn-1)%C]>=req)this.qn--;const bi=(this.qh+this.qn)%C;qv[bi]=req;qi[bi]=n;this.qn++;while(qi[this.qh]<n-L){this.qh=(this.qh+1)%C;this.qn--}const h=qv[this.qh];this.sum+=h-this.ab[this.ai];this.ab[this.ai]=h;this.ai=(this.ai+1)%L;const avg=this.sum/L;let g=this.g;g=avg<g?avg:g+(avg-g)*this.rel;if(!(g>0))g=1e-4;this.g=g;const w=this.w,dl=this.dl[w],dr=this.dr[w];this.dl[w]=a;this.dr[w]=b;this.w=(w+1)%L;oL[k]=dl*g;if(oR!==oL)oR[k]=dr*g;if(!(g-g===0)){this.g=1;this.sum=L;this.ab.fill(1);this.qn=0}}return true}})";
@@ -166,7 +169,9 @@ function applyFx(t){const T=(p,v,tc)=>p.setTargetAtTime(v,t,tc||.02);
   T(M.cr.wet.gain,X.on?X.mix:0);T(M.cr.dry.gain,X.on?1-X.mix:1);
   const Q=S.cmp;T(M.cmp.threshold,Q.on?-40+Q.thr*40:0);T(M.cmp.ratio,Q.on?1+Q.ratio*19:1);T(M.cmp.attack,.001+Q.att*.1);T(M.cmp.release,.03+Q.rel*.97);T(M.cmk.gain,Q.on?Math.pow(10,Q.mk*18/20):1);
   /* efectos apagados = ramas desconectadas del grafo (el navegador no las calcula): chorus, filtro LFO, bitcrusher, reverb, delay y compresor */
-  const wire=(k,on,f)=>{if(M['_w'+k]===on)return;M['_w'+k]=on;try{f(on?'connect':'disconnect')}catch(e){}};
+  /* al apagar espera a que acabe el fundido (S.xfade) antes de desconectar; al encender, o en el render WAV, conecta ya */
+  const wire=(k,on,f)=>{const pv=M['_w'+k];if(pv===on)return;M['_w'+k]=on;clearTimeout(M['_t'+k]);M['_t'+k]=0;const run=()=>{try{f(on?'connect':'disconnect')}catch(e){}};
+    if(on||pv===undefined||ctx!==LIVE)run();else{const M0=M;M['_t'+k]=setTimeout(()=>{if(M!==M0||M['_w'+k]!==false)return;M['_t'+k]=0;run()},XFD[S.xfade]*1000)}};
   wire('cho',H.on,m=>{M.ch.i[m](M.dLc);M.ch.i[m](M.dRc);M.cmg[m](M.ch.wet)});
   wire('flt',F.on,m=>{M.fl.i[m](M.flt);M.flt[m](M.fl.wet)});
   wire('cr',X.on,m=>{M.cr.i[m](M.crN);M.crN[m](M.cr.wet)});
@@ -848,6 +853,11 @@ const setLights=()=>{document.documentElement.dataset.lights=S.lights?'1':'0';li
 const LATN={interactive:'Rápido',balanced:'Equilibrado',playback:'Estable'},latB=$('#latB');
 const LATD={interactive:'MENOS búfer · menos retraso · más riesgo de cortes',balanced:'búfer MEDIO · retraso y cortes equilibrados',playback:'MÁS búfer · más retraso · menos cortes'};
 const setLat=()=>{latB.innerHTML='<span class="tt"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 8h10M18 8h2M4 16h2M10 16h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="8" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8" cy="16" r="2.2" fill="none" stroke="currentColor" stroke-width="2"/></svg>Audio</span><em class="st">'+LATN[S.lat]+'</em><small>'+LATD[S.lat]+'</small>'};setLat();
+/* retardo al desconectar un efecto apagado: más espera = salida más limpia; menos = más riesgo de clics. Se aplica al momento. */
+const XFN={fast:'Rápido',normal:'Normal',safe:'Seguro'},fadeB=$('#fadeB');
+const XFT={fast:'40 ms · menos espera · más riesgo de clics',normal:'100 ms · equilibrado',safe:'250 ms · más espera · salida más limpia'};
+const setXf=()=>{fadeB.innerHTML='<span class="tt"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M3 12h4l3-7 4 14 3-7h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Cortes</span><em class="st">'+XFN[S.xfade]+'</em><small>'+XFT[S.xfade]+'. Al apagar un efecto espera ese tiempo antes de cortarlo.</small>'};setXf();
+fadeB.addEventListener('click',()=>{const o=['fast','normal','safe'];S.xfade=o[(o.indexOf(S.xfade)+1)%3];setXf();saveSoon();flash('CORTES '+XFN[S.xfade].toUpperCase())});
 latB.addEventListener('click',()=>{const o=['interactive','balanced','playback'];S.lat=o[(o.indexOf(S.lat)+1)%3];setLat();saveFlush&&saveSoon();flash('AUDIO '+LATN[S.lat].toUpperCase()+' · AL RECARGAR')});
 lightsB.addEventListener('click',()=>{S.lights=!S.lights;setLights();saveSoon();flash(S.lights?'LUCES EXTRA: SÍ':'LUCES EXTRA: NO (AHORRA BATERÍA)')});setLights();
 $('#stageX').addEventListener('click',()=>setStage(false));

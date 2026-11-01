@@ -534,6 +534,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Corrige la v2.88: se habia subido la etiqueta pero no el ?v= de app.js y styles.css (quedaban en 2.87 y podian servirse en cache). Ahora las tres coinciden.
 - Para revertir: git revert del commit v2.89.
 
+## v2.90 (2026-11-01) — Claude
+- Menos chasquidos al apagar un efecto en directo (chorus, filtro, crusher, reverb, delay y compresor): antes se desconectaba al instante, sin esperar a que terminara el fundido de nivel. Ahora espera un poco y despues corta. Al encenderlo, o en el render WAV, conecta ya. Si lo reactivas durante la espera, se cancela la desconexion.
+- Nuevo ajuste "Cortes" en Pantalla y audio (3 niveles: Rapido 40 ms, Normal 100 ms, Seguro 250 ms). Mas espera = salida mas limpia; menos = mas riesgo de clics. Es del dispositivo (clave xfade en SAVE), se aplica al momento y no viaja en el .json.
+- La reverb usa una semilla fija: suena igual en directo, al recargar y en el WAV exportado (antes la respuesta era aleatoria cada vez).
+- Para revertir: git revert del commit v2.90.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.
