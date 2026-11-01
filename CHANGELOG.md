@@ -552,6 +552,13 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - No cambia el audio ni el formato de guardado.
 - Para revertir: git revert del commit v2.92.
 
+## v2.93 (2026-11-01) — Claude
+- Nuevo interruptor "Comp. drive" en la tarjeta Master de FX: compensa el volumen del drive del master y del drive de cada canal, para que el drive aporte saturacion y no volumen. Antes, un drive del 10 % subia la mezcla unos 12 dB y al 50 % unos 16 dB (medido exportando el WAV).
+- Con "Comp. drive" encendido el nivel se queda a unos 0-1,4 dB del nivel sin drive (medido en el WAV de la demo), pero los picos bajan 6-8 dB: el sonido es mas denso, no mas fuerte. Para ganar volumen real usa "Limitador: entrada".
+- Por defecto va encendido en instalaciones nuevas y APAGADO en proyectos y guardados anteriores (no tienen la clave dcomp), para que sigan sonando igual. La clave dcomp viaja en el .json y en SAVE.
+- Nodos nuevos de ganancia tras cada drive (master y 10 canales); el Subidon mantiene su propia compensacion y suma la nueva sin duplicarla. Referencia de la compensacion: seno de 0,12 en el master y de 0,3 en los canales.
+- Para revertir: git revert del commit v2.93.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.
