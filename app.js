@@ -29,7 +29,7 @@ const gv=(o,k,d)=>o[k]==null?d:o[k];
 const DEF=Object.assign({vol:.8,pan:0,mute:false,solo:false,tn:.5,dc:.5,flt:1,drv:0,rev:0,dly:0,prob:1,len:16,br:.35,gl:0,sc:0,ly:-1,lv:.4,lo:0},EQD);
 
 const XFD={fast:.04,normal:.1,safe:.25};/* segundos de espera antes de desconectar un efecto apagado */
-const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.85,rel:.55,att:.1},
+const FXD={rev:{on:true,size:.4,mix:.3,pre:.2,damp:.6,lo:.35},dly:{on:true,div:2,fb:.4,mix:.25,tone:.45,pp:false},sc:{on:true,amt:.85,rel:.55,att:.1,ret:.35,ghost:false},
   cho:{on:false,mode:'cho',rate:.35,depth:.5,fb:.3,mix:.4},flt:{on:false,type:'lowpass',freq:.55,res:.3,div:3,depth:.5,shape:'sine'},cr:{on:false,bits:.45,down:.25,mix:.5},cmp:{on:false,thr:.6,ratio:.25,att:.15,rel:.3,mk:0}};
 const SONGD={on:false,len:16,bars:[0,0,1,1,0,0,1,1,2,2,3,3,2,2,3,3].concat(new Array(16).fill(-1))},LANED=()=>({bpm:120,loop:4,vol:.8,on:new Array(32).fill(0)});
 const S={scv:0,lat:'balanced',xfade:'normal',lights:false,snd:'canal',dockOpen:false,dockH:0,awave:'sawtooth',lwave:'sawtooth',song:SONGD,lanes:{a1:LANED(),a2:LANED(),a3:LANED(),a4:LANED()},bar:0,em:'step',aud:true,tab:'seq',ch:0,pat:0,pp:0,playPat:0,bpm:132,play:false,g:0,chain:false,chainSet:[1,1,0,0],subSel:0,root:4,scale:'Pent. menor',wave:'sine',layer:true,
@@ -96,7 +96,7 @@ function build(){
   /* reverb: HPF send (no sub mud) -> pre-delay -> dark IR -> damping */
   M.rIn=ctx.createGain();M.rHp=ctx.createBiquadFilter();M.rHp.type='highpass';M.rHp.frequency.value=220;M.rPre=ctx.createDelay(.2);M.rPre.delayTime.value=.022;
   M.conv=ctx.createConvolver();M.rLp=ctx.createBiquadFilter();M.rLp.type='lowpass';M.rLp.frequency.value=7000;M.rRet=ctx.createGain();
-  M.rIn.connect(M.rHp);M.rHp.connect(M.rPre);M.rPre.connect(M.conv);M.conv.connect(M.rLp);M.rLp.connect(M.rRet);M.rRet.connect(M.in);
+  M.rIn.connect(M.rHp);M.rHp.connect(M.rPre);M.rPre.connect(M.conv);M.conv.connect(M.rLp);M.rDk=ctx.createGain();M.rLp.connect(M.rRet);M.rRet.connect(M.rDk);M.rDk.connect(M.in);
   /* delay: HPF send too */
   M.dIn=ctx.createGain();M.dHp=ctx.createBiquadFilter();M.dHp.type='highpass';M.dHp.frequency.value=200;
   /* stereo delay: two lines, self or cross feedback (ping-pong) */
@@ -104,7 +104,7 @@ function build(){
   M.dL=ctx.createDelay(2);M.dR=ctx.createDelay(2);M.dlpL=LP();M.dlpR=LP();M.inL=G();M.inR=G();M.sL=G();M.sR=G();M.xLR=G();M.xRL=G();
   M.dIn.connect(M.dHp);M.dHp.connect(M.inL);M.dHp.connect(M.inR);M.inL.connect(M.dL);M.inR.connect(M.dR);M.dL.connect(M.dlpL);M.dR.connect(M.dlpR);
   M.dlpL.connect(M.sL);M.sL.connect(M.dL);M.dlpR.connect(M.sR);M.sR.connect(M.dR);M.dlpL.connect(M.xLR);M.xLR.connect(M.dR);M.dlpR.connect(M.xRL);M.xRL.connect(M.dL);
-  M.dlpL.connect(M.dmg,0,0);M.dlpR.connect(M.dmg,0,1);M.dmg.connect(M.dRet);M.dRet.connect(M.in);
+  M.dlpL.connect(M.dmg,0,0);M.dlpR.connect(M.dmg,0,1);M.dDk=ctx.createGain();M.dmg.connect(M.dRet);M.dRet.connect(M.dDk);M.dDk.connect(M.in);
   M.lg={};LID.forEach(id=>{M.lg[id]=ctx.createGain();M.lg[id].connect(M.in)});
   chs=[];
   CH.forEach(()=>{const c={};c.in=ctx.createGain();c.sh=ctx.createWaveShaper();c.lp=ctx.createBiquadFilter();c.lp.type='lowpass';c.lp.Q.value=.6;
@@ -175,8 +175,8 @@ function applyFx(t){const T=(p,v,tc)=>p.setTargetAtTime(v,t,tc||.02);
   wire('cho',H.on,m=>{M.ch.i[m](M.dLc);M.ch.i[m](M.dRc);M.cmg[m](M.ch.wet)});
   wire('flt',F.on,m=>{M.fl.i[m](M.flt);M.flt[m](M.fl.wet)});
   wire('cr',X.on,m=>{M.cr.i[m](M.crN);M.crN[m](M.cr.wet)});
-  wire('rev',R.on,m=>{M.rRet[m](M.in)});
-  wire('dly',D.on,m=>{M.dRet[m](M.in)});
+  wire('rev',R.on,m=>{M.rDk[m](M.in)});
+  wire('dly',D.on,m=>{M.dDk[m](M.in)});
   wire('cmp',Q.on,m=>{if(m==='connect'){M.eq.o.disconnect(M.cmk);M.eq.o.connect(M.cmp);M.cmp.connect(M.cmk)}else{M.eq.o.disconnect(M.cmp);M.cmp.disconnect(M.cmk);M.eq.o.connect(M.cmk)}})}
 function applyDelay(){if(!ctx)return;const t=ctx.currentTime,dt=DIVS[S.dly.div][1]*60/S.bpm/4;M.dL.delayTime.setTargetAtTime(dt,t,.05);M.dR.delayTime.setTargetAtTime(dt,t,.05);M.lfo2.frequency.setTargetAtTime(S.bpm/60/FDIV[S.flt.div][1],t,.05)}
 function applyMaster(){if(!ctx)return;const t=ctx.currentTime;setEq(M.eq,S.meq,t);if(M._drv!==S.mdrive){M._drv=S.mdrive;setShape(M.sh,S.mdrive)}
@@ -305,9 +305,10 @@ function lead(off,t,v,ac,lay){const p=C[LEI],leg=!lay&&!!(leV&&leV.end>t-.01&&la
 function mel(i,off,t,v,ac,sl,lay){if(i===SUBI)sub(off,t,v,ac,lay);else if(i===ACI)acid(off,t,v,ac,sl,lay);else if(i===LEI)lead(off,t,v,ac,lay);else stab(off,t,v,ac);
   if(!lay){const L=C[i];if(L.lo&&L.lv>0)mel(i,off+L.lo,t,v*L.lv,ac,sl,true)}}
 /* smooth sidechain: ~3 ms dip, exponential recovery (no clicks) */
-function duck(t){const any=C.some(x=>x.solo);if(!S.sc.on||C[0].mute||(any&&!C[0].solo))return;C.forEach((p,i)=>{if(!p.sc||i===0)return;const g=chs[i].dk.gain;
-  if(g.cancelAndHoldAtTime)g.cancelAndHoldAtTime(t);else g.cancelScheduledValues(t);
-  g.setTargetAtTime(1-S.sc.amt,t,.001+S.sc.att*.03);g.setTargetAtTime(1,t+.015,(.04+S.sc.rel*.45)/3)})}
+function duck(t){const any=C.some(x=>x.solo);if(!S.sc.on||(!S.sc.ghost&&(C[0].mute||(any&&!C[0].solo))))return;
+  const dip=(g,a)=>{if(g.cancelAndHoldAtTime)g.cancelAndHoldAtTime(t);else g.cancelScheduledValues(t);g.setTargetAtTime(1-a,t,.001+S.sc.att*.03);g.setTargetAtTime(1,t+.015,(.04+S.sc.rel*.45)/3)};
+  C.forEach((p,i)=>{if(p.sc&&i!==0)dip(chs[i].dk.gain,S.sc.amt)});
+  if(S.sc.ret>0){const a=S.sc.amt*S.sc.ret;if(M.rDk)dip(M.rDk.gain,a);if(M.dDk)dip(M.dDk.gain,a)}}
 function audition(vv){if(!S.aud||!ensure())return;const t=ctx.currentTime+.005;vv=vv||VEL[2];if(S.ch<SUBI)drum(S.ch,t,vv);else mel(S.ch,SC[S.scale][S.subSel],t,vv,vv>1,false)}
 
 /* ---------- sequencer ---------- */
@@ -672,7 +673,7 @@ const FXDEF=[
    ['mwid','Ancho estéreo',v=>Math.round(msW(v)*100)+'%'],['mdrive','Drive',pct],['swing','Swing',pct],['hum','Humanizar',pct],['lim','Limitador: techo',v=>((v-1)*12).toFixed(1)+' dB'],['lig','Limitador: entrada',v=>'+'+(v*12).toFixed(1)+' dB'],['mvol','Volumen',v=>toDb(v*.9)]]},
  {id:'rev',n:'Reverb',ic:'🌫',c:'#a98bff',k:[['size','Tamaño',v=>(.3+v*2.2).toFixed(1)+' s'],['mix','Mezcla',pct],['pre','Pre-delay',v=>Math.round(2+v*100)+' ms'],['damp','Tono',v=>fmtF(Math.round(1500*Math.pow(14000/1500,v)))],['lo','Corte graves',v=>fmtF(Math.round(60*Math.pow(800/60,v)))]]},
  {id:'dly',n:'Delay',ic:'📡',c:'#4db8ff',seg:[['div',DIVS.map((d,i)=>[i,d[0]])]],tog:['pp','Ping-pong ↔'],k:[['fb','Feedback',pct],['mix','Mezcla',pct],['tone','Tono',v=>fmtF(Math.round(800*Math.pow(10,v)))]]},
- {id:'sc',n:'Sidechain',ic:'🦶',c:'#ff764d',k:[['amt','Cantidad',pct],['att','Ataque',v=>Math.round(1+v*30)+' ms'],['rel','Suelta',v=>Math.round((.04+v*.45)*1000)+' ms']],note:'El kick baja los canales marcados en Canal (el Sub viene marcado).'},
+ {id:'sc',n:'Sidechain',ic:'🦶',c:'#ff764d',tog:['ghost','Fantasma 👻'],k:[['amt','Cantidad',pct],['att','Ataque',v=>Math.round(1+v*30)+' ms'],['rel','Suelta',v=>Math.round((.04+v*.45)*1000)+' ms'],['ret','Reverb y delay',pct]],note:'El kick baja los canales marcados en Canal (el Sub viene marcado). Reverb y delay: cuánto baja también sus colas. Fantasma: sigue sonando el bombeo aunque el kick esté en mute.'},
  {id:'cho',n:'Chorus / Flanger',ic:'🌀',c:'#4de0c8',seg:[['mode',[['cho','Chorus'],['fla','Flanger']]]],k:[['rate','Velocidad',v=>(.05*Math.pow(100,v)).toFixed(2)+' Hz'],['depth','Profundidad',pct],['fb','Feedback',pct],['mix','Mezcla',pct]]},
  {id:'flt',n:'Filtro LFO',ic:'〰️',c:'#ffd24d',seg:[['type',[['lowpass','LP'],['highpass','HP'],['bandpass','BP']]],['shape',[['sine','∿'],['triangle','⋀'],['square','⊓'],['saw','⩘']]],['div',FDIV.map((d,i)=>[i,d[0]])]],
    k:[['freq','Frecuencia',v=>fmtF(Math.round(60*Math.pow(300,v)))],['res','Resonancia',pct],['depth','LFO',v=>'±'+(v*3).toFixed(1)+' oct']]},

@@ -540,6 +540,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - La reverb usa una semilla fija: suena igual en directo, al recargar y en el WAV exportado (antes la respuesta era aleatoria cada vez).
 - Para revertir: git revert del commit v2.90.
 
+## v2.91 (2026-11-01) — Claude
+- Sidechain sobre los retornos: el kick tambien baja las colas de reverb y delay. Nuevo mando "Reverb y delay" en la tarjeta Sidechain (por defecto 35 %; a 0 % queda como antes). Usa dos ganancias nuevas entre cada retorno y el master, sin ningun filtro extra, asi que casi no cuesta CPU.
+- Nuevo interruptor "Fantasma" en Sidechain: con el kick en mute (o con otro canal en solo) el bombeo sigue sonando. Apagado por defecto, como antes. Util en un breakdown sin bombo.
+- Los dos ajustes nuevos (ret, ghost) viajan en el .json dentro de sc; los proyectos antiguos reciben los valores por defecto al cargar.
+- Para revertir: git revert del commit v2.91.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.
