@@ -1127,3 +1127,4 @@ input[type=range]::-moz-range-thumb,.fxc input[type=range]::-moz-range-thumb,.ms
 @media (max-width:380px){.trans .seg .hd{flex:0 0 28px}.trans .seg>#bpmv{flex:1 0 38px}}
 @media (max-width:380px){.trans{grid-template-columns:minmax(0,1fr) 98px}.trans .seg>button.ur{min-width:28px;flex-basis:28px}}
 .ldots{top:4px;right:8px}.lcd .big .ver{bottom:14px;opacity:.8}
+@media (max-width:340px){.trans .seg>#rand,.trans .seg>#clear{font-size:7.5px;letter-spacing:0;padding:0}}

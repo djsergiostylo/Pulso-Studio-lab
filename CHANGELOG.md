@@ -568,6 +568,7 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Fila de transporte sin desbordes a 360 px.
 - No cambia el motor de sonido ni el formato de guardado: proyectos, .json y códigos PS1 anteriores se abren igual. Un panel Sonido guardado en Mix, FX o EQ se abre en Canal.
 - Probado en Chromium a 390 y 360 px sin errores de consola: reproducción, mute, efectos, EQ, guardado antiguo, .json, código PS1 y WAV de 16 y 24 bits.
+- Revisión antes de publicar: al abrir la app la fila Secuenciador / Pads salía vacía hasta tocar un módulo (corregido); Azar y Borrar ya no se cortan a 320 px; color de la app instalada actualizado. Probado con pantalla táctil emulada (iPhone 13, iPhone SE, Pixel 5 e iPad Mini).
 - Para revertir: git revert del commit v3.0.
 
 ## Manual (2026-10-31) — Claude

@@ -1330,5 +1330,5 @@ $('#t-song').addEventListener('input',e=>{const id=e.target.dataset.lv;if(!id)re
 
 function upd(){updLcd();renderChips();renderNotes();updGrid();renderPbar();updSteppers();if(S.tab==='roll')renderRoll()}
 rs.value=S.root;ss.value=S.scale;
-paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderMixLim();renderMstFx();renderCanal();skin(S.skin);upd();setLcd(S.lcdv);syncDock();setTimeout(fromHash,0);histCur=histSer();hBtn();
+paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderMixLim();renderMstFx();renderCanal();skin(S.skin);upd();setLcd(S.lcdv);showTab(S.tab);setTimeout(fromHash,0);histCur=histSer();hBtn();
 })();
