@@ -1,4 +1,4 @@
-:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14.7px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14.7px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* ===== v1.2 layout compacto "Directo" ===== */
 .device{padding:10px;gap:8px}.lcd{min-height:58px;padding:7px 12px}.lcd .big{font-size:33.6px}.lcd canvas{height:44px}
 .tabs>button{min-height:32px}.subtabs>button{min-height:28px}.brand.foot{display:none}
@@ -31,20 +31,11 @@
 
 /* Layout: sticky transport + four task tabs; Mix, FX, EQ and channel share one grouped workspace */
 :root{
-  --lp:45%;--lt:#000;--page:#dfe3e6;--pfg:#3a444b;--dev:#f4f5f3;--edge:#c3cacf;--lcd:#c5d8b8;--lcdfg:#1f2a1a;
-  --key:#e2e6e8;--keyedge:#b4bcc2;--on:#ff5a1f;--onfg:#fff;--fg:#1d2226;--mute:#56626a;--led:#ff5a1f;--track:#c9d0d4;
-  --disp:'Silkscreen','Courier New',monospace;--mono:'DM Mono',ui-monospace,Menlo,monospace;
-  color-scheme:light;
+  --lp:82%;--lt:var(--fg);--page:#060708;--pfg:#a4a7ad;--dev:#1b1d21;--dev2:#111315;--edge:#000;--lcd:#0d0905;--lcdfg:#ffa24a;
+  --key:#1d2024;--key2:#2d3137;--keyedge:#3a3e45;--slot:#08090a;--on:#ff6a1a;--onfg:#160700;--fg:#ecebe7;--mute:#a0a3a9;--led:#ff6a1a;--track:#08090a;
+  --disp:'Chakra Petch','Arial Narrow',system-ui,sans-serif;--mono:'DM Mono',ui-monospace,Menlo,monospace;--lcdf:'Share Tech Mono','DM Mono',ui-monospace,monospace;
+  color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){:root:not([data-skin]){
-  --lp:82%;--lt:var(--fg);--page:#090b0d;--pfg:#9aa5ad;--dev:#16191d;--edge:#2a3037;--lcd:#0b1a1d;--lcdfg:#43e3f2;
-  --key:#23282e;--keyedge:#343b43;--on:#22d3ee;--onfg:#04181b;--fg:#e7ecef;--mute:#8a949c;--led:#22d3ee;--track:#2f363d;color-scheme:dark}}
-:root[data-skin="dark"]{--lp:82%;--lt:var(--fg);--page:#090b0d;--pfg:#9aa5ad;--dev:#16191d;--edge:#2a3037;--lcd:#0b1a1d;--lcdfg:#43e3f2;--key:#23282e;--keyedge:#343b43;--on:#22d3ee;--onfg:#04181b;--fg:#e7ecef;--mute:#8a949c;--led:#22d3ee;--track:#2f363d;color-scheme:dark}
-:root[data-skin="light"]{--lp:45%;--lt:#000;--page:#dfe3e6;--pfg:#3a444b;--dev:#f4f5f3;--edge:#c3cacf;--lcd:#c5d8b8;--lcdfg:#1f2a1a;--key:#e2e6e8;--keyedge:#b4bcc2;--on:#ff5a1f;--onfg:#fff;--fg:#1d2226;--mute:#56626a;--led:#ff5a1f;--track:#c9d0d4;color-scheme:light}
-:root[data-skin="orange"]{--lp:0%;--lt:var(--fg);--page:#1b1b1d;--pfg:#b9b9bd;--dev:#ff6a13;--edge:#d9540a;--lcd:#cbd8b2;--lcdfg:#25301a;--key:#f1ece0;--keyedge:#b8480a;--on:#1f1f22;--onfg:#fff;--fg:#1a0d04;--mute:#5e2607;--led:#141416;--track:#b8480a;color-scheme:light}
-:root[data-skin="sub"]{--lp:82%;--lt:var(--fg);--page:#07030d;--pfg:#b9a6d6;--dev:#170a26;--edge:#2c1649;--lcd:#0f0620;--lcdfg:#c58bff;--key:#26133d;--keyedge:#3a2160;--on:#b26bff;--onfg:#12061f;--fg:#efe6ff;--mute:#9a84bd;--led:#ff4fd8;--track:#3a2160;color-scheme:dark}
-:root[data-skin="green"]{--lp:82%;--lt:var(--fg);--page:#030a06;--pfg:#9cc9ac;--dev:#0c1811;--edge:#1c3426;--lcd:#07120b;--lcdfg:#46ff9c;--key:#15281c;--keyedge:#214030;--on:#46ff9c;--onfg:#04140a;--fg:#dcf8e7;--mute:#7ba58b;--led:#46ff9c;--track:#214030;color-scheme:dark}
-:root[data-skin="neon"]{--lp:82%;--lt:var(--fg);--page:#05080f;--pfg:#93a1b8;--dev:#0b1220;--edge:#1c2740;--lcd:#070d18;--lcdfg:#3ee6d0;--key:#101a2c;--keyedge:#22304b;--on:#3ee6d0;--onfg:#03211d;--fg:#e6edf7;--mute:#8090a8;--led:#3ee6d0;--track:#22304b;color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--page);color:var(--pfg);font-family:var(--mono);padding-inline:16px;padding-block:16px 28px;-webkit-tap-highlight-color:transparent}
@@ -167,24 +158,18 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .step.on[data-v="3"]{box-shadow:0 3px 0 var(--keyedge),0 0 10px var(--on)}
 .step.on.ph{box-shadow:inset 0 0 0 2px var(--led),0 0 16px var(--on)}
 .chip .nm{box-shadow:0 2px 0 var(--keyedge)}
-/* style: hardware */
-:root[data-style="hw"] .device::before{--scr:radial-gradient(circle,var(--mute) 0 2px,transparent 2.6px);content:"";position:absolute;inset:5px;pointer-events:none;
-  background:var(--scr) left top/7px 7px no-repeat,var(--scr) right top/7px 7px no-repeat,var(--scr) left bottom/7px 7px no-repeat,var(--scr) right bottom/7px 7px no-repeat}
-:root[data-style="hw"] :is(.fn,.seg,.step,.chip .nm,.nm2){background-image:linear-gradient(180deg,rgba(255,255,255,.13),rgba(0,0,0,.07))}
-:root[data-style="hw"] .lcd{outline:3px solid var(--keyedge)}
-:root[data-style="hw"] .brand{border-bottom:1px dashed var(--edge);padding-bottom:8px}
 /* style: ableton */
-:root[data-style="abl"] .device{border-radius:6px;box-shadow:none}
-:root[data-style="abl"] :is(.step,.fn,.seg,.chip .nm,.nm2,.lcd,.card,select,.fad,.pn,.tg,.sk){border-radius:3px}
-:root[data-style="abl"] :is(.step,.fn){box-shadow:none}
-:root[data-style="abl"] .step:active{transform:none}
-:root[data-style="abl"] .step.on{background:var(--ch);border-color:var(--ch);color:#111}
-:root[data-style="abl"] .step.on[data-v="3"]{box-shadow:none}
-:root[data-style="abl"] .step.ph{box-shadow:inset 0 0 0 2px var(--led)}
-:root[data-style="abl"] .step.on.ph{box-shadow:inset 0 0 0 2px var(--fg)}
-:root[data-style="abl"] .chip .nm{border-bottom:3px solid var(--c);box-shadow:none}
-:root[data-style="abl"] .chip .nm[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#111}
-:root[data-style="abl"] .cap{background:var(--c)}
+:root .device{border-radius:6px;box-shadow:none}
+:root :is(.step,.fn,.seg,.chip .nm,.nm2,.lcd,.card,select,.fad,.pn,.tg,.sk){border-radius:3px}
+:root :is(.step,.fn){box-shadow:none}
+:root .step:active{transform:none}
+:root .step.on{background:var(--ch);border-color:var(--ch);color:#111}
+:root .step.on[data-v="3"]{box-shadow:none}
+:root .step.ph{box-shadow:inset 0 0 0 2px var(--led)}
+:root .step.on.ph{box-shadow:inset 0 0 0 2px var(--fg)}
+:root .chip .nm{border-bottom:3px solid var(--c);box-shadow:none}
+:root .chip .nm[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:#111}
+:root .cap{background:var(--c)}
 /* stage mode */
 :root[data-stage] :is(.brand,.hint,#tabs,#subs,.strip,.pbar>.seg,.emode,.tools){display:none}
 [hidden]{display:none!important}
@@ -294,7 +279,7 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .fxc input[type=range]::-webkit-slider-thumb{background:var(--c)}
 .fxc input[type=range]::-moz-range-thumb{background:var(--c)}
 .fxc .k label output{color:var(--fg)}
-:root[data-style="abl"] :is(.fxc,.fxg,.fxnav button){border-radius:3px}
+:root :is(.fxc,.fxg,.fxnav button){border-radius:3px}
 .msbar{--c:#9fb0c8;border:1px solid var(--keyedge);border-left:4px solid var(--c);border-radius:10px;padding:6px 8px 8px;display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:2px 10px;align-items:end;background:var(--dev);position:relative}
 .msbar .mt{grid-row:1/3;font-family:var(--disp);font-size:9.45px;letter-spacing:.1em;color:var(--fg);align-self:center;display:flex;flex-direction:column;align-items:center;gap:2px}
 .msbar .mt b{font-size:14.7px;font-weight:400}
@@ -305,7 +290,7 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .msbar .lvl{position:absolute;left:4px;right:6px;bottom:2px;height:3px;border-radius:2px;background:color-mix(in srgb,var(--fg) 15%,transparent);overflow:hidden}
 .msbar .lvl i{position:absolute;inset:0;background:var(--c);transform:scaleX(0);transform-origin:left;will-change:transform}
 .msbar .lvl i.hot{background:#e5484d}
-:root[data-style="abl"] .msbar{border-radius:3px}
+:root .msbar{border-radius:3px}
 .msbar[hidden]{display:none}
 #aud[aria-pressed="false"]{background:var(--key);color:var(--mute)}
 #prec[data-rec]{background:#e5484d;color:#fff;border-color:#e5484d}
@@ -343,7 +328,6 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .lcd .md{font-size:8.4px}
 :root[data-stage] .lcd canvas{height:96px}
 .brand.foot{border-top:1px dashed var(--edge);padding-top:8px;opacity:.8}
-:root[data-style="hw"] .brand.foot{border-bottom:0;padding-bottom:0}
 .pie{display:flex;flex-direction:column;gap:10px;padding-top:4px}
 :root[data-stage] .pie{display:none}
 .stagex{display:none}
@@ -379,7 +363,7 @@ select{width:100%;min-height:40px;background:var(--key);border:1px solid var(--k
 .lrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .lrow label{display:flex;flex-direction:column;gap:3px;font-family:var(--disp);font-size:9.45px;letter-spacing:.1em;color:var(--mute);text-transform:uppercase}
 .lrow input{min-height:38px;background:var(--key);border:1px solid var(--keyedge);border-radius:10px;padding:0 10px;color:var(--fg);font-family:var(--mono);font-size:14.7px;width:100%}
-:root[data-style="abl"] :is(.pad,.sc,.lane,.sg){border-radius:3px}
+:root :is(.pad,.sc,.lane,.sg){border-radius:3px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 /* ===== v1.3 ===== */
 /* grid: tiempos 1-5-9-13 */
@@ -480,10 +464,6 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 
 /* v2.14: módulos y carátulas */
 :root{--pnl:color-mix(in srgb,var(--dev),var(--fg) 5%);--pedge:color-mix(in srgb,var(--keyedge),transparent 35%);--pttl:var(--mute)}
-:root[data-skin="orange"]{--pnl:#ef5f0d;--pttl:#1a0d04}
-:root[data-skin="plata"]{--page:#9aa0a6;--pfg:#23272c;--dev:#c9ccd1;--edge:#8f949b;--lcd:#1d2a1f;--lcdfg:#8cff9b;--key:#e7e9ec;--keyedge:#8f949b;--on:#ff7a1a;--onfg:#1c1f24;--fg:#1c1f24;--mute:#4b5158;--led:#ff7a1a;--track:#aeb3b9;--pnl:#b9bdc3;--pttl:#2f343a;color-scheme:light}
-:root[data-skin="mpc"]{--page:#26282c;--pfg:#b8bcc2;--dev:#5d6066;--edge:#3a3d42;--lcd:#0a0f12;--lcdfg:#5cf0ff;--key:#3a3d42;--keyedge:#2a2c30;--on:#e5413a;--onfg:#fff;--fg:#eceef0;--mute:#b4b8be;--led:#e5413a;--track:#44474c;--pnl:#4e5156;--pttl:#d6d9dd;color-scheme:dark}
-:root[data-skin="papel"]{--page:#e6e3d8;--pfg:#3a3a36;--dev:#f3f1ea;--edge:#c9c5b8;--lcd:#ecebe3;--lcdfg:#1d1d1b;--key:#ffffff;--keyedge:#c9c5b8;--on:#e2492f;--onfg:#fff;--fg:#1d1d1b;--mute:#6b6a62;--led:#e2492f;--track:#d8d4c6;--pnl:#e8e5db;--pttl:#55544c;color-scheme:light}
 .device{gap:8px}
 .trans,.mtx,.nrow,.pbar,.card,.sg,.msbar{background:var(--pnl);border:1px solid var(--pedge);border-top-color:color-mix(in srgb,var(--fg) 14%,var(--pedge));border-radius:10px;padding:8px;box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 8%,transparent),0 1px 0 color-mix(in srgb,#000 18%,transparent)}
 .more{background:var(--pnl);border-color:var(--pedge);padding:0 8px}
@@ -498,34 +478,21 @@ body{padding-block:8px calc(var(--nav) + env(safe-area-inset-bottom) + 6px)}
 .card .sk[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
 .sk::before{content:"";display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--ca,transparent);box-shadow:0 0 0 2px var(--cs,transparent),0 0 0 3px color-mix(in srgb,var(--fg) 30%,transparent);margin-right:9px;vertical-align:-1px}
 .trk .rn{color:color-mix(in srgb,var(--c) 62%,var(--fg))}
-:root[data-skin="mpc"]{--lp:82%;--lt:var(--fg)}
 
 /* v2.15: ajustes de diseño */
 .mtx::before,.dkm::before,#t-song .pbar::before{display:block;border-left:3px solid var(--on);padding-left:6px;font-family:var(--disp);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--pttl);line-height:1}
 .dkm::before{content:"Macros";grid-column:1/-1;margin-bottom:2px}
 #t-song .pbar::before{content:"Patrones"}
 .dkm{background:var(--pnl);border:1px solid var(--pedge);border-top-color:color-mix(in srgb,var(--fg) 14%,var(--pedge));border-radius:10px;padding:8px;box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 8%,transparent),0 1px 0 color-mix(in srgb,#000 18%,transparent)}
-
-/* v2.16: contraste de botones y letras en todas las carátulas */
-@media (prefers-color-scheme:light){:root:not([data-skin]){--onfg:#16110d}}
-:root[data-skin="light"]{--onfg:#16110d}
-:root[data-skin="papel"]{--on:#c8381f;--led:#c8381f}
-:root[data-skin="mpc"]{--on:#cf352f}
 #play:not([aria-pressed="true"]){color:var(--fg);box-shadow:inset 0 -3px 0 var(--on)}
 .tabs>button{color:color-mix(in srgb,var(--fg) 75%,transparent)}
 .tabs>button[aria-selected="true"]{color:var(--fg)}
 .trk .rn{color:var(--fg)}
 label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 85%,transparent)}
-:root[data-skin="mpc"]{--mute:#d3d6da}
-:root[data-skin="orange"]{--mute:#3a1503}
-:root[data-skin="plata"]{--mute:#363b41}
-:root[data-skin="papel"]{--mute:#4d4c45}
 .tabs>button{color:color-mix(in srgb,var(--fg) 88%,transparent)}
 .more2 .sk{color:var(--fg);border-color:var(--pedge)}
 .more2 .sk[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
-:root[data-skin="mpc"]{--pnl:#454950}
 label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
-:root[data-skin="mpc"]{--dev:#52565c}
 
 /* v2.17: Mezcla y Canción en bloques con color */
 :root[data-tab="mix"] .prow,:root[data-tab="fx"] .prow,:root[data-tab="eq"] .prow,:root[data-tab="canal"] .prow,:root[data-tab="file"] .prow{display:none}
@@ -584,13 +551,7 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 .sdb{max-height:34dvh}
 
 /* v2.23: el panel Sonido tiene su propio color (distinto del acento del secuenciador) */
-:root{--snd:#ff9f43;--sndfg:#1a1008}
-:root[data-skin="light"],:root[data-skin="papel"]{--snd:#6d3fd1;--sndfg:#fff}
-@media (prefers-color-scheme:light){:root:not([data-skin]){--snd:#6d3fd1;--sndfg:#fff}}
-:root[data-skin="orange"]{--snd:#26262b;--sndfg:#fff}
-:root[data-skin="plata"]{--snd:#1f5fa8;--sndfg:#fff}
-:root[data-skin="mpc"]{--snd:#5cf0ff;--sndfg:#04181b}
-:root[data-skin="sub"],:root[data-skin="green"]{--snd:#ffb347;--sndfg:#1a1008}
+:root{--snd:#dedbd3;--sndfg:#14110d}
 .sdock{--bc:var(--snd);border-top:3px solid var(--snd);background:color-mix(in srgb,var(--snd) 9%,var(--dev))}
 .sdh{background:color-mix(in srgb,var(--snd) 16%,var(--dev));border-bottom:1px solid color-mix(in srgb,var(--snd) 45%,transparent)}
 #sndTog{border-color:var(--snd);color:var(--fg)}#sndTog b{color:var(--snd)}
@@ -646,32 +607,7 @@ label,.note,.hint,summary{color:color-mix(in srgb,var(--fg) 95%,transparent)}
 /* v2.37 BPM centrado en su boton */
 .trans .seg .val{align-items:center;align-content:center}
 .trans .seg .val span{display:block;line-height:1}
-.trans .seg .val small{display:block;line-height:1;padding-top:4px}
-
-/* v2.40 Gris MPC: rail de los deslizadores visible */
-:root[data-skin="mpc"]{--track:#44474c}
-
-/* v2.41 Naranja mas elegante: chasis mandarina, paneles crema, barra inferior oscura */
-:root[data-skin="orange"]{--dev:#e8692c;--edge:#b9481a;--pnl:#f3dcc0;--pttl:#4a2308;--key:#fbf3e6;--keyedge:#c9a37c;--track:#b98c66;--mute:#3a1503;--fg:#2a1306}
-:root[data-skin="orange"] .device{background-image:linear-gradient(180deg,#f07a3a 0%,#e8692c 45%,#d9591f 100%)}:root[data-skin="orange"] #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 45%,#2a1306)}
-:root[data-skin="orange"] #sndCh,:root[data-skin="orange"] #soundDock b{color:#a3320a}
-:root[data-skin="orange"] .fxgt,:root[data-skin="orange"] .fxc summary,:root[data-skin="orange"] .fxc label{color:#2a1306}
-:root[data-skin="orange"] #t-seq .rh .ms>button{background:var(--key);border-color:#a8683a}
-/* v2.42 todas las caratulas: acentos menos chillones, texto menos deslumbrante, rail de deslizadores visible */
-:root[data-skin="neon"]{--on:#34c6b4;--led:#34c6b4;--lcdfg:#5fd9c9;--fg:#d5deeb}
-:root[data-skin="dark"]{--on:#2bb8cf;--led:#2bb8cf;--lcdfg:#5fd0dc;--fg:#d9dfe3}
-:root[data-skin="sub"]{--on:#a678e6;--led:#e060c4;--lcdfg:#b99be6;--fg:#ded3f2}
-:root[data-skin="green"]{--on:#4fd98f;--led:#4fd98f;--lcdfg:#6fe0a4;--fg:#d0e9da}
-:root[data-skin="light"]{--on:#e5571f;--led:#e5571f}
-:root[data-skin="plata"]{--on:#e96d18;--led:#e96d18;--lcdfg:#82e090}
-:root[data-skin]{--rail:color-mix(in srgb,var(--fg) 42%,var(--dev))}:root[data-skin="plata"] #soundDock .nm,:root[data-skin="papel"] #soundDock .nm,:root[data-skin="light"] #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 40%,var(--fg))}
-:root[data-skin="plata"] #sndCh,:root[data-skin="papel"] #sndCh,:root[data-skin="light"] #sndCh{color:color-mix(in srgb,var(--on) 55%,var(--fg))}
-@media (prefers-color-scheme:light){:root:not([data-skin]) #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 40%,var(--fg))}:root:not([data-skin]) #sndCh{color:color-mix(in srgb,var(--on) 55%,var(--fg))}}
-:root[data-skin="mpc"] #sndCh{color:#ff9a8f}
-:root[data-skin="mpc"] .fxc summary,:root[data-skin="mpc"] .fxc label,:root[data-skin="mpc"] .fxgt{color:var(--fg)}.dbs span{color:color-mix(in srgb,var(--fg) 88%,var(--dev))}
-:root[data-skin="plata"] .lane .lh b,:root[data-skin="mpc"] .lane .lh b{color:var(--fg)}
-:root[data-skin="plata"] #soundDock .nm,:root[data-skin="papel"] #soundDock .nm,:root[data-skin="light"] #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 30%,var(--fg))}
-@media (prefers-color-scheme:light){:root:not([data-skin]) #soundDock .nm{color:color-mix(in srgb,var(--c,#c04000) 30%,var(--fg))}}
+.trans .seg .val small{display:block;line-height:1;padding-top:4px}.dbs span{color:color-mix(in srgb,var(--fg) 88%,var(--dev))}
 /* v2.43 FX compacto: tarjetas delimitadas, parametros siempre visibles, cerradas = una linea */
 #fxList{display:flex;flex-direction:column;gap:6px}
 .fxgt{margin:10px 0 0;padding:5px 8px;border-left:0;border-radius:6px;background:color-mix(in srgb,var(--gc) 22%,transparent);color:var(--fg);font-size:9.45px;letter-spacing:.14em;display:flex;align-items:center;gap:6px}
@@ -833,8 +769,7 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 .tabs>button[aria-selected="true"]{background:color-mix(in srgb,var(--on) 24%,transparent);color:var(--fg);font-weight:700}
 .tabs>button[aria-selected="true"]::before{left:0;right:0;height:4px;border-radius:0 0 4px 4px}
 .tabs>button[aria-selected="true"] i{transform:scale(1.12);filter:drop-shadow(0 0 4px color-mix(in srgb,var(--on) 70%,transparent))}
-.tabs>button i{transition:transform .12s}:root[data-skin="orange"] .tabs>button[aria-selected="true"]{background:color-mix(in srgb,#fff 38%,var(--dev))}
-:root[data-skin="orange"] .tabs>button:not([aria-selected="true"]){color:var(--fg)}
+.tabs>button i{transition:transform .12s}
 
 /* v2.64 titulo Secuenciador centrado con subrayado de acento */
 .mtx::before{width:max-content;margin:0 auto 4px;padding:0 0 3px .16em;border-left:0;border-bottom:2px solid var(--bc,var(--on));text-align:center}.mtx::before{font-size:13.5px;letter-spacing:.18em;padding-left:.18em;padding-bottom:4px;margin-bottom:6px}
@@ -1081,3 +1016,114 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 /* v2.92: aviso de coste del EQ (borde, para no depender del color del texto) */
 .note.eqcost{border-left:3px solid #ffb347;padding-left:8px}
 .note.eqcost.hi{border-left-color:#ff5a5a;font-weight:700}
+
+/* ===== v3.0 STYLO: instrumento de hardware (chasis metálico, teclas retroiluminadas, LEDs, faders) ===== */
+/* carátulas: mismo diseño, cambia el color de las luces y el tinte del chasis */
+:root[data-skin="acid"]{--on:#b6f03a;--led:#b6f03a;--onfg:#0d1400;--lcd:#070c05;--lcdfg:#c4f45c;--dev:#161813;--dev2:#0f110d;--snd:#e0dccf}
+:root[data-skin="ice"]{--on:#3ad8f0;--led:#3ad8f0;--onfg:#001318;--lcd:#050b0e;--lcdfg:#6fe6f7;--dev:#15191d;--dev2:#0e1114;--snd:#d6dde2}
+:root[data-skin="rojo"]{--on:#ff4a55;--led:#ff4a55;--onfg:#1a0003;--lcd:#0e0607;--lcdfg:#ff7a82;--dev:#1b1819;--dev2:#121011;--snd:#e2d9d6}
+body{background:radial-gradient(120% 60% at 50% 0,#15171a 0,var(--page) 70%) fixed var(--page)}
+.device{background:repeating-linear-gradient(90deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px),linear-gradient(180deg,var(--dev) 0,var(--dev2) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+:root :is(.step,.fn,.seg,.chip .nm,.nm2,.lcd,.card,select,.fad,.pn,.tg,.sk,.pre,.prb,.modeb,.more,.more2){border-radius:5px}
+
+/* pantalla: cristal hundido con texto de fósforo */
+.lcd{background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 30%),var(--lcd);border:1px solid #000;box-shadow:inset 0 2px 10px #000,inset 0 0 0 1px rgba(255,255,255,.03),0 1px 0 rgba(255,255,255,.09);font-family:var(--lcdf)}
+.lcd .l1,.lcd .l2,.lcd .big,.lcd .big small,.lcd output{font-family:var(--lcdf);text-shadow:0 0 8px color-mix(in srgb,var(--lcdfg) 55%,transparent)}
+.lcd .l1,.lcd .l2{font-size:11.5px;letter-spacing:.12em}
+.lcd .big{letter-spacing:.04em}
+.lcd .ver{font-family:var(--lcdf)}
+
+/* teclas: plástico con bisel; encendidas = retroiluminadas */
+.seg{background:var(--slot);border-color:#000;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.06);gap:1px;padding:1px}
+.seg>button,.seg>.val{border-left:0;border-radius:3px;background:linear-gradient(180deg,var(--key2),var(--key));box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35);font-weight:600;font-size:11px;letter-spacing:.07em}
+.seg>button:active{background:var(--key);box-shadow:inset 0 2px 4px #000}
+.seg>button[aria-pressed="true"],.seg>button[aria-selected="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--on),#fff 22%),var(--on));color:var(--onfg);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 12px color-mix(in srgb,var(--on) 55%,transparent)}
+.fn,.tg,.prb,.modeb,.pre,.card .sk{background:linear-gradient(180deg,var(--key2),var(--key));border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.05);font-weight:600;color:var(--fg)}
+.fn{font-size:11px}.tg{font-size:10.5px;border-radius:4px}
+:is(.fn,.tg,.prb,.pre,.card .sk):active{box-shadow:inset 0 2px 5px #000}
+:is(.fn,.tg,.prb,.pre,.card .sk)[aria-pressed="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--on),#fff 22%),var(--on));color:var(--onfg);border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 12px color-mix(in srgb,var(--on) 55%,transparent)}
+.sdh .seg>button[aria-pressed="true"],.sdb .seg>button[aria-pressed="true"],.sdb .tg[aria-pressed="true"],.sdb .pre[aria-pressed="true"]{background:linear-gradient(180deg,#fff,var(--snd));color:var(--sndfg);box-shadow:inset 0 1px 0 #fff,0 0 10px color-mix(in srgb,var(--snd) 45%,transparent)}
+#play[aria-pressed="true"]{animation:none}
+.trans .seg{background:var(--slot)}
+
+/* paneles: placa atornillada con rótulo serigrafiado */
+.card,.more,.more2{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.card h3,.card .hd2 h3{font-size:11.5px;font-weight:600;letter-spacing:.16em;color:var(--fg)}
+.note,.hint{font-family:var(--mono);line-height:1.45}
+.k label{font-weight:600;letter-spacing:.08em}
+.k output,.smpn{font-family:var(--lcdf);color:var(--on)}
+
+/* faders horizontales: ranura hundida y capuchón metálico con línea de color */
+input[type=range]{--tc:var(--on)}
+.fxc input[type=range],.msbar input[type=range]{--tc:var(--c)}
+#t-canal input[type=range]{--tc:var(--ch,var(--snd))}
+.sbp input[type=range]{--tc:#f0a040}
+input[type=range]::-webkit-slider-runnable-track{background:var(--slot);box-shadow:inset 0 1px 2px #000,0 1px 0 rgba(255,255,255,.07)}
+input[type=range]::-moz-range-track{background:var(--slot);box-shadow:inset 0 1px 2px #000,0 1px 0 rgba(255,255,255,.07)}
+input[type=range]::-webkit-slider-thumb,.fxc input[type=range]::-webkit-slider-thumb,.msbar input[type=range]::-webkit-slider-thumb,#t-canal input[type=range]::-webkit-slider-thumb,.sbp input[type=range]::-webkit-slider-thumb{width:16px;height:24px;margin-top:-9px;border-radius:3px;border:1px solid #000;background:linear-gradient(90deg,transparent 40%,var(--tc) 40% 60%,transparent 60%),linear-gradient(180deg,#f1f2f3 0,#a9adb3 48%,#7c8087 52%,#c9ccd0 100%);box-shadow:0 2px 4px rgba(0,0,0,.7)}
+input[type=range]::-moz-range-thumb,.fxc input[type=range]::-moz-range-thumb,.msbar input[type=range]::-moz-range-thumb,#t-canal input[type=range]::-moz-range-thumb,.sbp input[type=range]::-moz-range-thumb{width:14px;height:22px;border-radius:3px;border:1px solid #000;background:linear-gradient(90deg,transparent 40%,var(--tc) 40% 60%,transparent 60%),linear-gradient(180deg,#f1f2f3 0,#a9adb3 48%,#7c8087 52%,#c9ccd0 100%)}
+.sbp input[type=range]::-webkit-slider-thumb{width:13px;height:18px;margin-top:-6.5px}
+.msbar input[type=range]::-webkit-slider-thumb,.dkm input[type=range]::-webkit-slider-thumb,.fxc input[type=range]::-webkit-slider-thumb{height:20px;margin-top:-7px}
+.fxc input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90deg,var(--c) var(--p,50%),var(--slot) var(--p,50%))}
+
+/* secuenciador: pads de goma con luz propia */
+#grid .step{background:linear-gradient(180deg,var(--key2),var(--key));border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 0 rgba(0,0,0,.4)}
+#grid .step.beat:not(.on){background:linear-gradient(180deg,color-mix(in srgb,var(--key2),#fff 9%),color-mix(in srgb,var(--key),#fff 7%));border-color:#000}
+#grid .step.on{background:linear-gradient(180deg,color-mix(in srgb,var(--c),#fff 28%),var(--c));border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 9px color-mix(in srgb,var(--c) 60%,transparent)}
+#grid .step.on[data-v="3"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 14px var(--c)}
+#grid .step.ph{box-shadow:inset 0 0 0 2px var(--fg)}
+#grid .step.ph:not(.on){background:color-mix(in srgb,var(--c) 30%,var(--key))}
+#grid .step.on.ph{box-shadow:inset 0 0 0 2px #fff,0 0 16px var(--c)}
+.mtx{background:var(--slot);border:1px solid #000;box-shadow:inset 0 2px 6px #000,0 1px 0 rgba(255,255,255,.06)}
+#t-seq .rn,.rn{font-weight:700;font-size:10.5px;letter-spacing:.06em}
+
+/* barra de módulos: botones de modo con LED */
+.tabs{background:linear-gradient(180deg,#24272c,#131517);border-top:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 -8px 20px rgba(0,0,0,.55)}
+.tabs>button{gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--mute);border-left:1px solid rgba(0,0,0,.55);box-shadow:inset 1px 0 0 rgba(255,255,255,.04)}
+.tabs>button:first-child{border-left:0;box-shadow:none}
+.tabs>button i{display:block;width:22px;height:5px;border-radius:3px;background:#050506;box-shadow:inset 0 1px 2px #000,0 1px 0 rgba(255,255,255,.08);transition:none}
+.tabs>button[aria-selected="true"]{background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.1));color:var(--fg);box-shadow:inset 0 2px 6px rgba(0,0,0,.6)}
+.tabs>button[aria-selected="true"]::before{display:none}
+.tabs>button[aria-selected="true"] i{transform:none;filter:none;background:var(--on);box-shadow:0 0 10px var(--on),0 0 2px #fff inset}
+#tab-menu i{height:11px;background:linear-gradient(180deg,var(--mute) 0 2px,transparent 2px 4.5px,var(--mute) 4.5px 6.5px,transparent 6.5px 9px,var(--mute) 9px 11px);box-shadow:none;border-radius:0}
+#tab-menu[aria-selected="true"] i{background:linear-gradient(180deg,var(--on) 0 2px,transparent 2px 4.5px,var(--on) 4.5px 6.5px,transparent 6.5px 9px,var(--on) 9px 11px);box-shadow:none}
+#tab-menu{gap:3px}
+.subtabs{margin-top:2px}
+
+/* mezclador: ranuras, capuchones y medidores de LED */
+.fad{background:var(--slot);border:1px solid #000;box-shadow:inset 0 2px 5px #000}
+.meter{background:#040405;box-shadow:inset 0 1px 2px #000}
+.mg{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.nm2{font-weight:700}
+
+/* panel Sonido: módulo acoplado con frontal claro */
+.sdock{border-top:1px solid #000;background:linear-gradient(180deg,#202327,var(--dev2));box-shadow:0 -10px 22px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1)}
+.sdh{background:transparent;border-bottom:1px solid #000}
+.sdh .seg{border-color:#000;background:var(--slot)}
+
+/* Master: medidores de pico y RMS */
+.vu{display:grid;grid-template-columns:38px 1fr 46px;align-items:center;gap:8px;font-family:var(--disp);font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--fg)}
+.vub{position:relative;height:14px;border-radius:2px;background:#040405;border:1px solid #000;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.07);overflow:hidden}
+.vub i{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#35d06a 0,#35d06a 70%,#f2c230 86%,#ff4034 100%);-webkit-mask:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 4px);mask:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 4px)}
+.vub u{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;left:0;background:#fff}
+.vu output{font-family:var(--lcdf);font-size:13px;text-align:right;color:var(--on);font-variant-numeric:tabular-nums}
+.vucard.hot #vuPkO{color:#ff4034}
+.vusc{position:relative;height:12px;margin:-4px 54px 0 46px;font-family:var(--lcdf);font-size:9.5px;color:var(--mute)}
+.vusc span{position:absolute;transform:translateX(-50%)}
+#t-mst{display:flex;flex-direction:column;gap:10px}
+#t-mst .mstfx{margin:0}
+#wavBit>button{min-height:34px}
+
+/* rótulo de marca */
+.brand.foot{display:flex;justify-content:space-between;align-items:baseline;padding:10px 6px 4px;font-family:var(--disp);color:var(--mute);letter-spacing:.14em;text-transform:uppercase;font-size:10px}
+.brand.foot b{font-size:15px;font-weight:700;letter-spacing:.32em;color:var(--fg)}
+.brand.foot em{font-style:normal}
+:root:is([data-tab="seq"],[data-tab="pads"],[data-tab="roll"]) .brand.foot{display:none}
+#t-mst>.note{padding-inline:8px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* fila de transporte y de patrones: sin desbordes a 360 px */
+.trans .seg{gap:0;padding:0}.trans .seg>button,.trans .seg>.val{border-radius:0;border-left:1px solid #000}.trans .seg>:first-child{border-left:0}
+.modeb{white-space:nowrap;letter-spacing:.02em;padding-inline:6px}
+@media (max-width:380px){.trans .seg .hd{flex:0 0 28px}.trans .seg>#bpmv{flex:1 0 38px}}
+@media (max-width:380px){.trans{grid-template-columns:minmax(0,1fr) 98px}.trans .seg>button.ur{min-width:28px;flex-basis:28px}}
+.ldots{top:4px;right:8px}.lcd .big .ver{bottom:14px;opacity:.8}

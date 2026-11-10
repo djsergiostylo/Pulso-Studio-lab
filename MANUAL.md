@@ -1,15 +1,15 @@
 # Manual de Pulso Studio
 
-Pulso Studio es una **groovebox para el móvil** que funciona en el navegador: baterías, bajos y sintes, patrones, piano roll, efectos y exportación a WAV, todo sin instalar nada.
+Pulso Studio es una **estación de techno para el móvil** (diseño STYLO, con aspecto de hardware) que funciona en el navegador: baterías, bajos y sintes, patrones, piano roll, efectos y exportación a WAV, todo sin instalar nada.
 
-Este manual explica cada pantalla con capturas. Las capturas usan la carátula **Neón**, pero todo funciona igual con las demás.
+Este manual explica cada pantalla con capturas. Las capturas usan la carátula **Stylo**, pero todo funciona igual con las demás.
 
-> **Versión:** en la pantallita de la app, arriba a la derecha, pone la versión que tienes cargada (por ejemplo `v2.86`).
+> **Versión:** en la pantallita de la app, arriba a la derecha, pone la versión que tienes cargada (por ejemplo `v3.0`).
 
 <!--galeria-->
 ## Todas las vistas de un vistazo
 
-**Crear**
+**Groove y Synth**
 
 <table>
 <tr>
@@ -24,16 +24,16 @@ Este manual explica cada pantalla con capturas. Las capturas usan la carátula *
 </tr>
 </table>
 
-**Panel Sonido**
+**Panel Sonido, Mixer, Master y FX**
 
 <table>
 <tr>
 <td align="center" width="33%"><a href="#81-macro"><img src="manual/img/09-macro.jpg" width="150" alt="Macro (Subidón)"><br>Macro (Subidón)</a></td>
 <td align="center" width="33%"><a href="#82-canal"><img src="manual/img/11-canal.jpg" width="150" alt="Canal"><br>Canal</a></td>
-<td align="center" width="33%"><a href="#83-mix"><img src="manual/img/12-mix.jpg" width="150" alt="Mix"><br>Mix</a></td>
+<td align="center" width="33%"><a href="#83-mixer-y-master"><img src="manual/img/12-mix.jpg" width="150" alt="Mixer"><br>Mixer</a></td>
 </tr>
 <tr>
-<td align="center" width="33%"><a href="#83-mix"><img src="manual/img/12b-mix-master.jpg" width="150" alt="Mix · Master desplegado"><br>Mix · Master desplegado</a></td>
+<td align="center" width="33%"><a href="#83-mixer-y-master"><img src="manual/img/12b-mix-master.jpg" width="150" alt="Master"><br>Master</a></td>
 <td align="center" width="33%"><a href="#84-fx"><img src="manual/img/13-fx.jpg" width="150" alt="FX"><br>FX</a></td>
 <td align="center" width="33%"><a href="#85-eq"><img src="manual/img/14-eq.jpg" width="150" alt="EQ"><br>EQ</a></td>
 </tr>
@@ -42,16 +42,16 @@ Este manual explica cada pantalla con capturas. Las capturas usan la carátula *
 
 ## 1. Primeros pasos
 
-Abre la web en el navegador del móvil. Verás la pantalla de **Crear**: arriba la pantallita con el tempo, debajo los botones de transporte, la fila de patrones y la rejilla de pasos.
+Abre la web en el navegador del móvil. Verás el módulo **Groove**: arriba la pantallita con el tempo, debajo los botones de transporte, la fila de patrones y la rejilla de pasos.
 
-![Pantalla Crear: pantallita, transporte, patrones, rejilla, panel Sonido y barra inferior](manual/img/01-crear.jpg)
+![Módulo Groove: pantallita, transporte, patrones, rejilla, panel Sonido y barra inferior](manual/img/01-crear.jpg)
 
 La pantalla se divide en cuatro zonas:
 
 - **Pantallita (LCD):** muestra el canal y el patrón elegidos, el estado y el tempo en BPM. Desliza el dedo por ella para cambiar de patrón A–D. Toca para cambiar entre onda y espectro.
 - **Transporte y patrones:** Stop, Play, Azar, Borrar, deshacer, rehacer, tempo y los patrones A B C D.
-- **Vistas de Crear:** debajo de los patrones hay tres vistas: **Secuenciador** (la rejilla), **Pads** (tocar en directo) y **Piano roll** (dibujar notas).
-- **Panel Sonido y barra inferior:** el panel Sonido (Macro, Canal, Mix, FX, EQ) y las cuatro pestañas **Crear, Canción, Proyecto y Aspecto**.
+- **Vistas de Groove:** debajo de los patrones hay dos vistas: **Secuenciador** (la rejilla) y **Pads** (tocar en directo). El **piano roll** está en el módulo **Synth**.
+- **Panel Sonido y barra de módulos:** el panel Sonido (Macro y Canal) y, abajo, los botones de módulo con su LED: **Groove** (secuenciador y pads), **Synth** (piano roll), **Mixer** (canales), **FX** (efectos y ecualizador), **Master** (medidores, master, limitador y exportar audio) y **Menú** (Canción, Proyecto y Aspecto).
 
 > **Consejo:** para usarla como una app, añade la web a la pantalla de inicio desde el menú del navegador. Se abre sin barras y a pantalla casi completa.
 
@@ -113,7 +113,7 @@ Deshacer y rehacer guardan **todo el proyecto**, no solo las notas: secuencia, c
 - Mover un deslizador **sin soltar** cuenta como un solo paso, aunque hagas pausas.
 - Grabar con los pads es un solo paso.
 - El mensaje de la pantallita dice qué se deshizo: SECUENCIA, MEZCLA, FX, EQ…
-- **No entran** la carátula, el estilo, las luces, el audio ni Play, Pausa y Stop.
+- **No entran** la carátula, las luces, el audio ni Play, Pausa y Stop.
 
 ## 4. Pads
 
@@ -138,7 +138,7 @@ La vista **Pads** es para tocar en directo. Tiene dos modos: **Batería** y **No
 
 ## 5. Piano roll
 
-El piano roll sirve para **escribir** melodías y ritmos viendo las notas. Se abre desde la vista **Piano roll** de Crear.
+El piano roll sirve para **escribir** melodías y ritmos viendo las notas. Se abre con el botón **Synth** de la barra de módulos; al entrar elige el último sinte que usaste.
 
 ![Piano roll de ACID: filas de notas, pasos en columnas y barra de fuerza](manual/img/05c-piano-roll.jpg)
 
@@ -159,6 +159,8 @@ El piano roll sirve para **escribir** melodías y ritmos viendo las notas. Se ab
 
 ## 6. Canción
 
+Está en **Menú → Canción**.
+
 Aquí se monta el tema encadenando patrones.
 
 ![Pantalla Canción](manual/img/06-cancion.jpg)
@@ -172,6 +174,8 @@ Aquí se monta el tema encadenando patrones.
 
 ## 7. Proyecto
 
+Está en **Menú → Proyecto**.
+
 Guarda, comparte y exporta lo que has hecho.
 
 ![Pantalla Proyecto](manual/img/07-proyecto.jpg)
@@ -180,14 +184,13 @@ Guarda, comparte y exporta lo que has hecho.
 - **Exportar .json / Cargar .json:** copia de seguridad del proyecto, o para pasarlo a otro móvil.
 - **Código y Enlace:** genera un código o un enlace que puedes mandar por WhatsApp. Quien lo abra o pegue tendrá tu beat. No incluye samples propios.
 - **Importar:** carga el código pegado en el cuadro.
-- **Exportar audio:** elige 1, 2, 4 u 8 vueltas y pulsa **Exportar WAV**. Se calcula al instante, sin cortes, a 16 bits y a la frecuencia de tu móvil.
-- **Grabar en tiempo real (.webm):** graba lo que suena mientras suena.
+- **Exportar audio** (WAV y grabación en tiempo real) está ahora en el módulo **Master**.
 
 Los proyectos guardados con versiones anteriores se abren sin problema: la app los adapta sola al abrirlos.
 
-## 8. El panel Sonido
+## 8. El panel Sonido y los módulos de mezcla
 
-Bajo la rejilla siempre está el panel **Sonido**. Tócalo (la flecha) para abrirlo o cerrarlo. Arrastra la **asa** de arriba para cambiar su altura; doble toque la deja en la altura normal. Tiene cinco pestañas: **Macro, Canal, Mix, FX y EQ**.
+Bajo la rejilla, los pads y el piano roll siempre está el panel **Sonido**. Tócalo (la flecha) para abrirlo o cerrarlo. Arrastra la **asa** de arriba para cambiar su altura; doble toque la deja en la altura normal. Tiene dos pestañas: **Macro y Canal**. La mezcla, los efectos, el ecualizador y el master tienen su propio módulo a pantalla completa en la barra de abajo: **Mixer, FX y Master**.
 
 ### 8.1 Macro
 
@@ -229,11 +232,15 @@ Todo sobre el canal que has elegido.
 - **Mis kits guardados:** guarda y recupera tus ajustes de baterías.
 - **SUB y sintes:** onda (Sin, Tri, Saw, Sqr), tono y escala, y **Capa +1 octava**.
 
-### 8.3 Mix
+### 8.3 Mixer y Master
 
-El mezclador. De arriba abajo: el **Limitador**, el **Master**, y después los canales.
+El módulo **Mixer** muestra los canales. El módulo **Master** reúne los medidores de salida, la placa del master con sus ajustes, el limitador y la exportación de audio.
 
-![Pestaña Mix: limitador, master y canales](manual/img/12-mix.jpg)
+![Módulo Mixer: canales de baterías y sintes](manual/img/12-mix.jpg)
+
+**Medidores de salida (Master).** Dos barras de LEDs miden la salida real, después del limitador y del volumen: **PICO** (con una raya blanca que retiene el máximo 1,5 s) y **RMS** (el volumen medio, más parecido a lo que oyes). Si el número de PICO se pone rojo, has llegado a 0 dBFS: baja la Entrada del limitador o el volumen.
+
+![Limitador y exportación en el módulo Master](manual/img/12c-master-limitador.jpg)
 
 **Limitador.** Es un limitador de picos: lo que pase de cierto nivel se atenúa, y lo que no llega, pasa sin cambios. Se pliega tocando su nombre. Tiene dos barras:
 
@@ -242,32 +249,35 @@ El mezclador. De arriba abajo: el **Limitador**, el **Master**, y después los c
 - **Vúmetro ENTRADA:** muestra el nivel que llega al limitador, de −48 a +12 dB. La raya fina es 0 dB y la gruesa es donde empieza a limitar. Cuando el limitador atenúa, la barra se pone naranja y sale la reducción en dB (**RED.**). Pasar de 0 dB aquí no es un fallo: el limitador lo recoge.
 - **Doble toque** en una barra la devuelve a su valor por defecto.
 
-**Master.** Una placa propia, tumbada, bajo el limitador.
+**Master.** Una placa propia, tumbada, bajo los medidores.
 
-![El master desplegado: ajustes, fader, medidor y pantalla NIVEL y PICO](manual/img/12b-mix-master.jpg)
+![Módulo Master: medidores PICO y RMS, placa del master y ajustes](manual/img/12b-mix-master.jpg)
 
 - **Placa MASTER:** toca la placa para **mostrar u ocultar los ajustes del master** (Low pass, High pass, Medios, Resonancia HP, Frec. medios, Brillo, Ancho estéreo, Drive, Swing y Humanizar). Son los mismos de FX → Master, y se mueven a la vez. Doble toque restablece cada ajuste.
 - **LED de la placa:** apagado cuando todo va bien, **naranja** si el limitador trabaja bastante o el master empieza a saturar, y **rojo** si distorsiona.
 - **Fader horizontal, medidor de LEDs y escala en dB:** el volumen del master y su nivel.
-- **NIVEL y PICO:** el pico es el valor más alto que ha pasado por el master desde la última vez. El botón **↺** lo reinicia. Solo mide con la pestaña Mix abierta.
+- **NIVEL y PICO:** el pico es el valor más alto que ha pasado por el master desde la última vez. El botón **↺** lo reinicia. Solo mide con el módulo Mixer o Master abierto.
+- **Abrir el EQ del master:** lleva al ecualizador con el master ya elegido.
+- **Exportar audio:** elige 1, 2, 4 u 8 vueltas, **16 o 24 bits**, y pulsa **Exportar WAV**. Se calcula al instante, sin cortes, a la frecuencia de tu móvil; debajo sale el volumen (LUFS) y el pico del archivo. 16 bits lleva dither; 24 bits es para seguir trabajando el audio en otro programa.
+- **Grabar en tiempo real (.webm):** graba lo que suena mientras suena.
 
 **Canales.** Baterías y Sintes tienen cada uno su tira:
 
 - **Fader:** el volumen del canal, con el medidor y la escala en dB al lado.
 - **Pan:** reparte el sonido entre izquierda y derecha.
 - **M y S:** mute y solo.
-- **Toca el nombre** para abrir ese canal en la pestaña Canal.
+- **Toca el nombre** para abrir ese canal en Groove, con el panel Sonido en Canal.
 - **Doble toque** en un fader o en el pan lo reinicia.
 
 ### 8.4 FX
 
-Los efectos, organizados como una cadena de módulos.
+El módulo **FX** tiene dos vistas: **Efectos** y **Ecualizador**. Los efectos se organizan como una cadena de módulos.
 
-![Pestaña FX con el módulo Master](manual/img/13-fx.jpg)
+![Módulo FX con el efecto Master](manual/img/13-fx.jpg)
 
 - **Tira de módulos:** **Envíos** (Reverb, Delay) y **Master** (Master, Chorus, Filtro, Crush, Sidechain, Compresor). Toca un módulo para ver solo ese efecto.
 - **LED de cada módulo:** enciende o apaga el efecto sin cambiar de efecto.
-- **Reverb y Delay** son **envíos**: se mandan desde cada canal con el control Reverb o Delay de la pestaña Canal.
+- **Reverb y Delay** son **envíos**: se mandan desde cada canal con el control Reverb o Delay del panel Sonido → Canal.
 - **Chorus/Flanger, Filtro LFO, Bitcrusher y Compresor** actúan sobre toda la mezcla.
 - **Sidechain:** el kick baja el volumen de los canales marcados, para que los graves respiren.
 - **Master:** filtros (con **Resonancia LP** y **Resonancia HP**), medios, brillo, ancho estéreo, drive, swing, humanizar, **Limitador: techo**, **Limitador: entrada** y volumen.
@@ -275,9 +285,9 @@ Los efectos, organizados como una cadena de módulos.
 
 ### 8.5 EQ
 
-El ecualizador, por canal y para el master.
+El ecualizador, por canal y para el master. Está en **FX → Ecualizador**.
 
-![Pestaña EQ](manual/img/14-eq.jpg)
+![Vista Ecualizador](manual/img/14-eq.jpg)
 
 - Elige arriba el canal (o MST para el master). El **nombre del sonido** sale arriba a la derecha de la gráfica.
 - **Lectura de la gráfica:** la línea gruesa es el ajuste del EQ y el área de fondo es el sonido real. El eje de +24 a −24 dB es cuánto sube o baja cada banda; no es el nivel de salida del master.
@@ -291,12 +301,11 @@ El ecualizador, por canal y para el master.
 
 ## 9. Aspecto
 
-Esta pestaña cambia cómo se ve la app y da acceso a este manual.
+Está en **Menú → Aspecto**. Cambia cómo se ve la app y da acceso a este manual.
 
 ![Pestaña Aspecto](manual/img/08-aspecto.jpg)
 
-- **Carátula (colores):** diez carátulas, ordenadas de la más oscura a la más clara. **Auto** sigue el modo claro u oscuro de tu móvil.
-- **Estilo:** **Hardware** (con tornillos y serigrafía) o **Ableton** (más limpio).
+- **Carátula (colores):** cuatro carátulas del mismo diseño de hardware: **Stylo** (naranja), **Acid** (verde), **Hielo** (cian) y **Rojo 909**. Cambian el color de las luces, de la pantalla y el tinte del chasis. Si tenías una carátula antigua, la app pasa sola a Stylo.
 - **Luces extra:** destellos al sonar en pads, nombres y pantalla. Gastan batería, así que viene **apagado**. Si el audio suena entrecortado, déjalo apagado.
 - **Audio:** **Rápido**, **Equilibrado** o **Estable**. Es el tamaño del búfer de audio: más búfer, más retraso al tocar pero menos cortes. El cambio se aplica **al recargar** la página.
 - **Ayuda · Abrir el manual:** el botón que abre este manual, al final de la pestaña.
@@ -316,7 +325,7 @@ Esta pestaña cambia cómo se ve la app y da acceso a este manual.
 - Los altavoces del móvil casi no reproducen graves; con auriculares se nota mucho más.
 
 **El LED del master se pone naranja o rojo, o el sonido distorsiona.**
-- Mira el Limitador de Mix. Si **ENTRADA** muestra una reducción (RED.) alta, el limitador está atenuando mucho.
+- Mira el Limitador del módulo Master. Si **ENTRADA** muestra una reducción (RED.) alta, el limitador está atenuando mucho.
 - Baja un poco los faders de los canales, o baja la barra **ENTRADA** del limitador. Bajar el fader del master no lo evita, porque actúa después.
 - Si quieres un límite más bajo, baja el **TECHO**.
 
