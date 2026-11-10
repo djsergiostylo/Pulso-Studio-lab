@@ -559,6 +559,18 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Nodos nuevos de ganancia tras cada drive (master y 10 canales); el Subidon mantiene su propia compensacion y suma la nueva sin duplicarla. Referencia de la compensacion: seno de 0,12 en el master y de 0,3 en los canales.
 - Para revertir: git revert del commit v2.93.
 
+## v3.0 (2026-11-10) — Claude
+- Rediseño completo STYLO: el aparato pasa a parecer un instrumento de hardware (chasis metálico oscuro, pantalla de fósforo, teclas retroiluminadas, pads de goma con luz, faders con capuchón metálico, LEDs). Tipografía técnica nueva (Chakra Petch y Share Tech Mono).
+- Navegación por módulos en la barra inferior: Groove (secuenciador y pads), Synth (piano roll), Mixer (canales), FX (efectos y ecualizador), Master y Menú (Canción, Proyecto y Aspecto). Mixer, FX, EQ y Master pasan a pantalla completa; el panel fijo Sonido se queda en Groove y Synth con Macro y Canal.
+- Módulo Master nuevo: medidores reales de PICO (con retención) y RMS de la salida, placa del master con sus ajustes siempre a la vista, limitador, acceso al EQ del master y exportación de audio (antes en Proyecto).
+- Exportar WAV en 16 bits (con dither) o 24 bits. La elección es del dispositivo (clave wbit en SAVE).
+- Carátulas: 4 variantes del mismo diseño (Stylo, Acid, Hielo, Rojo 909). Se retiran las 10 antiguas y los estilos Hardware/Ableton; quien tuviera una antigua pasa sola a Stylo.
+- Fila de transporte sin desbordes a 360 px.
+- No cambia el motor de sonido ni el formato de guardado: proyectos, .json y códigos PS1 anteriores se abren igual. Un panel Sonido guardado en Mix, FX o EQ se abre en Canal.
+- Probado en Chromium a 390 y 360 px sin errores de consola: reproducción, mute, efectos, EQ, guardado antiguo, .json, código PS1 y WAV de 16 y 24 bits.
+- Revisión antes de publicar: al abrir la app la fila Secuenciador / Pads salía vacía hasta tocar un módulo (corregido); Azar y Borrar ya no se cortan a 320 px; color de la app instalada actualizado. Probado con pantalla táctil emulada (iPhone 13, iPhone SE, Pixel 5 e iPad Mini).
+- Para revertir: git revert del commit v3.0.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.

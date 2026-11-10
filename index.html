@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0b1220"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=2.93">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c0d0f"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css?v=3.0">
 <title>Pulso Studio · Tu groovebox en el móvil</title>
 <meta name="description" content="Secuenciador de 16 pasos y pads para crear ritmos desde el móvil. Por Pulso Lab.">
 <meta property="og:type" content="website">
@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Pulso Studio · Tu groovebox en el móvil">
 <meta name="twitter:image" content="https://djsergiostylo.github.io/Pulso-Studio-lab/preview.png">
 </head><body>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Silkscreen:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=DM+Mono:wght@400;500&family=Share+Tech+Mono&display=swap">
 
 
 <main class="wrap">
@@ -25,7 +25,7 @@
     <div class="head">
       <div class="lcd" id="lcd" data-v="info" role="button" tabindex="0" aria-label="Cambiar pantalla: info, onda o espectro">
         <div class="l1" id="l1">■ KICK · PAT A</div>
-        <div class="big"><span id="lb">132</span><small>BPM</small><span class="ver" aria-label="Versión v2.93">v2.93</span></div>
+        <div class="big"><span id="lb">132</span><small>BPM</small><span class="ver" aria-label="Versión v3.0">v3.0</span></div>
         <div class="l2" id="l2">LISTO</div><div class="lsteps" id="lsteps" aria-hidden="true"></div><canvas id="scope" aria-hidden="true"></canvas><span class="md" id="md"></span><span class="ldots" aria-hidden="true"><i></i><i></i><i></i></span>
         <div class="lvol" id="lvol"><button type="button" id="lmute" aria-label="Silenciar" aria-pressed="false">🔊</button><input id="lvr" type="range" min="0" max="100" step="1" value="100" aria-label="Volumen de escucha"><output id="lvo" for="lvr">100%</output></div>
       </div>
@@ -47,17 +47,15 @@
       <div class="prow"><div class="pchips" id="pchips" role="group" aria-label="Patrón"></div><div class="prv" role="group" aria-label="Vista"><button class="prb" id="aud" aria-pressed="true" aria-label="Sonar al pulsar" title="Sonar al pulsar">🔊</button><button class="prb" id="stage" aria-pressed="false" aria-label="Modo escenario" title="Modo escenario"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><rect x="3" y="5" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 20h6M12 17v3" stroke="currentColor" stroke-width="2" fill="none"/></svg></button><button class="prb" id="fs" aria-pressed="false" aria-label="Pantalla completa" title="Pantalla completa"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" fill="none"/></svg></button></div><button class="modeb" id="modeB" aria-expanded="false">Modo: Paso ▾</button></div>
     </div>
 
-    <nav class="tabs" id="tabs" role="tablist" aria-label="Secciones principales">
-      <button type="button" role="tab" id="tab-crear" data-g="crear" aria-selected="true" aria-controls="t-seq" tabindex="0"><i>▦</i><span>Crear</span></button>
-      <button type="button" role="tab" id="tab-song" data-g="song" aria-selected="false" aria-controls="t-song" tabindex="-1"><i>♫</i><span>Canción</span></button>
-      <button type="button" role="tab" id="tab-file" data-g="file" aria-selected="false" aria-controls="t-file" aria-label="Proyecto: guardar, importar y exportar" tabindex="-1"><i>💾</i><span>Proyecto</span></button>
-      <button type="button" role="tab" id="tab-look" data-g="look" aria-selected="false" aria-controls="t-look" aria-label="Aspecto: carátula, estilo y pantalla" tabindex="-1"><i>🎨</i><span>Aspecto</span></button>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Módulos">
+      <button type="button" role="tab" id="tab-groove" data-g="groove" aria-selected="true" aria-controls="t-seq" tabindex="0"><i aria-hidden="true"></i><span>Groove</span></button>
+      <button type="button" role="tab" id="tab-synth" data-g="synth" aria-selected="false" aria-controls="t-roll" tabindex="-1"><i aria-hidden="true"></i><span>Synth</span></button>
+      <button type="button" role="tab" id="tab-mixer" data-g="mixer" aria-selected="false" aria-controls="t-mix" tabindex="-1"><i aria-hidden="true"></i><span>Mixer</span></button>
+      <button type="button" role="tab" id="tab-fx" data-g="fx" aria-selected="false" aria-controls="t-fx" tabindex="-1"><i aria-hidden="true"></i><span>FX</span></button>
+      <button type="button" role="tab" id="tab-master" data-g="master" aria-selected="false" aria-controls="t-mst" tabindex="-1"><i aria-hidden="true"></i><span>Master</span></button>
+      <button type="button" role="tab" id="tab-menu" data-g="menu" aria-selected="false" aria-controls="t-song" aria-label="Menú: canción, proyecto y aspecto" tabindex="-1"><i aria-hidden="true"></i><span>Menú</span></button>
     </nav>
-    <div class="seg subtabs" id="subs">
-      <button data-t="seq" aria-pressed="true">Secuenciador</button>
-      <button data-t="pads" aria-pressed="false">Pads</button>
-      <button data-t="roll" aria-pressed="false">Piano roll</button>
-    </div>
+    <div class="seg subtabs" id="subs"></div>
     
 
     <section id="t-seq" class="tab">
@@ -136,14 +134,6 @@
         <textarea id="shT" rows="2" placeholder="Pega aquí un código PS1:… y pulsa Importar código" spellcheck="false" autocomplete="off"></textarea>
         <p class="note" id="dlnote">El .json sirve de copia o para pasar tus ritmos a otro móvil. Código o enlace: mándalo por WhatsApp; quien lo abra o pegue tendrá tu beat (sin samples propios). Importar usa lo pegado en el cuadro.</p>
       </div>
-      <div class="card" id="reccard">
-        <h3>Exportar audio</h3>
-        <div class="seg" id="recN" role="group" aria-label="Vueltas a grabar"><button data-n="1">1 vuelta</button><button data-n="2">2</button><button data-n="4">4</button><button data-n="8">8</button></div>
-        <button class="fn" id="pwav">⬇ Exportar WAV (calidad máxima)</button>
-        <button class="fn" id="prec">⏺ Grabar en tiempo real (.webm)</button>
-        <p class="note">El WAV se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz) y 16 bits.</p>
-        <p class="note" id="wavStat" aria-live="polite" hidden></p>
-      </div>
     <details class="more2"><summary>⚙ Ayuda</summary>
   <p class="hint">Desliza el dedo por la pantalla para cambiar de patrón A–D. Toca la pantalla para ver la onda o el espectro. Toca un paso para encenderlo y mantenlo pulsado para cambiar su fuerza. Con ! ×2 ↔ ↗ le pones acento, redoble, nudge o slide (acid). PADS para tocar en directo, SONG para montar la canción. Con auriculares se nota el subgrave.</p>
   </details>
@@ -153,8 +143,7 @@
       <div class="card" id="skinCard">
         <h3>Aspecto</h3>
         <div class="skins"><span>Carátula (colores)</span><div id="skins" role="group" aria-label="Carátula"></div></div>
-        <div class="skins"><span>Estilo</span><div id="styles" role="group" aria-label="Estilo"><button class="sk" data-st="hw">Hardware</button><button class="sk" data-st="abl">Ableton</button></div></div>
-        <p class="note">Carátula cambia los colores de todo el aparato. Estilo: Hardware lleva tornillos y serigrafía, Ableton es más limpio.</p>
+        <p class="note">La carátula cambia el color de las luces y del chasis de todo el aparato.</p>
       </div>
       <div class="card" id="viewCard">
         <h3>Pantalla y audio</h3>
@@ -170,6 +159,65 @@
       </div>
     </section>
 
+<section id="t-mix" class="tab" hidden>
+      <div class="mix" id="mix"></div>
+      <p class="note">Arrastra el fader y el pan; al lado tienes la escala en dB. Doble toque los reinicia. Toca el nombre para abrir el canal. El master y el limitador están en el módulo Master.</p>
+    </section>
+
+    <section id="t-fx" class="tab" hidden>
+      <div class="msbar" id="msBar" aria-label="Master rápido"></div>
+      <div class="fxnav" id="fxNav" role="group" aria-label="Ir a efecto"></div>
+      <div class="fxl" id="fxList"></div>
+      <p class="note">Doble toque en un control lo devuelve a su valor inicial. Reverb y Delay son envíos (súbelos por canal en Groove → Sonido → Canal); el resto actúa sobre toda la mezcla.</p>
+    </section>
+
+    <section id="t-eq" class="tab" hidden>
+      <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
+      <button id="eqStyle" class="fn" type="button" aria-pressed="false">EQ BYPASS · NO</button>
+      <p class="note" id="eqCost" aria-live="polite"></p>
+      <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
+      <div class="seg" id="eqP" role="group" aria-label="Ajustes rápidos">
+        <button data-p="flat">Plano</button><button data-p="nosub">Sin sub</button><button data-p="nobass">Sin graves</button><button data-p="bass">+Graves</button><button data-p="mud">−Barro</button><button data-p="air">Brillo</button>
+      </div>
+      <div class="card">
+        <div class="hd2"><h3>Banda <span id="eqBn"></span></h3><span class="eqact"><button id="eqOn" class="eqm" aria-pressed="true">ON</button><button id="eqDel" class="eqm" aria-label="Borrar banda">🗑</button></span></div>
+        <div class="eqb" id="eqB" role="group" aria-label="Bandas de EQ"></div>
+        <div id="eqCtl">
+          <div class="seg" id="eqTy" role="group" aria-label="Tipo de banda"></div>
+          <div class="seg" id="eqSl" role="group" aria-label="Pendiente del corte" hidden></div>
+          <div class="eqk">
+            <div class="k"><label for="eq_f">Frecuencia <output id="eo_f"></output></label><input id="eq_f" type="range" min="0" max="1000" step="1"></div>
+            <div class="k" id="kg"><label for="eq_g">Ganancia <output id="eo_g"></output></label><input id="eq_g" type="range" min="-24" max="24" step="0.5"></div>
+            <div class="k" id="kq"><label for="eq_q">Q (ancho) <output id="eo_q"></output></label><input id="eq_q" type="range" min="0" max="100" step="1"></div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Hasta 8 bandas por canal, como Pro-Q: doble toque en la curva crea una banda; arrastra el punto para frecuencia y ganancia (10 Hz–24 kHz). Tipos: campana, shelf, notch y cortes de graves/agudos hasta 96 dB/oct ("Sin graves" quita todo lo de abajo). La sombra es el espectro en vivo.</p>
+    </section>
+
+    <section id="t-mst" class="tab" hidden>
+      <div class="card vucard" id="vuCard" aria-label="Medidores de salida">
+        <div class="hd2"><h3>Salida · medidores</h3><span class="smpn">dBFS</span></div>
+        <div class="vu"><span>PICO</span><div class="vub"><i id="vuPk"></i><u id="vuHold"></u></div><output id="vuPkO">-∞</output></div>
+        <div class="vu"><span>RMS</span><div class="vub"><i id="vuRms"></i></div><output id="vuRmsO">-∞</output></div>
+        <div class="vusc" aria-hidden="true"><span style="left:0">-48</span><span style="left:25%">-36</span><span style="left:50%">-24</span><span style="left:75%">-12</span><span style="left:87.5%">-6</span><span style="left:100%">0</span></div>
+      </div>
+      <div class="mcm" id="mixMst" aria-label="Master"></div>
+      <div class="mstfx" id="mixMstFx" aria-label="Ajustes del master"></div>
+      <div class="msbar mixlim" id="mixLim" aria-label="Limitador del master"></div>
+      <button class="fn" id="mstEq" type="button">Abrir el EQ del master</button>
+      <div class="card" id="reccard">
+        <h3>Exportar audio</h3>
+        <div class="seg" id="recN" role="group" aria-label="Vueltas a grabar"><button data-n="1">1 vuelta</button><button data-n="2">2</button><button data-n="4">4</button><button data-n="8">8</button></div>
+        <div class="seg" id="wavBit" role="group" aria-label="Resolución del WAV"><button data-b="16">16 bits</button><button data-b="24">24 bits</button></div>
+        <button class="fn" id="pwav">⬇ Exportar WAV (calidad máxima)</button>
+        <button class="fn" id="prec">⏺ Grabar en tiempo real (.webm)</button>
+        <p class="note">El WAV se calcula al instante, sin cortes, a la frecuencia de tu móvil (normalmente 48 kHz), en 16 o 24 bits.</p>
+        <p class="note" id="wavStat" aria-live="polite" hidden></p>
+      </div>
+      <p class="note">Cadena del master: filtros → drive → EQ → compresor → ancho → limitador con techo. PICO y RMS miden la salida real. Si PICO se pone rojo, baja la Entrada del limitador o el volumen.</p>
+    </section>
+
 <div class="sheet" id="sheet" hidden>
       <div class="seg emode" id="emode" role="group" aria-label="Qué hace tocar un paso"><button data-m="step" aria-pressed="true">Paso</button><button data-m="acc" aria-pressed="false">Acento</button><button data-m="rt" aria-pressed="false">Redoble</button><button data-m="nd" aria-pressed="false">Nudge</button><button data-m="sl" aria-pressed="false">Slide</button><button data-m="prob" aria-pressed="false">Prob.</button><button data-m="euc" aria-pressed="false">Euclíd.</button></div>
       <div class="modex" id="modeX" hidden>
@@ -177,11 +225,11 @@
         <div class="seg" id="euc" hidden><button class="ek" data-e="-1" aria-label="Menos golpes">−</button><button class="val" id="eucv">◎ Euclid 4</button><button class="ek" data-e="1" aria-label="Más golpes">+</button><button class="ek" data-e="r" aria-label="Rotar">↻</button></div>
       </div>
     </div>
-    <section id="soundDock" class="sdock" aria-label="Sonido del canal, mezcla, efectos y ecualizador" hidden>
+    <section id="soundDock" class="sdock" aria-label="Sonido del canal y macros" hidden>
       <div class="sdgrip" id="sdGrip" role="separator" aria-orientation="horizontal" aria-label="Arrastra para cambiar la altura del panel Sonido" tabindex="0"><i></i></div>
       <div class="sdh">
         <button type="button" id="sndTog" aria-expanded="false" aria-controls="sndBody"><span class="chev">▴</span> Sonido · <b id="sndCh">KICK</b></button>
-        <div class="seg" id="sndTabs" role="group" aria-label="Qué editar"><button data-t="macro" aria-pressed="false">Macro</button><button data-t="canal" aria-pressed="true">Canal</button><button data-t="mix" aria-pressed="false">Mix</button><button data-t="fx" aria-pressed="false">FX</button><button data-t="eq" aria-pressed="false">EQ</button></div>
+        <div class="seg" id="sndTabs" role="group" aria-label="Qué editar"><button data-t="macro" aria-pressed="false">Macro</button><button data-t="canal" aria-pressed="true">Canal</button></div>
       </div>
       <div class="sdb" id="sndBody" hidden>
       <section id="t-macro" class="tab" hidden>
@@ -241,56 +289,23 @@
       </div>
     </section>
     
-      <section id="t-mix" class="tab" hidden>
-      <div class="msbar mixlim" id="mixLim" aria-label="Limitador del master"></div>
-      <div class="mcm" id="mixMst" aria-label="Master"></div>
-      <div class="mstfx" id="mixMstFx" hidden aria-label="Ajustes del master"></div>
-      <div class="mix" id="mix"></div>
-      <p class="note">Arrastra el fader y el pan; al lado tienes la escala en dB. Doble toque los reinicia. Toca el nombre para abrir el canal. Si el pico del MST se pone naranja o rojo, baja el Limitador.</p>
-    </section>
+      
 
     
-      <section id="t-fx" class="tab" hidden>
-      <div class="msbar" id="msBar" aria-label="Master rápido"></div>
-      <div class="fxnav" id="fxNav" role="group" aria-label="Ir a efecto"></div>
-      <div class="fxl" id="fxList"></div>
-      <p class="note">Doble toque en un control lo devuelve a su valor inicial. Reverb y Delay son envíos (súbelos por canal en Canal); el resto actúa sobre toda la mezcla.</p>
-    </section>
+      
 
     
-      <section id="t-eq" class="tab" hidden>
-      <div class="eqt" id="eqT" role="group" aria-label="Canal a ecualizar"></div>
-      <button id="eqStyle" class="fn" type="button" aria-pressed="false">EQ BYPASS · NO</button>
-      <p class="note" id="eqCost" aria-live="polite"></p>
-      <canvas id="eqc" aria-label="Curva de ecualización"></canvas>
-      <div class="seg" id="eqP" role="group" aria-label="Ajustes rápidos">
-        <button data-p="flat">Plano</button><button data-p="nosub">Sin sub</button><button data-p="nobass">Sin graves</button><button data-p="bass">+Graves</button><button data-p="mud">−Barro</button><button data-p="air">Brillo</button>
-      </div>
-      <div class="card">
-        <div class="hd2"><h3>Banda <span id="eqBn"></span></h3><span class="eqact"><button id="eqOn" class="eqm" aria-pressed="true">ON</button><button id="eqDel" class="eqm" aria-label="Borrar banda">🗑</button></span></div>
-        <div class="eqb" id="eqB" role="group" aria-label="Bandas de EQ"></div>
-        <div id="eqCtl">
-          <div class="seg" id="eqTy" role="group" aria-label="Tipo de banda"></div>
-          <div class="seg" id="eqSl" role="group" aria-label="Pendiente del corte" hidden></div>
-          <div class="eqk">
-            <div class="k"><label for="eq_f">Frecuencia <output id="eo_f"></output></label><input id="eq_f" type="range" min="0" max="1000" step="1"></div>
-            <div class="k" id="kg"><label for="eq_g">Ganancia <output id="eo_g"></output></label><input id="eq_g" type="range" min="-24" max="24" step="0.5"></div>
-            <div class="k" id="kq"><label for="eq_q">Q (ancho) <output id="eo_q"></output></label><input id="eq_q" type="range" min="0" max="100" step="1"></div>
-          </div>
-        </div>
-      </div>
-      <p class="note">Hasta 8 bandas por canal, como Pro-Q: doble toque en la curva crea una banda; arrastra el punto para frecuencia y ganancia (10 Hz–24 kHz). Tipos: campana, shelf, notch y cortes de graves/agudos hasta 96 dB/oct ("Sin graves" quita todo lo de abajo). La sombra es el espectro en vivo.</p>
-    </section>
+      
 
     
       </div>
     </section>
-    <div class="brand foot"><b>Pulso Studio</b><em>Pulso Lab · groovebox</em></div>
+    <div class="brand foot"><b>STYLO</b><em>Pulso Studio · techno workstation</em></div>
   </section>
 
   
 </main>
 
-<script src="./app.js?v=2.93"></script>
+<script src="./app.js?v=3.0"></script>
 
 </body></html>
