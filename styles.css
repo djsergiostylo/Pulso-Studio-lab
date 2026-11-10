@@ -1022,32 +1022,32 @@ body{padding-bottom:calc(var(--nav) + env(safe-area-inset-bottom,0px))}
 :root[data-skin="acid"]{--on:#b6f03a;--led:#b6f03a;--onfg:#0d1400;--lcd:#070c05;--lcdfg:#c4f45c;--dev:#161813;--dev2:#0f110d;--snd:#e0dccf}
 :root[data-skin="ice"]{--on:#3ad8f0;--led:#3ad8f0;--onfg:#001318;--lcd:#050b0e;--lcdfg:#6fe6f7;--dev:#15191d;--dev2:#0e1114;--snd:#d6dde2}
 :root[data-skin="rojo"]{--on:#ff4a55;--led:#ff4a55;--onfg:#1a0003;--lcd:#0e0607;--lcdfg:#ff7a82;--dev:#1b1819;--dev2:#121011;--snd:#e2d9d6}
-body{background:radial-gradient(120% 60% at 50% 0,#15171a 0,var(--page) 70%) fixed var(--page)}
+body{background:radial-gradient(120% 60% at 50% 0,var(--pg2) 0,var(--page) 70%) fixed var(--page)}
 .device{background:repeating-linear-gradient(90deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px),linear-gradient(180deg,var(--dev) 0,var(--dev2) 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
 :root :is(.step,.fn,.seg,.chip .nm,.nm2,.lcd,.card,select,.fad,.pn,.tg,.sk,.pre,.prb,.modeb,.more,.more2){border-radius:5px}
 
 /* pantalla: cristal hundido con texto de fósforo */
-.lcd{background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 30%),var(--lcd);border:1px solid #000;box-shadow:inset 0 2px 10px #000,inset 0 0 0 1px rgba(255,255,255,.03),0 1px 0 rgba(255,255,255,.09);font-family:var(--lcdf)}
+.lcd{background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 30%),var(--lcd);border:1px solid var(--ln);box-shadow:inset 0 2px 10px #000,inset 0 0 0 1px rgba(255,255,255,.03),0 1px 0 rgba(255,255,255,.09);font-family:var(--lcdf)}
 .lcd .l1,.lcd .l2,.lcd .big,.lcd .big small,.lcd output{font-family:var(--lcdf);text-shadow:0 0 8px color-mix(in srgb,var(--lcdfg) 55%,transparent)}
 .lcd .l1,.lcd .l2{font-size:11.5px;letter-spacing:.12em}
 .lcd .big{letter-spacing:.04em}
 .lcd .ver{font-family:var(--lcdf)}
 
 /* teclas: plástico con bisel; encendidas = retroiluminadas */
-.seg{background:var(--slot);border-color:#000;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.06);gap:1px;padding:1px}
+.seg{background:var(--slot);border-color:var(--ln);box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.06);gap:1px;padding:1px}
 .seg>button,.seg>.val{border-left:0;border-radius:3px;background:linear-gradient(180deg,var(--key2),var(--key));box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35);font-weight:600;font-size:11px;letter-spacing:.07em}
 .seg>button:active{background:var(--key);box-shadow:inset 0 2px 4px #000}
 .seg>button[aria-pressed="true"],.seg>button[aria-selected="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--on),#fff 22%),var(--on));color:var(--onfg);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 12px color-mix(in srgb,var(--on) 55%,transparent)}
-.fn,.tg,.prb,.modeb,.pre,.card .sk{background:linear-gradient(180deg,var(--key2),var(--key));border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.05);font-weight:600;color:var(--fg)}
+.fn,.tg,.prb,.modeb,.pre,.card .sk{background:linear-gradient(180deg,var(--key2),var(--key));border:1px solid var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),inset 0 -2px 0 rgba(0,0,0,.35),0 1px 0 rgba(255,255,255,.05);font-weight:600;color:var(--fg)}
 .fn{font-size:11px}.tg{font-size:10.5px;border-radius:4px}
 :is(.fn,.tg,.prb,.pre,.card .sk):active{box-shadow:inset 0 2px 5px #000}
-:is(.fn,.tg,.prb,.pre,.card .sk)[aria-pressed="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--on),#fff 22%),var(--on));color:var(--onfg);border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 12px color-mix(in srgb,var(--on) 55%,transparent)}
+:is(.fn,.tg,.prb,.pre,.card .sk)[aria-pressed="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--on),#fff 22%),var(--on));color:var(--onfg);border-color:var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 0 12px color-mix(in srgb,var(--on) 55%,transparent)}
 .sdh .seg>button[aria-pressed="true"],.sdb .seg>button[aria-pressed="true"],.sdb .tg[aria-pressed="true"],.sdb .pre[aria-pressed="true"]{background:linear-gradient(180deg,#fff,var(--snd));color:var(--sndfg);box-shadow:inset 0 1px 0 #fff,0 0 10px color-mix(in srgb,var(--snd) 45%,transparent)}
 #play[aria-pressed="true"]{animation:none}
 .trans .seg{background:var(--slot)}
 
 /* paneles: placa atornillada con rótulo serigrafiado */
-.card,.more,.more2{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.card,.more,.more2{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border:1px solid var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
 .card h3,.card .hd2 h3{font-size:11.5px;font-weight:600;letter-spacing:.16em;color:var(--fg)}
 .note,.hint{font-family:var(--mono);line-height:1.45}
 .k label{font-weight:600;letter-spacing:.08em}
@@ -1060,25 +1060,25 @@ input[type=range]{--tc:var(--on)}
 .sbp input[type=range]{--tc:#f0a040}
 input[type=range]::-webkit-slider-runnable-track{background:var(--slot);box-shadow:inset 0 1px 2px #000,0 1px 0 rgba(255,255,255,.07)}
 input[type=range]::-moz-range-track{background:var(--slot);box-shadow:inset 0 1px 2px #000,0 1px 0 rgba(255,255,255,.07)}
-input[type=range]::-webkit-slider-thumb,.fxc input[type=range]::-webkit-slider-thumb,.msbar input[type=range]::-webkit-slider-thumb,#t-canal input[type=range]::-webkit-slider-thumb,.sbp input[type=range]::-webkit-slider-thumb{width:16px;height:24px;margin-top:-9px;border-radius:3px;border:1px solid #000;background:linear-gradient(90deg,transparent 40%,var(--tc) 40% 60%,transparent 60%),linear-gradient(180deg,#f1f2f3 0,#a9adb3 48%,#7c8087 52%,#c9ccd0 100%);box-shadow:0 2px 4px rgba(0,0,0,.7)}
-input[type=range]::-moz-range-thumb,.fxc input[type=range]::-moz-range-thumb,.msbar input[type=range]::-moz-range-thumb,#t-canal input[type=range]::-moz-range-thumb,.sbp input[type=range]::-moz-range-thumb{width:14px;height:22px;border-radius:3px;border:1px solid #000;background:linear-gradient(90deg,transparent 40%,var(--tc) 40% 60%,transparent 60%),linear-gradient(180deg,#f1f2f3 0,#a9adb3 48%,#7c8087 52%,#c9ccd0 100%)}
+input[type=range]::-webkit-slider-thumb,.fxc input[type=range]::-webkit-slider-thumb,.msbar input[type=range]::-webkit-slider-thumb,#t-canal input[type=range]::-webkit-slider-thumb,.sbp input[type=range]::-webkit-slider-thumb{width:16px;height:24px;margin-top:-9px;border-radius:3px;border:1px solid var(--ln);background:linear-gradient(90deg,transparent 40%,var(--tc) 40% 60%,transparent 60%),linear-gradient(180deg,#f1f2f3 0,#a9adb3 48%,#7c8087 52%,#c9ccd0 100%);box-shadow:0 2px 4px rgba(0,0,0,.7)}
+input[type=range]::-moz-range-thumb,.fxc input[type=range]::-moz-range-thumb,.msbar input[type=range]::-moz-range-thumb,#t-canal input[type=range]::-moz-range-thumb,.sbp input[type=range]::-moz-range-thumb{width:14px;height:22px;border-radius:3px;border:1px solid var(--ln);background:linear-gradient(90deg,transparent 40%,var(--tc) 40% 60%,transparent 60%),linear-gradient(180deg,#f1f2f3 0,#a9adb3 48%,#7c8087 52%,#c9ccd0 100%)}
 .sbp input[type=range]::-webkit-slider-thumb{width:13px;height:18px;margin-top:-6.5px}
 .msbar input[type=range]::-webkit-slider-thumb,.dkm input[type=range]::-webkit-slider-thumb,.fxc input[type=range]::-webkit-slider-thumb{height:20px;margin-top:-7px}
 .fxc input[type=range]::-webkit-slider-runnable-track{background:linear-gradient(90deg,var(--c) var(--p,50%),var(--slot) var(--p,50%))}
 
 /* secuenciador: pads de goma con luz propia */
-#grid .step{background:linear-gradient(180deg,var(--key2),var(--key));border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 0 rgba(0,0,0,.4)}
-#grid .step.beat:not(.on){background:linear-gradient(180deg,color-mix(in srgb,var(--key2),#fff 9%),color-mix(in srgb,var(--key),#fff 7%));border-color:#000}
-#grid .step.on{background:linear-gradient(180deg,color-mix(in srgb,var(--c),#fff 28%),var(--c));border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 9px color-mix(in srgb,var(--c) 60%,transparent)}
+#grid .step{background:linear-gradient(180deg,var(--key2),var(--key));border-color:var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 -2px 0 rgba(0,0,0,.4)}
+#grid .step.beat:not(.on){background:linear-gradient(180deg,color-mix(in srgb,var(--key2),#fff 9%),color-mix(in srgb,var(--key),#fff 7%));border-color:var(--ln)}
+#grid .step.on{background:linear-gradient(180deg,color-mix(in srgb,var(--c),#fff 28%),var(--c));border-color:var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 9px color-mix(in srgb,var(--c) 60%,transparent)}
 #grid .step.on[data-v="3"]{box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 0 14px var(--c)}
 #grid .step.ph{box-shadow:inset 0 0 0 2px var(--fg)}
 #grid .step.ph:not(.on){background:color-mix(in srgb,var(--c) 30%,var(--key))}
 #grid .step.on.ph{box-shadow:inset 0 0 0 2px #fff,0 0 16px var(--c)}
-.mtx{background:var(--slot);border:1px solid #000;box-shadow:inset 0 2px 6px #000,0 1px 0 rgba(255,255,255,.06)}
+.mtx{background:var(--slot);border:1px solid var(--ln);box-shadow:inset 0 2px 6px #000,0 1px 0 rgba(255,255,255,.06)}
 #t-seq .rn,.rn{font-weight:700;font-size:10.5px;letter-spacing:.06em}
 
 /* barra de módulos: botones de modo con LED */
-.tabs{background:linear-gradient(180deg,#24272c,#131517);border-top:1px solid #000;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 -8px 20px rgba(0,0,0,.55)}
+.tabs{background:linear-gradient(180deg,var(--nav1),var(--nav2));border-top:1px solid var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 -8px 20px rgba(0,0,0,.55)}
 .tabs>button{gap:6px;font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--mute);border-left:1px solid rgba(0,0,0,.55);box-shadow:inset 1px 0 0 rgba(255,255,255,.04)}
 .tabs>button:first-child{border-left:0;box-shadow:none}
 .tabs>button i{display:block;width:22px;height:5px;border-radius:3px;background:#050506;box-shadow:inset 0 1px 2px #000,0 1px 0 rgba(255,255,255,.08);transition:none}
@@ -1091,19 +1091,19 @@ input[type=range]::-moz-range-thumb,.fxc input[type=range]::-moz-range-thumb,.ms
 .subtabs{margin-top:2px}
 
 /* mezclador: ranuras, capuchones y medidores de LED */
-.fad{background:var(--slot);border:1px solid #000;box-shadow:inset 0 2px 5px #000}
+.fad{background:var(--slot);border:1px solid var(--ln);box-shadow:inset 0 2px 5px #000}
 .meter{background:#040405;box-shadow:inset 0 1px 2px #000}
-.mg{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border-color:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.mg{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));border-color:var(--ln);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
 .nm2{font-weight:700}
 
 /* panel Sonido: módulo acoplado con frontal claro */
-.sdock{border-top:1px solid #000;background:linear-gradient(180deg,#202327,var(--dev2));box-shadow:0 -10px 22px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1)}
-.sdh{background:transparent;border-bottom:1px solid #000}
-.sdh .seg{border-color:#000;background:var(--slot)}
+.sdock{border-top:1px solid var(--ln);background:linear-gradient(180deg,var(--dk1),var(--dev2));box-shadow:0 -10px 22px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.1)}
+.sdh{background:transparent;border-bottom:1px solid var(--ln)}
+.sdh .seg{border-color:var(--ln);background:var(--slot)}
 
 /* Master: medidores de pico y RMS */
 .vu{display:grid;grid-template-columns:38px 1fr 46px;align-items:center;gap:8px;font-family:var(--disp);font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--fg)}
-.vub{position:relative;height:14px;border-radius:2px;background:#040405;border:1px solid #000;box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.07);overflow:hidden}
+.vub{position:relative;height:14px;border-radius:2px;background:#040405;border:1px solid var(--ln);box-shadow:inset 0 1px 3px #000,0 1px 0 rgba(255,255,255,.07);overflow:hidden}
 .vub i{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#35d06a 0,#35d06a 70%,#f2c230 86%,#ff4034 100%);-webkit-mask:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 4px);mask:repeating-linear-gradient(90deg,#000 0 3px,transparent 3px 4px)}
 .vub u{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;left:0;background:#fff}
 .vu output{font-family:var(--lcdf);font-size:13px;text-align:right;color:var(--on);font-variant-numeric:tabular-nums}
@@ -1122,9 +1122,24 @@ input[type=range]::-moz-range-thumb,.fxc input[type=range]::-moz-range-thumb,.ms
 #t-mst>.note{padding-inline:8px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 /* fila de transporte y de patrones: sin desbordes a 360 px */
-.trans .seg{gap:0;padding:0}.trans .seg>button,.trans .seg>.val{border-radius:0;border-left:1px solid #000}.trans .seg>:first-child{border-left:0}
+.trans .seg{gap:0;padding:0}.trans .seg>button,.trans .seg>.val{border-radius:0;border-left:1px solid var(--ln)}.trans .seg>:first-child{border-left:0}
 .modeb{white-space:nowrap;letter-spacing:.02em;padding-inline:6px}
 @media (max-width:380px){.trans .seg .hd{flex:0 0 28px}.trans .seg>#bpmv{flex:1 0 38px}}
 @media (max-width:380px){.trans{grid-template-columns:minmax(0,1fr) 98px}.trans .seg>button.ur{min-width:28px;flex-basis:28px}}
 .ldots{top:4px;right:8px}.lcd .big .ver{bottom:14px;opacity:.8}
 @media (max-width:340px){.trans .seg>#rand,.trans .seg>#clear{font-size:7.5px;letter-spacing:0;padding:0}}
+
+/* ===== v3.1 Fondo del chasis: se elige aparte del color de las luces (data-bg). La pantalla y las ranuras siguen oscuras ===== */
+:root{--pg2:#15171a;--nav1:#24272c;--nav2:#131517;--dk1:#202327;--ln:#000;--ontx:var(--on)}
+:root[data-bg="grafito"]{--page:#16181b;--pg2:#25282c;--dev:#2c2f34;--dev2:#212327;--key:#2f3338;--key2:#40454c;--keyedge:#555a62;--slot:#111315;--track:#111315;--nav1:#383c42;--nav2:#25282c;--dk1:#34383d;--mute:#b6b9bf;--pfg:#b6b9bf;--ontx:color-mix(in srgb,var(--on),#fff 30%)}
+:root[data-bg="noche"]{--page:#060a13;--pg2:#111a2d;--dev:#152034;--dev2:#0d1524;--key:#17233a;--key2:#25344f;--keyedge:#3a4a68;--slot:#050912;--track:#050912;--nav1:#1f2b45;--nav2:#0e1626;--dk1:#1a2439;--mute:#a9b3c8;--pfg:#a9b3c8}
+:root[data-bg="acero"]{--page:#2a2e33;--pg2:#3d4249;--dev:#4a5058;--dev2:#3b4047;--key:#42484f;--key2:#58606a;--keyedge:#7a818a;--slot:#191c1f;--track:#191c1f;--nav1:#565d66;--nav2:#3c4148;--dk1:#4f555d;--fg:#f7f6f3;--mute:#dcdfe3;--pfg:#dcdfe3;--ontx:var(--fg)}
+:root[data-bg="plata"]{--page:#8d9197;--pg2:#a9adb3;--dev:#cfd2d6;--dev2:#bbbec3;--key:#c6c9ce;--key2:#eceef0;--keyedge:#7d828a;--slot:#26292d;--track:#26292d;--nav1:#e0e2e5;--nav2:#b5b9be;--dk1:#d7d9dd;--fg:#131518;--mute:#3a3f46;--pfg:#22252a;--ln:#555a62;--ontx:var(--fg);--lp:38%;--lt:#000;color-scheme:light}
+.k output,.smpn,.vu output{color:var(--ontx)}
+/* textos que van sobre ranuras oscuras (rejilla, selectores): siempre claros, sea cual sea el fondo */
+:root{--sfg:#ecebe7;--smute:#a9acb2}
+#t-seq .rn,.trk .rn{color:color-mix(in srgb,var(--c) 10%,var(--sfg))}
+.octr span,.pts .seg>.pc{color:var(--smute)}
+/* fondos claros: los textos con el color del canal pasan al color de letra normal para que se lean */
+:root:is([data-bg="acero"],[data-bg="plata"]) :is(#sndCh,#rollVo,.sdb #chipsCan .chip .nm,.mixlim .limin span){color:var(--fg)}
+.sdb #chipsCan .chip .nm[aria-pressed="true"]{color:#14110d!important}

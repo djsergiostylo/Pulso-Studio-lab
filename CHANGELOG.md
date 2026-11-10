@@ -571,6 +571,12 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - Revisión antes de publicar: al abrir la app la fila Secuenciador / Pads salía vacía hasta tocar un módulo (corregido); Azar y Borrar ya no se cortan a 320 px; color de la app instalada actualizado. Probado con pantalla táctil emulada (iPhone 13, iPhone SE, Pixel 5 e iPad Mini).
 - Para revertir: git revert del commit v3.0.
 
+## v3.1 (2026-11-10) — Claude
+- Aspecto: nuevo selector "Fondo (chasis)" con cinco tonos: Negro (el de siempre), Grafito, Azul noche, Gris acero y Plata (claro, con letras oscuras). Va aparte del color de las luces (antes "Carátula", ahora "Luces"), así que se combinan como quieras.
+- La pantalla, la rejilla y las ranuras de los faders siguen oscuras en todos los fondos. En los fondos claros, los textos que iban con el color del canal o de las luces pasan al color de letra normal para que se lean.
+- El fondo es un ajuste del dispositivo (clave bg en SAVE): se recuerda en el móvil y no viaja en el .json. No cambia el audio ni el formato de guardado.
+- Para revertir: git revert del commit v3.1.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.

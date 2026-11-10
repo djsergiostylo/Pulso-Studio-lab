@@ -52,7 +52,7 @@ let P=[mk(),mk(),mk(),mk()];
 
 /* storage: per viewer only */
 const migLim=so=>{if(!so||typeof so.lim!=='number'||so.limv===3)return;if(so.limv!==2)so.lim=.5+so.lim/2;const ld=(so.lim-.5)*24;so.lig=Math.max(0,ld)/12;so.lim=Math.max(0,Math.min(1,(12-.05+Math.min(0,ld))/12));so.limv=3};
-const SAVE=['wbit','ovol','omute','scv','lat','xfade','dcomp','lights','snd','dockOpen','dockH','mfold','sb','awave','lwave','song','lanes','hum','mres','mhp','mhres','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','lig','limv','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
+const SAVE=['bg','wbit','ovol','omute','scv','lat','xfade','dcomp','lights','snd','dockOpen','dockH','mfold','sb','awave','lwave','song','lanes','hum','mres','mhp','mhres','mmid','mmf','mair','mwid','aud','cho','flt','cr','cmp','bpm','swing','mdrive','mcut','mvol','lim','lig','limv','root','scale','wave','layer','chain','chainSet','rev','dly','sc','skin','style','lcdv','ui3','meq'];
 function saveMessage(t){const e=$('#saveState');if(e)e.textContent=t}
 /* guardar es costoso (JSON + localStorage): se agrupa en una sola escritura 400 ms después del último cambio y se fuerza al salir de la página */
 const saveNow=()=>{try{const s={};SAVE.forEach(k=>{s[k]=S[k]});localStorage.setItem('pulsostudio1',JSON.stringify({P,C,S:s}));saveMessage('Guardado en este dispositivo · '+new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}))}catch(e){saveMessage('No se pudo guardar en este dispositivo')}};
@@ -794,6 +794,11 @@ document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset
 /* ---------- skins ---------- */
 function skin(n){S.skin=n;document.documentElement.setAttribute('data-skin',n);
   $$('#skins button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===n));eqCol=null;fxCol=null;if(sT()==='fx')FXDEF.forEach(d=>drawFxG(d.id));readCols();drawLcd()}
+/* fondo del chasis (v3.1): ajuste del dispositivo, independiente del color de las luces */
+const BGS=[['negro','Negro','#1b1d21'],['grafito','Grafito','#2c2f34'],['noche','Azul noche','#152034'],['acero','Gris acero','#4a5058'],['plata','Plata','#cfd2d6']];
+function bgSet(n){if(!BGS.some(b=>b[0]===n))n='negro';S.bg=n;const de=document.documentElement;if(n==='negro')de.removeAttribute('data-bg');else de.setAttribute('data-bg',n);const m=$('meta[name="theme-color"]');if(m)m.content=BGS.find(b=>b[0]===n)[2];
+  $$('#bgs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.k===n));skin(S.skin)}
+BGS.forEach(s=>{const b=document.createElement('button');b.className='sk';b.dataset.k=s[0];b.textContent=s[1];b.style.setProperty('--cs',s[2]);b.style.setProperty('--ca',s[2]);b.addEventListener('click',()=>{bgSet(s[0]);save()});$('#bgs').appendChild(b)});
 SKINS.forEach(s=>{const b=document.createElement('button');b.className='sk';b.dataset.k=s[0];b.textContent=s[1];b.style.setProperty('--cs',s[2]);b.style.setProperty('--ca',s[3]);b.addEventListener('click',()=>{skin(s[0]);save()});$('#skins').appendChild(b)});
 
 /* ---------- visuals, style, stage, undo, iOS ---------- */
@@ -1330,5 +1335,5 @@ $('#t-song').addEventListener('input',e=>{const id=e.target.dataset.lv;if(!id)re
 
 function upd(){updLcd();renderChips();renderNotes();updGrid();renderPbar();updSteppers();if(S.tab==='roll')renderRoll()}
 rs.value=S.root;ss.value=S.scale;
-paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderMixLim();renderMstFx();renderCanal();skin(S.skin);upd();setLcd(S.lcdv);showTab(S.tab);setTimeout(fromHash,0);histCur=histSer();hBtn();
+paintEqStyle();renderKits();buildMix();buildDock();renderFx();renderMsBar();renderMixLim();renderMstFx();renderCanal();bgSet(S.bg);upd();setLcd(S.lcdv);showTab(S.tab);setTimeout(fromHash,0);histCur=histSer();hBtn();
 })();

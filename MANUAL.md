@@ -113,7 +113,7 @@ Deshacer y rehacer guardan **todo el proyecto**, no solo las notas: secuencia, c
 - Mover un deslizador **sin soltar** cuenta como un solo paso, aunque hagas pausas.
 - Grabar con los pads es un solo paso.
 - El mensaje de la pantallita dice qué se deshizo: SECUENCIA, MEZCLA, FX, EQ…
-- **No entran** la carátula, las luces, el audio ni Play, Pausa y Stop.
+- **No entran** el color de las luces, el fondo, las luces extra, el audio ni Play, Pausa y Stop.
 
 ## 4. Pads
 
@@ -305,7 +305,8 @@ Está en **Menú → Aspecto**. Cambia cómo se ve la app y da acceso a este man
 
 ![Pestaña Aspecto](manual/img/08-aspecto.jpg)
 
-- **Carátula (colores):** cuatro carátulas del mismo diseño de hardware: **Stylo** (naranja), **Acid** (verde), **Hielo** (cian) y **Rojo 909**. Cambian el color de las luces, de la pantalla y el tinte del chasis. Si tenías una carátula antigua, la app pasa sola a Stylo.
+- **Luces (color):** cuatro colores para los botones encendidos y la pantalla: **Stylo** (naranja), **Acid** (verde), **Hielo** (cian) y **Rojo 909**.
+- **Fondo (chasis):** el tono del aparato: **Negro**, **Grafito**, **Azul noche**, **Gris acero** y **Plata** (claro, con letras oscuras). Se combina con cualquier color de luces. La pantalla y las ranuras de los controles siguen oscuras en todos. Se recuerda en este dispositivo; no viaja en el proyecto.
 - **Luces extra:** destellos al sonar en pads, nombres y pantalla. Gastan batería, así que viene **apagado**. Si el audio suena entrecortado, déjalo apagado.
 - **Audio:** **Rápido**, **Equilibrado** o **Estable**. Es el tamaño del búfer de audio: más búfer, más retraso al tocar pero menos cortes. El cambio se aplica **al recargar** la página.
 - **Ayuda · Abrir el manual:** el botón que abre este manual, al final de la pestaña.

@@ -21,7 +21,7 @@ Sigue la sección *Versionado* de [README.md](README.md). Siempre con `tools/bum
 
 ## Decisiones del usuario que se respetan
 - Navegación por módulos (v3.0): Groove, Synth, Mixer, FX (Efectos y Ecualizador), Master y Menú (Canción, Proyecto, Aspecto). El panel fijo "Sonido" (Macro y Canal) acompaña a Groove y Synth. Cada canal conserva su color en Canal, Mixer y EQ.
-- Diseño STYLO de hardware con 4 carátulas (Stylo, Acid, Hielo, Rojo 909): son solo variables de color al final de `styles.css`. No se añaden carátulas claras ni estilos alternativos sin pedirlo.
+- Diseño STYLO de hardware. En Aspecto se eligen por separado las **Luces** (Stylo, Acid, Hielo, Rojo 909; `data-skin`) y el **Fondo** del chasis (Negro, Grafito, Azul noche, Gris acero, Plata; `data-bg`, clave `bg` en `SAVE`). Son solo variables de color al final de `styles.css`. La pantalla y las ranuras siguen oscuras en todos los fondos. No se añaden más sin pedirlo.
 - Al reproducir solo se anima el cursor del secuenciador (luces extra apagadas por defecto), para gastar poco.
 - Botones y letras deben leerse bien en todas las carátulas (contraste mínimo 4,5:1).
 - Si cambias la interfaz, rehaz las capturas de `manual/img/` (script `tools/capturas-manual.js`) y actualiza `MANUAL.md`.
