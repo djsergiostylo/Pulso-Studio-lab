@@ -577,6 +577,16 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - El fondo es un ajuste del dispositivo (clave bg en SAVE): se recuerda en el móvil y no viaja en el .json. No cambia el audio ni el formato de guardado.
 - Para revertir: git revert del commit v3.1.
 
+## v3.2 (2026-11-11) — Claude
+- Equilibrio de la mezcla: clap, hats y stab quedaban entre 17 y 25 dB por debajo del bombo y el fader no daba para subirlos. Ahora salen más fuertes de origen (clap +8 dB, hat y open +10,5 dB, stab +9,5 dB, lead +6 dB). Medido en el WAV de la demo, respecto al pico del bombo: clap de -16,6 a unos -8 dB, hat de -22,8 a unos -12 dB, stab de -25 a unos -16 dB. Los samples propios no cambian.
+- Más nivel de salida: +6 dB limpios justo antes del limitador (la mezcla salía con 11 dB sin usar). La demo pasa de -25,0 a -18,9 LUFS y de -11,4 a -5,1 dBFS de pico, sin que el limitador llegue a actuar. El vúmetro ENTRADA del limitador ya cuenta esa ganancia.
+- Reverb nueva: caída exponencial real, agudos que se apagan antes y 8 primeras reflexiones distintas a cada lado (antes era ruido con una caída lineal, sin reflexiones). Suena un 60 % más presente con el mismo valor de Mezcla. Sigue usando semilla fija y cuesta lo mismo.
+- Estéreo: el stab y el lead reparten sus osciladores desafinados a izquierda y derecha (antes toda la mezcla era prácticamente mono: -57 dB de señal lateral; ahora -31,7 dB en la demo y -7 dB en el stab solo). Siguen sonando bien en mono.
+- Chorus: la parte con efecto ya no lleva graves (corte a 170 Hz), así el bombo y el sub se quedan centrados.
+- Compresor: se descuenta la ganancia automática del navegador. Antes, encenderlo subía la mezcla unos 5,5 dB; ahora la baja lo que comprime (unos 2,4 dB en la demo) y el nivel se recupera con Ganancia.
+- OJO: los proyectos anteriores se abren igual, pero sonarán distinto: más fuertes, con hats, clap y stab más presentes, y más bajos si llevaban el compresor encendido. No cambia el formato de guardado.
+- Para revertir: git revert del commit v3.2.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.

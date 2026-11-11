@@ -279,6 +279,8 @@ El módulo **FX** tiene dos vistas: **Efectos** y **Ecualizador**. Los efectos s
 - **LED de cada módulo:** enciende o apaga el efecto sin cambiar de efecto.
 - **Reverb y Delay** son **envíos**: se mandan desde cada canal con el control Reverb o Delay del panel Sonido → Canal.
 - **Chorus/Flanger, Filtro LFO, Bitcrusher y Compresor** actúan sobre toda la mezcla.
+- **Chorus sin graves:** el chorus no toca lo que hay por debajo de unos 170 Hz, así el bombo y el sub se quedan centrados y firmes.
+- **Compresor sin salto de volumen:** al encenderlo ya no sube el volumen por su cuenta; aprieta la mezcla y el nivel lo recuperas con **Ganancia**.
 - **Sidechain:** el kick baja el volumen de los canales marcados, para que los graves respiren.
 - **Master:** filtros (con **Resonancia LP** y **Resonancia HP**), medios, brillo, ancho estéreo, drive, swing, humanizar, **Limitador: techo**, **Limitador: entrada** y volumen.
 - **Doble toque** en un control lo devuelve a su valor. Por defecto el drive del master está en 0 % y la ganancia del compresor en 0 dB.
