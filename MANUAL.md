@@ -231,6 +231,8 @@ Todo sobre el canal que has elegido.
 - **Sample propio:** carga un audio de hasta 8 segundos. Se guarda en este móvil.
 - **Mis kits guardados:** guarda y recupera tus ajustes de baterías.
 - **SUB y sintes:** onda (Sin, Tri, Saw, Sqr), tono y escala, y **Capa +1 octava**.
+- **Modelo de sonido (baterías):** cada batería puede cambiar de timbre sin cambiar de canal. **Kick:** Clásico, Duro (más pegada y clic) o Largo (más grave y con cola). **Snare:** Clásico o Rimshot. **Hat y Open:** Metal o Ruido (más suave). **Tom:** Tom o Cencerro. Clásico, Metal y Tom son los sonidos de siempre. El modelo viaja con el proyecto; si el canal tiene un sample propio, suena el sample.
+- **Kits y presets:** además de Original, 808, 909, Lo-fi, Seco y Techno hay cuatro kits nuevos (**Hard, Industrial, Minimal y Dub**) que también eligen el modelo de cada batería. Sub, Acid, Stab y Lead tienen tres presets nuevos cada uno.
 
 ### 8.3 Mixer y Master
 

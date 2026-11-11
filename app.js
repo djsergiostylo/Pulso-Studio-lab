@@ -16,6 +16,8 @@ const mf=m=>440*Math.pow(2,(m-69)/12);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const mk=()=>fixP({d:CH.slice(0,6).map(()=>new Array(16).fill(0)),s:new Array(16).fill(-1),sv:new Array(16).fill(2)});
 const NST=32;
+/* v3.3 modelos de sonido de cada batería (clave md del canal; 0 = el sonido de siempre) */
+const MDL=[['Clásico','Duro','Largo'],['Clásico','Rimshot'],['Clásico'],['Metal','Ruido'],['Metal','Ruido'],['Tom','Cencerro']];
 const ok16=(a,f,lo,hi)=>Array.from({length:NST},(_,i)=>{const v=a&&a[i];return typeof v==='number'&&isFinite(v)?Math.max(lo,Math.min(hi,Math.round(v))):f});
 /* per-step extras for all 7 tracks: accent (0/1), ratchet (1-4), nudge (-2..2 eighths of a step). Todas las filas guardan 32 pasos (proyectos de 16 se amplían solos); solo ACID puede usar LEN hasta 32 */
 function fixP(p){p.d=Array.from({length:6},(_,r)=>ok16(p.d&&p.d[r],0,0,3));p.s=ok16(p.s,-1,-1,24);p.sv=ok16(p.sv,2,1,3);
@@ -67,7 +69,7 @@ try{const r=localStorage.getItem('pulsostudio1')||localStorage.getItem('pocketsu
 if(!SKINS.some(s=>s[0]===S.skin))S.skin='stylo';
 P.forEach(fixP);fixSong();C.forEach(fixC);if(!['macro','canal'].includes(S.snd))S.snd='canal';S.dockOpen=!!S.dockOpen;if(!['interactive','balanced','playback'].includes(S.lat))S.lat='balanced';if(!XFD[S.xfade])S.xfade='normal';S.lights=!!S.lights;S.wbit=S.wbit===24?24:16;document.documentElement.dataset.lights=S.lights?'1':'0';S.dockH=Number.isFinite(+S.dockH)&&S.dockH>0?clamp(Math.round(S.dockH),110,900):0;
 S.meq=Object.assign({},EQD,S.meq);
-function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lo=i>=SUBI&&[12,-12,7,24].includes(Math.round(+c.lo))?Math.round(+c.lo):0;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.4,0,1)}
+function fixC(c,i){c.len=clamp(Math.round(+c.len)||16,1,i===ACI?32:16);const l=Math.round(+c.ly);c.ly=i<SUBI&&l>=0&&l<SUBI&&l!==i?l:-1;c.lo=i>=SUBI&&[12,-12,7,24].includes(Math.round(+c.lo))?Math.round(+c.lo):0;c.lv=clamp(Number.isFinite(+c.lv)?+c.lv:.4,0,1);const m=Math.round(+c.md);c.md=i<SUBI&&m>0&&m<MDL[i].length?m:0}
 function fixSong(){const g=S.song||{};S.song={on:!!g.on,len:[8,16,32].includes(g.len)?g.len:16,bars:ok16x32(g.bars)};
   const L=S.lanes||{};S.lanes={};LID.forEach(id=>{const x=L[id]||{},d=LANED();S.lanes[id]={bpm:clamp(+x.bpm||120,40,240),loop:[1,2,4,8].includes(x.loop)?x.loop:4,vol:typeof x.vol==='number'?clamp(x.vol,0,1):.8,on:Array.from({length:32},(_,i)=>x.on&&x.on[i]?1:0)}})}
 function ok16x32(a){return Array.from({length:32},(_,i)=>{const v=a&&a[i];return typeof v==='number'&&v>=-1&&v<=3?Math.round(v):(a?-1:SONGD.bars[i])})}
@@ -207,30 +209,40 @@ function choke(v,t){if(!v||v.end<=t)return;v.gs.forEach(g=>{const p=g.gain;if(p.
   v.srcs.forEach(s=>{try{s.stop(t+.03)}catch(e){}});v.end=t}
 const HATR=[2,3,4.16,5.43,6.79,8.21];
 /* one synth graph, used live (fallback) and to pre-render cached voices; lv: 0-2 velocity, 3 accent */
-function synth(x,out,i,t,lv,nz,srcs,pp){const m=.6+pp.tn,dm=.5+pp.dc,pv=1+(lv-2)*.012,bv=[.72,.86,1,1.22][lv];
+function synth(x,out,i,t,lv,nz,srcs,pp){const md=pp.md|0,m=.6+pp.tn,dm=.5+pp.dc,pv=1+(lv-2)*.012,bv=[.72,.86,1,1.22][lv];
   const G=()=>x.createGain(),F=(ty,f,q)=>{const b=x.createBiquadFilter();b.type=ty;b.frequency.value=f;if(q!=null)b.Q.value=q;return b};
   const O=(ty,stp)=>{const o=x.createOscillator();if(ty)o.type=ty;o._stp=stp;srcs.push(o);return o};
   const N=stp=>{const z=x.createBufferSource();z.buffer=nz;z.loop=true;z._stp=stp;z._off=Math.random()*.9;srcs.push(z);return z};
   const E=(g,pk,len,at)=>{g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(pk,t+(at||.0015));g.gain.exponentialRampToValueAtTime(.001,t+len)};
   let len;
-  if(i===0){len=.42*dm;const f0=42*m*pv,o=O('',len+.05),g=G();
-    o.frequency.setValueAtTime(f0*4.4,t);o.frequency.exponentialRampToValueAtTime(f0*1.8,t+.011);o.frequency.exponentialRampToValueAtTime(f0,t+.075+.06*dm);
+  if(i===0){/* bombo: [barrido inicial, barrido medio, t1, t2, largo, clic] por modelo: clásico, duro (más pegada y clic), largo (más grave y con cola) */
+    const K=[[4.4,1.8,.011,.075,.42,.42,42],[6,2.1,.006,.045,.34,.75,44],[3.4,1.5,.016,.13,.8,.3,37]][md]||[4.4,1.8,.011,.075,.42,.42,42];len=K[4]*dm;const f0=K[6]*m*pv,o=O('',len+.05),g=G();
+    o.frequency.setValueAtTime(f0*K[0],t);o.frequency.exponentialRampToValueAtTime(f0*K[1],t+K[2]);o.frequency.exponentialRampToValueAtTime(f0,t+K[3]+.06*dm);
     E(g,1,len,.0008);o.connect(g);g.connect(out);
-    const n=N(.016),bp=F('bandpass',3600*bv,.8),gc=G();E(gc,.42*bv,.014,.0005);n.connect(bp);bp.connect(gc);gc.connect(out)}
+    const n=N(.016),bp=F('bandpass',3600*bv,.8),gc=G();E(gc,K[5]*bv,.014,.0005);n.connect(bp);bp.connect(gc);gc.connect(out)}
+  else if(i===1&&md===1){/* rimshot: dos tonos cortos y un chasquido de ruido */
+    len=.07*dm+.02;const o=O('',len+.03),g=G();o.frequency.setValueAtTime(1750*m*pv,t);E(g,.55*bv,len*.7,.0004);o.connect(g);g.connect(out);
+    const o2=O('triangle',len+.03),g2=G();o2.frequency.setValueAtTime(470*m*pv,t);E(g2,.6*bv,len,.0004);o2.connect(g2);g2.connect(out);
+    const n=N(.02),hp=F('highpass',3000),gn=G();E(gn,.5*bv,.012,.0004);n.connect(hp);hp.connect(gn);gn.connect(out)}
   else if(i===1){len=.2*dm;const n=N(len+.05),hp=F('highpass',1100*m*(.85+.15*bv)),g=G();E(g,.7*bv,len);n.connect(hp);hp.connect(g);g.connect(out);
     const o=O('triangle',.25),g2=G();o.frequency.setValueAtTime(240*m*pv,t);o.frequency.exponentialRampToValueAtTime(185*m*pv,t+.03);E(g2,.5,.11*dm);o.connect(g2);g2.connect(out)}
   else if(i===2){len=.22*dm;const n=N(len+.08),bp=F('bandpass',1500*m*(.9+.1*bv),1.1),g=G();g.gain.setValueAtTime(0,t);
     [0,.012,.024].forEach(z=>{g.gain.linearRampToValueAtTime(.8,t+z+.001);g.gain.exponentialRampToValueAtTime(.05,t+z+.01)});g.gain.linearRampToValueAtTime(.7,t+.037);g.gain.exponentialRampToValueAtTime(.001,t+.036+len);n.connect(bp);bp.connect(g);g.connect(out)}
+  else if((i===3||i===4)&&md===1){/* hat de ruido: sin componente metálica, más suave y limpio */
+    len=(i===3?.05:.3)*dm;const n=N(len+.02),hp=F('highpass',6500*m),pk=F('peaking',Math.min(17000,9500*m),1.2),g=G();pk.gain.value=6;E(g,.42*bv,len);n.connect(hp);hp.connect(pk);pk.connect(g);g.connect(out)}
   else if(i===3||i===4){len=(i===3?.06:.32)*dm;const mix=G();mix.gain.value=.16;
     HATR.forEach(r=>{const q=O('square',len+.05);q.frequency.value=40*m*r;q.connect(mix)});
     const bp=F('bandpass',Math.min(18000,10000*m*(.9+.1*bv)),.9),hp=F('highpass',7000*m),n=N(len),gn=G();gn.gain.value=.25;n.connect(gn);gn.connect(hp);
     const g=G();E(g,.5,len);mix.connect(bp);bp.connect(hp);hp.connect(g);g.connect(out)}
+  else if(md===1){/* cencerro: dos ondas cuadradas (relación 800/540) por un paso banda, golpe seco y cola corta */
+    len=.28*dm;const f=540*m/1.1*pv,bp=F('bandpass',f*1.75,1.6),g=G();[1,800/540].forEach(r=>{const q=O('square',len+.05);q.frequency.value=f*r;q.connect(bp)});
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.5*bv,t+.001);g.gain.exponentialRampToValueAtTime(.16*bv,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+len);bp.connect(g);g.connect(out)}
   else{len=.32*dm;const f0=95*m*pv,o=O('',len+.05),g=G();o.frequency.setValueAtTime(f0*2.6,t);o.frequency.exponentialRampToValueAtTime(f0*1.25,t+.02);o.frequency.exponentialRampToValueAtTime(f0,t+.2);E(g,.9,len);o.connect(g);g.connect(out)}
   srcs.forEach(z=>{if(z._off!=null)z.start(t,z._off);else z.start(t);z.stop(t+z._stp)});
   return len}
 /* voice cache: rendered offline at 4x, soft-saturated, then decimated with a windowed-sinc FIR (no aliasing) */
 const VC=new Map(),NZ=new Map(),FIRS={},SMP=new Array(6).fill(null),SMPN=new Array(6).fill('');let OSF=2;
-const vKey=(i,sr,lv)=>i+'|'+sr+'|'+C[i].tn.toFixed(3)+'|'+C[i].dc.toFixed(3)+'|'+lv;
+const vKey=(i,sr,lv)=>i+'|'+(C[i].md|0)+'|'+sr+'|'+C[i].tn.toFixed(3)+'|'+C[i].dc.toFixed(3)+'|'+lv;
 const RRN=i=>(i>=1&&i<=4)?2:1;
 function fir(f){if(FIRS[f])return FIRS[f];const N=15*f+1|1,h=new Float32Array(N),fc=.45/f;let sm=0;
   for(let k=0;k<N;k++){const q=k-(N-1)/2,w=.42-.5*Math.cos(2*Math.PI*k/(N-1))+.08*Math.cos(4*Math.PI*k/(N-1));h[k]=(q?Math.sin(2*Math.PI*fc*q)/(Math.PI*q):2*fc)*w;sm+=h[k]}
@@ -240,29 +252,29 @@ function decim(d,f){const h=fir(f),N=h.length,hf=(N-1)/2,n=Math.floor(d.length/f
 function noiseFor(x){const r=x.sampleRate;if(NZ.has(r))return NZ.get(r);const b=x.createBuffer(1,r,r),d=b.getChannelData(0);for(let k=0;k<d.length;k++)d[k]=Math.random()*2-1;NZ.set(r,b);return b}
 const SAT=[1.4,1.2,0,0,0,1.3];
 /* v3.2 nivel de cada voz sintetizada (clap, hats) y del stab: antes quedaban 17-25 dB bajo el bombo y el fader no daba para subirlos. Los samples propios no se tocan */
-const VG=[1,1,2.6,3.4,3.4,1],STG=3;
+const VG=[1,1,2.6,3.4,3.4,1],STG=3,VGM={'0|1':.85,'1|1':.85,'3|1':.75,'4|1':1,'5|1':1.5},vg=i=>(C[i].md|0)?(VGM[i+'|'+C[i].md]||VG[i]):VG[i];
 async function renderVoice(i,lv,sr,pp){const OC=window.OfflineAudioContext||window.webkitOfflineAudioContext,dm=.5+pp.dc;OSF=Math.max(1,Math.min(OSF,Math.floor(192000/sr)));
-  const dur=[.42*dm,Math.max(.25,.2*dm),.22*dm+.08,.06*dm,.32*dm,.32*dm][i]+.08;let x,f=OSF;
+  const md=pp.md|0,dur=[[.42,.34,.8][md]*dm,Math.max(.25,.2*dm),.22*dm+.08,.06*dm,.32*dm,.32*dm][i]+.08;let x,f=OSF;
   for(;;){try{x=new OC(1,Math.ceil(dur*sr*f),sr*f);break}catch(e){if(f<=1)throw e;f=f/2;OSF=f}}
   const srcs=[];synth(x,x.destination,i,0,lv,noiseFor(x),srcs,pp);
   const rb=await new Promise((res,rej)=>{x.oncomplete=e=>res(e.renderedBuffer);const p=x.startRendering();if(p&&p.then)p.then(res,rej)});
-  const d=rb.getChannelData(0),k=SAT[i];if(k){const nk=Math.tanh(k);for(let j=0;j<d.length;j++)d[j]=Math.tanh(d[j]*k)/nk}
+  const d=rb.getChannelData(0),k=i===0&&md===1?2.6:md&&i!==0?0:SAT[i];if(k){const nk=Math.tanh(k);for(let j=0;j<d.length;j++)d[j]=Math.tanh(d[j]*k)/nk}
   const o=f>1?decim(d,f):d;let end=o.length;while(end>1&&Math.abs(o[end-1])<3e-5)end--;
   const b=x.createBuffer(1,end,sr);b.getChannelData(0).set(o.subarray(0,end));return b}
 let warming=null,warmAgain=false,wq=0;
 function warmAll(sr){if(warming){warmAgain=true;return warming}
   warming=(async()=>{do{warmAgain=false;const want=new Set();
-    for(let i=0;i<6;i++){if(SMP[i])continue;const pp={tn:C[i].tn,dc:C[i].dc};
+    for(let i=0;i<6;i++){if(SMP[i])continue;const pp={tn:C[i].tn,dc:C[i].dc,md:C[i].md|0};
       for(let lv=0;lv<4;lv++)for(let r=0;r<RRN(i);r++){const k=vKey(i,sr,lv)+'|'+r;want.add(k);if(!VC.has(k)){try{VC.set(k,await renderVoice(i,lv,sr,pp))}catch(e){}}}}
     for(const k of [...VC.keys()])if(!want.has(k))VC.delete(k)}while(warmAgain);warming=null})();return warming}
 function queueWarm(){clearTimeout(wq);wq=setTimeout(()=>{if(LIVE){warmAll(LIVE.sampleRate);warmStab(LIVE.sampleRate)}},150)}
-function drumLive(i,t,v,lv,dest,lay,semi){const d=dst(dest,v*VG[i]),srcs=[],pp=semi?Object.assign({},C[i],{tn:(.6+C[i].tn)*Math.pow(2,semi/12)-.6}):C[i],len=synth(ctx,d,i,t,lv,noise,srcs,pp);srcs.forEach(z=>reg(d,z));if(i===4&&!lay)ohV={gs:[d],srcs,end:t+len+.05}}
+function drumLive(i,t,v,lv,dest,lay,semi){const d=dst(dest,v*vg(i)),srcs=[],pp=semi?Object.assign({},C[i],{tn:(.6+C[i].tn)*Math.pow(2,semi/12)-.6}):C[i],len=synth(ctx,d,i,t,lv,noise,srcs,pp);srcs.forEach(z=>reg(d,z));if(i===4&&!lay)ohV={gs:[d],srcs,end:t+len+.05}}
 function drum(i,t,v,dest,lay,semi){dest=dest==null?i:dest;if(!lay){const L=C[i];if(L.ly>=0&&L.lv>0)drum(L.ly,t,v*L.lv,i,true)}const lv=v<.6?0:v<.9?1:v<1.15?2:3;if(i===3&&!lay)choke(ohV,t);
   const smp=SMP[i];let buf=smp;
   if(!buf){buf=VC.get(vKey(i,ctx.sampleRate,lv)+'|'+(RRN(i)>1&&Math.random()<.5?1:0));if(!buf){queueWarm();return drumLive(i,t,v,lv,dest,lay,semi)}}
   const z=ctx.createBufferSource(),g=ctx.createGain();z.buffer=buf;
   const rate=smp?Math.pow(2,(C[i].tn-.5)*2)*(1+(lv-2)*.008):1+(Math.random()-.5)*.006;z.playbackRate.value=rate*(semi?Math.pow(2,semi/12):1);
-  let dur=buf.duration/(rate*(semi?Math.pow(2,semi/12):1));const gv0=smp?v*.9:v*VG[i];g.gain.setValueAtTime(gv0,t);
+  let dur=buf.duration/(rate*(semi?Math.pow(2,semi/12):1));const gv0=smp?v*.9:v*vg(i);g.gain.setValueAtTime(gv0,t);
   if(smp&&C[i].dc<.97){const L=.03+C[i].dc*C[i].dc*2.2;if(L<dur){g.gain.setValueAtTime(gv0,t+L*.5);g.gain.exponentialRampToValueAtTime(gv0*.001+1e-5,t+L);dur=L+.01}}
   z.connect(g);g.connect(chs[dest].in);z.onended=()=>{try{g.disconnect()}catch(e){}};z.start(t);z.stop(t+dur+.01);
   if(i===4&&!lay)ohV={gs:[g],srcs:[z],end:t+dur}}
@@ -633,19 +645,24 @@ const KITS=[['Original',[[.5,.5,1,0,0,0],[.5,.5,1,0,.2,0],[.5,.5,1,0,.3,0],[.5,.
   ['909',[[.5,.5,1,.35,0,0],[.4,.6,1,.2,.15,0],[.4,.55,1,.15,.25,0],[.2,.7,1,0,0,0],[.45,.65,1,0,.1,.1],[.5,.5,1,.15,0,0]]],
   ['Lo-fi',[[.45,.4,.6,.3,0,0],[.5,.4,.5,.3,.25,0],[.5,.4,.5,.25,.3,.1],[.3,.4,.45,.2,0,0],[.5,.35,.45,.2,.15,.2],[.55,.35,.55,.25,.1,0]]],
   ['Seco',[[.22,.5,1,.1,0,0],[.2,.55,1,.1,0,0],[.2,.5,1,.05,.05,0],[.12,.6,1,0,0,0],[.25,.6,1,0,0,0],[.25,.5,1,.05,0,0]]],
-  ['Techno',[[.6,.45,1,.55,0,0],[.35,.65,1,.3,.1,0],[.35,.6,1,.25,.2,.1],[.15,.8,1,.1,0,0],[.4,.75,1,.15,.1,.2],[.45,.55,1,.3,0,0]]]];
+  ['Techno',[[.6,.45,1,.55,0,0],[.35,.65,1,.3,.1,0],[.35,.6,1,.25,.2,.1],[.15,.8,1,.1,0,0],[.4,.75,1,.15,.1,.2],[.45,.55,1,.3,0,0]]],
+  /* v3.3: el 7.º valor es el modelo de sonido (md) */
+  ['Hard',[[.45,.5,1,.45,0,0,1],[.3,.6,1,.35,.1,0],[.35,.55,1,.3,.2,0],[.12,.85,1,.15,0,0,1],[.35,.8,1,.2,.1,.1,1],[.4,.5,1,.35,0,0]]],
+  ['Industrial',[[.55,.4,.8,.7,.1,0,1],[.5,.4,.7,.6,.3,0],[.5,.4,.7,.5,.4,.1],[.2,.6,.8,.4,0,0],[.5,.55,.8,.4,.2,.2],[.5,.6,.9,.5,.2,.1,1]]],
+  ['Minimal',[[.3,.55,1,.1,0,0],[.3,.6,1,.05,.1,0,1],[.25,.6,1,0,.15,0],[.1,.75,1,0,0,0,1],[.25,.7,1,0,.05,.15,1],[.3,.6,1,0,.1,.2,1]]],
+  ['Dub',[[.7,.4,1,.2,0,0,2],[.4,.5,.8,.1,.45,.3,1],[.45,.45,.8,.1,.5,.35],[.15,.6,.8,0,.1,.25],[.45,.6,.8,0,.3,.4],[.6,.4,.9,.1,.4,.4]]]];
 const KP=['dc','tn','flt','drv','rev','dly'];
-const PRE={[SUBI]:[['Sub sine',{w:'sine',dc:.6,br:.2,gl:0,flt:1,drv:0}],['Saw sucio',{w:'sawtooth',dc:.5,br:.6,gl:0,flt:.6,drv:.35}],['Pluck',{w:'triangle',dc:.25,br:.5,gl:0,flt:1,drv:.1}],['808 largo',{w:'sine',dc:.9,br:.15,gl:.4,flt:1,drv:.2}],['Glide',{w:'square',dc:.55,br:.4,gl:.8,flt:.7,drv:.2}]],
-  [ACI]:[['Clásico',{w:'sawtooth',tn:.35,br:.6,gl:.5,dc:.35,flt:1,drv:.2}],['Squelch',{w:'square',tn:.3,br:.8,gl:.7,dc:.25,flt:1,drv:.3}],['Suave',{w:'sawtooth',tn:.5,br:.3,gl:.3,dc:.5,flt:1,drv:0}],['Duro',{w:'sawtooth',tn:.45,br:.5,gl:.8,dc:.2,flt:1,drv:.6}]],
-  [LEI]:[['Saw lead',{w:'sawtooth',tn:.6,br:.4,gl:.1,dc:.4,flt:1,drv:.1}],['Square',{w:'square',tn:.5,br:.2,gl:0,dc:.3,flt:1,drv:0}],['Pluck',{w:'sawtooth',tn:.45,br:.3,gl:0,dc:.12,flt:1,drv:0}],['Glide',{w:'triangle',tn:.55,br:.5,gl:.8,dc:.5,flt:1,drv:.05}]],
-  [STI]:[['Rave',{tn:.6,dc:.35,br:.4,flt:1,drv:.1,rev:.3,dly:.25}],['Seco corto',{tn:.5,dc:.15,br:.2,rev:.1,dly:0}],['Pad largo',{tn:.35,dc:.9,br:.5,rev:.5,dly:.2}],['Dub',{tn:.4,dc:.5,br:.3,rev:.3,dly:.4}]]};
+const PRE={[SUBI]:[['Sub sine',{w:'sine',dc:.6,br:.2,gl:0,flt:1,drv:0}],['Saw sucio',{w:'sawtooth',dc:.5,br:.6,gl:0,flt:.6,drv:.35}],['Pluck',{w:'triangle',dc:.25,br:.5,gl:0,flt:1,drv:.1}],['808 largo',{w:'sine',dc:.9,br:.15,gl:.4,flt:1,drv:.2}],['Glide',{w:'square',dc:.55,br:.4,gl:.8,flt:.7,drv:.2}],['Rumble',{w:'sine',dc:.95,br:.2,gl:.2,flt:.5,drv:.5}],['Reese',{w:'sawtooth',dc:.7,br:.35,gl:.3,flt:.45,drv:.25}],['Golpe',{w:'square',dc:.2,br:.6,gl:0,flt:.8,drv:.3}]],
+  [ACI]:[['Clásico',{w:'sawtooth',tn:.35,br:.6,gl:.5,dc:.35,flt:1,drv:.2}],['Squelch',{w:'square',tn:.3,br:.8,gl:.7,dc:.25,flt:1,drv:.3}],['Suave',{w:'sawtooth',tn:.5,br:.3,gl:.3,dc:.5,flt:1,drv:0}],['Duro',{w:'sawtooth',tn:.45,br:.5,gl:.8,dc:.2,flt:1,drv:.6}],['Chillón',{w:'square',tn:.55,br:.9,gl:.9,dc:.3,flt:1,drv:.45}],['Burbuja',{w:'sawtooth',tn:.2,br:.85,gl:.6,dc:.15,flt:1,drv:.1}],['Oscuro',{w:'sawtooth',tn:.15,br:.5,gl:.35,dc:.6,flt:.7,drv:.35}]],
+  [LEI]:[['Saw lead',{w:'sawtooth',tn:.6,br:.4,gl:.1,dc:.4,flt:1,drv:.1}],['Square',{w:'square',tn:.5,br:.2,gl:0,dc:.3,flt:1,drv:0}],['Pluck',{w:'sawtooth',tn:.45,br:.3,gl:0,dc:.12,flt:1,drv:0}],['Glide',{w:'triangle',tn:.55,br:.5,gl:.8,dc:.5,flt:1,drv:.05}],['Sirena',{w:'sawtooth',tn:.7,br:.7,gl:.9,dc:.8,flt:1,drv:.2}],['Hoover',{w:'sawtooth',tn:.5,br:1,gl:.5,dc:.6,flt:.9,drv:.3}],['Campana',{w:'triangle',tn:.8,br:.1,gl:0,dc:.25,flt:1,drv:0}]],
+  [STI]:[['Rave',{tn:.6,dc:.35,br:.4,flt:1,drv:.1,rev:.3,dly:.25}],['Seco corto',{tn:.5,dc:.15,br:.2,rev:.1,dly:0}],['Pad largo',{tn:.35,dc:.9,br:.5,rev:.5,dly:.2}],['Dub',{tn:.4,dc:.5,br:.3,rev:.3,dly:.4}],['Techno',{tn:.55,dc:.2,br:.6,flt:1,drv:.3,rev:.25,dly:.3}],['Frío',{tn:.75,dc:.45,br:.15,flt:1,drv:0,rev:.4,dly:.2}],['Detroit',{tn:.45,dc:.6,br:.5,flt:1,drv:.1,rev:.45,dly:.35}]]};
 function renderPresets(){const sub=MEL(S.ch),list=sub?PRE[S.ch]:KITS;
   $('#presetT').textContent=sub?'Presets · '+CH[S.ch][1]:'Kits de sonido';$('#presetN').textContent=sub?'este canal':'6 baterías';
   $('#presetRow').innerHTML=list.map((x,i)=>`<button type="button" class="pre" data-i="${i}">${x[0]}</button>`).join('');
   $('#presetNote').textContent=sub?'Cambia onda, filtro y envolvente de este canal. Ajusta a tu gusto con los mandos.':'Cambia tono, caída, filtro, drive y envíos de las 6 baterías a la vez. "Original" lo deja como al principio.'}
 $('#presetRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if(!b)return;const i=+b.dataset.i,ch=S.ch;
   if(MEL(ch)){const [n,o]=PRE[ch][i];Object.keys(o).forEach(k=>{if(k==='w'){if(ch===ACI)S.awave=o.w;else if(ch===LEI)S.lwave=o.w;else S.wave=o.w}else C[ch][k]=o[k]});flash('PRESET: '+n.toUpperCase())}
-  else{const [n,v]=KITS[i];v.forEach((r,d)=>KP.forEach((k,j)=>{C[d][k]=r[j]}));flash('KIT: '+n.toUpperCase())}
+  else{const [n,v]=KITS[i];v.forEach((r,d)=>{KP.forEach((k,j)=>{C[d][k]=r[j]});C[d].md=r[6]||0});flash('KIT: '+n.toUpperCase())}
   applyAll();queueWarm();renderCanal();audition();save()});
 /* capa: una segunda voz de batería suena a la vez dentro del mismo canal */
 /* capa: una segunda voz suena a la vez dentro del mismo canal (baterías: otra batería; sintes: la misma voz a otra altura) */
@@ -658,7 +675,10 @@ function renderLayer(){const ch=S.ch,mel=MEL(ch),c=C[ch];$('#lyCard').hidden=fal
 $('#lyRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if(!b)return;if(MEL(S.ch))C[S.ch].lo=+b.dataset.i;else C[S.ch].ly=+b.dataset.i;renderLayer();audition();save()});
 $('#lyLv').addEventListener('input',e=>{C[S.ch].lv=e.target.value/100;$('#lyO').textContent=e.target.value;saveSoon()});
 $('#lyLv').addEventListener('change',()=>audition());
-function renderCanal(){const c=C[S.ch],sub=MEL(S.ch);$('#sndCh').textContent=CH[S.ch][1];renderPresets();renderLayer();
+function renderModel(){const ch=S.ch,L=MEL(ch)?[]:MDL[ch],card=$('#mdCard');card.hidden=L.length<2;if(L.length<2)return;const smp=!!SMP[ch];
+  $('#mdRow').innerHTML=L.map((n,i)=>`<button type="button" class="pre" data-i="${i}" aria-pressed="${(C[ch].md|0)===i}">${n}</button>`).join('');$('#mdN').textContent=smp?'no se oye: hay un sample':L[C[ch].md|0].toLowerCase()}
+$('#mdRow').addEventListener('click',e=>{const b=e.target.closest('.pre');if(!b)return;C[S.ch].md=+b.dataset.i;renderModel();queueWarm();audition();save()});
+function renderCanal(){const c=C[S.ch],sub=MEL(S.ch);renderModel();$('#sndCh').textContent=CH[S.ch][1];renderPresets();renderLayer();
   $('#canT').textContent='Canal · '+CH[S.ch][1];$('#canKn').innerHTML=(S.ch===ACI?KA:S.ch===STI?KB:S.ch===LEI?KL:sub?KS:KD).map(([k,l])=>kn('c_'+k,l,c[k])).join('');
   const sc=$('#scTog');sc.hidden=S.ch===0;sc.setAttribute('aria-pressed',!!c.sc);$('#subx').hidden=!sub;$('#smpx').hidden=sub;$('#smpN').textContent=(!sub&&SMPN[S.ch])||'Sintetizado';$('#smpX').disabled=sub||!SMP[S.ch];
   const wv=S.ch===ACI?S.awave:S.ch===LEI?S.lwave:S.wave;$('#waves').hidden=S.ch===STI;$$('#waves button').forEach(b=>{b.setAttribute('aria-pressed',b.dataset.w===wv);b.hidden=S.ch===ACI&&(b.dataset.w==='sine'||b.dataset.w==='triangle')});

@@ -587,6 +587,14 @@ Mejoras previstas: 1) pantalla completa y pestañas abajo, 2) gestos y vibració
 - OJO: los proyectos anteriores se abren igual, pero sonarán distinto: más fuertes, con hats, clap y stab más presentes, y más bajos si llevaban el compresor encendido. No cambia el formato de guardado.
 - Para revertir: git revert del commit v3.2.
 
+## v3.3 (2026-11-11) — Claude
+- Modelos de sonido por batería (Sonido > Canal > "Modelo de sonido"): Kick Clásico, Duro o Largo; Snare Clásico o Rimshot; Hat y Open Metal o Ruido; Tom o Cencerro. El primero de cada lista es el sonido de siempre, así que nada cambia si no lo tocas.
+- Cuatro kits nuevos: Hard, Industrial, Minimal y Dub. Los kits ahora también eligen el modelo de cada batería (los antiguos lo dejan en el clásico).
+- Doce presets nuevos: Sub (Rumble, Reese, Golpe), Acid (Chillón, Burbuja, Oscuro), Lead (Sirena, Hoover, Campana) y Stab (Techno, Frío, Detroit).
+- El modelo es del proyecto: clave md de cada canal, viaja en el .json y en el código PS1. Los proyectos anteriores no la tienen y se abren con el clásico (migración en fixC).
+- Medido exportando cada modelo en solo: todos suenan, sin errores, a un nivel parecido al del clásico de su canal. No están escuchados.
+- Para revertir: git revert del commit v3.3.
+
 ## Manual (2026-10-31) — Claude
 - Manual actualizado a la v2.86: capturas nuevas de todas las pantallas (390x844 a doble resolucion) y secciones nuevas o reescritas de Transporte (Stop, Pausa, Azar que muta), Pads (Bateria y Notas), Piano roll, Mix (Limitador con Techo y Entrada, Master tumbado), FX, EQ y Consejos.
 - Galeria de vistas justo despues del indice: 12 miniaturas rotuladas (Crear: Secuenciador, Modos de paso, Pads Bateria, Pads Notas, Piano roll melodico y de bateria; Panel Sonido: Macro, Canal, Mix, Mix con master desplegado, FX y EQ). Cada una lleva a su seccion. En GitHub se ve como tabla y en manual.html como cuadricula de 2 o 3 columnas.
