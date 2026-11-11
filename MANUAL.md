@@ -113,7 +113,7 @@ Deshacer y rehacer guardan **todo el proyecto**, no solo las notas: secuencia, c
 - Mover un deslizador **sin soltar** cuenta como un solo paso, aunque hagas pausas.
 - Grabar con los pads es un solo paso.
 - El mensaje de la pantallita dice qué se deshizo: SECUENCIA, MEZCLA, FX, EQ…
-- **No entran** la carátula, las luces, el audio ni Play, Pausa y Stop.
+- **No entran** el color de las luces, el fondo, las luces extra, el audio ni Play, Pausa y Stop.
 
 ## 4. Pads
 
@@ -231,6 +231,8 @@ Todo sobre el canal que has elegido.
 - **Sample propio:** carga un audio de hasta 8 segundos. Se guarda en este móvil.
 - **Mis kits guardados:** guarda y recupera tus ajustes de baterías.
 - **SUB y sintes:** onda (Sin, Tri, Saw, Sqr), tono y escala, y **Capa +1 octava**.
+- **Modelo de sonido (baterías):** cada batería puede cambiar de timbre sin cambiar de canal. **Kick:** Clásico, Duro (más pegada y clic) o Largo (más grave y con cola). **Snare:** Clásico o Rimshot. **Hat y Open:** Metal o Ruido (más suave). **Tom:** Tom o Cencerro. Clásico, Metal y Tom son los sonidos de siempre. El modelo viaja con el proyecto; si el canal tiene un sample propio, suena el sample.
+- **Kits y presets:** además de Original, 808, 909, Lo-fi, Seco y Techno hay cuatro kits nuevos (**Hard, Industrial, Minimal y Dub**) que también eligen el modelo de cada batería. Sub, Acid, Stab y Lead tienen tres presets nuevos cada uno.
 
 ### 8.3 Mixer y Master
 
@@ -279,6 +281,8 @@ El módulo **FX** tiene dos vistas: **Efectos** y **Ecualizador**. Los efectos s
 - **LED de cada módulo:** enciende o apaga el efecto sin cambiar de efecto.
 - **Reverb y Delay** son **envíos**: se mandan desde cada canal con el control Reverb o Delay del panel Sonido → Canal.
 - **Chorus/Flanger, Filtro LFO, Bitcrusher y Compresor** actúan sobre toda la mezcla.
+- **Chorus sin graves:** el chorus no toca lo que hay por debajo de unos 170 Hz, así el bombo y el sub se quedan centrados y firmes.
+- **Compresor sin salto de volumen:** al encenderlo ya no sube el volumen por su cuenta; aprieta la mezcla y el nivel lo recuperas con **Ganancia**.
 - **Sidechain:** el kick baja el volumen de los canales marcados, para que los graves respiren.
 - **Master:** filtros (con **Resonancia LP** y **Resonancia HP**), medios, brillo, ancho estéreo, drive, swing, humanizar, **Limitador: techo**, **Limitador: entrada** y volumen.
 - **Doble toque** en un control lo devuelve a su valor. Por defecto el drive del master está en 0 % y la ganancia del compresor en 0 dB.
@@ -305,7 +309,8 @@ Está en **Menú → Aspecto**. Cambia cómo se ve la app y da acceso a este man
 
 ![Pestaña Aspecto](manual/img/08-aspecto.jpg)
 
-- **Carátula (colores):** cuatro carátulas del mismo diseño de hardware: **Stylo** (naranja), **Acid** (verde), **Hielo** (cian) y **Rojo 909**. Cambian el color de las luces, de la pantalla y el tinte del chasis. Si tenías una carátula antigua, la app pasa sola a Stylo.
+- **Luces (color):** cuatro colores para los botones encendidos y la pantalla: **Stylo** (naranja), **Acid** (verde), **Hielo** (cian) y **Rojo 909**.
+- **Fondo (chasis):** el tono del aparato: **Negro**, **Grafito**, **Azul noche**, **Gris acero** y **Plata** (claro, con letras oscuras). Se combina con cualquier color de luces. La pantalla y las ranuras de los controles siguen oscuras en todos. Se recuerda en este dispositivo; no viaja en el proyecto.
 - **Luces extra:** destellos al sonar en pads, nombres y pantalla. Gastan batería, así que viene **apagado**. Si el audio suena entrecortado, déjalo apagado.
 - **Audio:** **Rápido**, **Equilibrado** o **Estable**. Es el tamaño del búfer de audio: más búfer, más retraso al tocar pero menos cortes. El cambio se aplica **al recargar** la página.
 - **Ayuda · Abrir el manual:** el botón que abre este manual, al final de la pestaña.
